@@ -53,3 +53,4 @@ int main()
     vector<int> terminals = a.second;
     cout<<terminals.size();
     return 0;
+}
