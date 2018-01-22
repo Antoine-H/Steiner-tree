@@ -18,7 +18,7 @@ def read_graph (file):
                                   for u in input if u.startswith("T ")])
     return [graph,terminals]
 
-# Main
 
-g = read_graph("Heuristic/instance001.gr")
+if __name__ == '__main__':
+    g = read_graph("Heuristic/instance001.gr")
 
