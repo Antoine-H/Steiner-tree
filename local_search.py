@@ -22,14 +22,14 @@ def first_solution(graph,terminals):
 
 
 def modification(graph, terminals):
-	g2 = graph.copy()
-	edges = shuffle(g2.edges(data=True)) #pour avoir un edge aleatoire
-	for e in edges:
-		for e in edges:
-			g2.remove_edge(e)
-			if(not(nx.is_connected(g2))):
-				g2.add_adge(e)
-	return(g2)
+    g2 = graph.copy()
+    edges = shuffle(g2.edges(data=True)) #pour avoir un edge aleatoire
+    for e in edges:
+        for e in edges:
+            g2.remove_edge(e)
+            if(not(nx.is_connected(g2))):
+                g2.add_adge(e)
+    return(g2)
 
 
 # Objective function
