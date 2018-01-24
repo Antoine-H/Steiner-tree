@@ -1,9 +1,9 @@
 fonction de gain : width pour calculer l'efficacité de la locale search
 
-local search  : fonction de gain, solutoin de départ, fonction de déplacement, augmenter le radius de recherche, accepter l'erreur. 
+local search  : fonction de gain, solutoin de départ, fonction de déplacement, augmenter le radius de recherche, accepter l'erreur.
 
-physic like : recuit simulé : se baser sur la local search, 
+physic like : recuit simulé : se baser sur la local search,
 
-bio like : algo génétique  : pour Louis, génération de population, merge complet puis suppression aléatoire jusqu'a minimum. 
+bio like : algo génétique  : pour Louis, génération de population, merge complet puis suppression aléatoire jusqu'a minimum.
 
 integration de monte carlo: ???
