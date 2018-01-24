@@ -1,6 +1,6 @@
 
 import networkx as nx
-
+import random
 # Reads graphs.
 
 
@@ -22,11 +22,11 @@ def first_solution(graph,terminals):
 
 
 def modification(graph, act_sol, terminals):
-    g2 = act_sol.copy()
-	edges_tot = shuffle(graph.edges(data=True))
+	g2 = act_sol.copy()
+	edges_tot = random.shuffle(graph.edges(data=True))
 	g2.add(edges_tot[0])
-    edges = shuffle(g2.edges(data=True)) #pour avoir un edge aleatoire
-    for e in edges:
+	edges = random.shuffle(g2.edges(data=True)) #pour avoir un edge aleatoire
+	for e in edges:
         g2.remove_edge(e)
         if(not(nx.is_connected(g2))):
 			g2.add_adge(e)

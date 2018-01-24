@@ -1,11 +1,10 @@
 
 #
-#  Parser.
+#  genetic.
 #
 
 import networkx as nx
-
-# Reads graphs.
+import random
 
 
 def first_solution(graph,terminals):
@@ -27,7 +26,7 @@ def first_solution(graph,terminals):
 
 def fusion(t0,t1):
 	t_new = nx.compose(t0,t1)
-	edges = shuffle(t_new.edges(data=True))
+	edges = random.shuffle(t_new.edges(data=True))
 	for e in edges:
 		t_new.remove_edge(e)
 		if(not(nx.is_connected(t_new))):
