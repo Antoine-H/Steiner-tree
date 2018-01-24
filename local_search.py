@@ -21,7 +21,7 @@ def first_solution(graph,terminals):
     return(approx_spanning)
 
 
-def modification(graph, act_sol, terminals):
+def one_step_dummy(graph, act_sol, terminals):
     g2 = act_sol.copy()
     edges_tot = random.shuffle(graph.edges(data=True))
     g2.add(edges_tot[0])
