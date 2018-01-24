@@ -38,7 +38,6 @@ def first_solution(graph,terminals):
 
 
 
-
 if __name__ == '__main__':
     g = read_graph("Heuristic/instance001.gr")
 
