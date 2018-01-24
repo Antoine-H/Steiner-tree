@@ -2,37 +2,62 @@
 import random
 import networkx as nx
 import parser
+import random
+import matplotlib.pyplot as plt
 
 
+# Not checked
 def first_solution(graph,terminals):
     graph_t = nx.Graph()
     too_add = []
     approx_spanning = nx.Graph()
+
     for i in range(len(terminals.nodes())):
         for j in range(len(terminals.nodes())-i-1):
-            w = nx.shortest_path_length(graph,terminals.nodes()[i], terminals.nodes()[j],"weight")
+    graph_copy.add_weighted_edges_from(rand_edges)
+            w = nx.shortest_path_length(
+                    graph,terminals.nodes()[i], terminals.nodes()[j],"weight")
             too_add.append((terminals.nodes()[i],terminals.nodes()[j],w))
+
     graph_t.add_weighted_edges_from(too_add)
     spanning_tree = nx.minimum_spanning_tree(graph_t)
+
     for (i,j) in spanning_tree.edges():
         path = nx.shortest_path(graph,i, j,"weight")
         for i in range(len(path)-1):
             approx_spanning.add_edge(path[i],path[i+1])
-    return(approx_spanning)
+    return approx_spanning
 
 
-def one_step_dummy(graph, act_sol, terminals):
-    g2 = act_sol.copy()
-    edges_tot = random.shuffle(graph.edges(data=True))
-    g2.add(edges_tot[0])
-    edges = shuffle(g2.edges(data=True)) #pour avoir un edge aleatoire
-    for e in edges:
-        g2.remove_edge(e)
-        if(not(nx.is_connected(g2))):
-            g2.add_adge(e)
-        else:
-            break
-    return(g2)
+def display (graph):
+    pos=nx.spring_layout(graph)
+    nx.draw_networkx_nodes(graph,pos,node_size=30)
+    nx.draw_networkx_edges(graph,pos,width=5,alpha=0.5)
+    plt.axis('off')
+    plt.savefig("weighted_graph.png")
+    plt.show()
+
+
+def nm_step_dummy(graph, cur_sol, terminals, n=1, m=1):
+
+    graph_copy = cur_sol.copy()
+    print(nx.is_connected(graph_copy))
+    rand_edges = [graph.edges(data=True)[i]
+                    for i in random.sample(range(len(graph)),n)]
+    print(rand_edges)
+    graph_copy.add_weighted_edges_from(rand_edges)
+    print(nx.is_connected(graph_copy))
+    rand_edges = [graph.edges(data=True)[i]
+                    for i in random.sample(range(len(graph)),m)]
+
+    print(nx.is_connected(graph_copy))
+    for e in rand_edges:
+        graph_copy.remove_edges_from([e])
+        if not nx.is_connected(graph_copy):
+            graph_copy.add_weighted_edges_from([e])
+
+    print(nx.is_connected(graph_copy))
+    return graph_copy
 
 
 # Objective function
@@ -46,14 +71,24 @@ def gain (steiner):
     return d + w
 
 
-# Local search. With p ∈ [0,1]
+# Local search. With optional parameter p ∈ [0,1]
 def local_search (heuristic, graph, cur_sol, terminals, p=0):
-    if gain(graph) < gain(heuristic(graph, cur_sol, terminals)):
-        return graph
-    elif Random.random() < p:
-        return heuristic(graph)
+    new_sol = heuristic(graph, cur_sol, terminals)
+    if gain(cur_sol) < gain(new_sol):
+        return cur_sol
+    elif random.random() < p:
+        return new_sol
     else:
-        return heuristic(graph)
+        return new_sol
+
+
+def test (heuristic, graph, terminals, new=nx.Graph(), p=0):
+    new = first_solution (graph, terminals)
+    print(gain(new))
+    while True:
+        new = local_search (heuristic, graph, new, terminals, p=0)
+        print(gain(new))
+
 
 
 if __name__ == '__main__':
