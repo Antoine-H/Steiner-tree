@@ -1,7 +1,7 @@
 
+import random
 import networkx as nx
-
-# Reads graphs.
+import parser
 
 
 def first_solution(graph,terminals):
@@ -23,16 +23,16 @@ def first_solution(graph,terminals):
 
 def modification(graph, act_sol, terminals):
     g2 = act_sol.copy()
-	edges_tot = shuffle(graph.edges(data=True))
-	g2.add(edges_tot[0])
+    edges_tot = random.shuffle(graph.edges(data=True))
+    g2.add(edges_tot[0])
     edges = shuffle(g2.edges(data=True)) #pour avoir un edge aleatoire
     for e in edges:
         g2.remove_edge(e)
         if(not(nx.is_connected(g2))):
-			g2.add_adge(e)
-		else:
-			break
-	return(g2)
+            g2.add_adge(e)
+        else:
+            break
+    return(g2)
 
 
 # Objective function
@@ -46,6 +46,16 @@ def gain (steiner):
     return d + w
 
 
+# Local search. With p ∈ [0,1]
+def local_search (heuristic, graph, cur_sol, terminals, p=0):
+    if gain(graph) < gain(heuristic(graph, cur_sol, terminals)):
+        return graph
+    elif Random.random() < p:
+        return heuristic(graph)
+    else:
+        return heuristic(graph)
+
+
 if __name__ == '__main__':
-    g = read_graph("Heuristic/instance001.gr")
+    g = parser.read_graph("Heuristic/instance001.gr")
 
