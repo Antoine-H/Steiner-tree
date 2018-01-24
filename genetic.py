@@ -5,7 +5,8 @@
 
 import networkx as nx
 import random
-import local_search
+import local_search as ls 
+import parser
 
 def fusion(t0,t1):
 	t_new = nx.compose(t0,t1)
@@ -17,8 +18,8 @@ def fusion(t0,t1):
 	return(t_new)
 
 
-def genetic(nb_generation,taille_population):
-	population = random_solution(taille_population)
+def genetic(graph,nb_generation,taille_population):
+	population = random_solution(graph,taille_population)
 	for i in range(nb_generation):
 		population.sort()
 		for j in range(taille_population/2):
@@ -32,5 +33,6 @@ def genetic(nb_generation,taille_population):
 	return(population[0])
 
 if __name__ == '__main__':
-    g = read_graph("Heuristic/instance001.gr")
+	g = parser.read_graph()
+    g_end = genetic(graph,10, 20)
 
