@@ -1,8 +1,4 @@
 
-#
-#  Parser.
-#
-
 import networkx as nx
 
 # Reads graphs.
@@ -35,7 +31,17 @@ def modification(graph, terminals):
 				g2.add_adge(e)
 	return(g2)
 
-def local_search()
+
+# Objective function
+def gain (steiner):
+    # Assuming that max eccentricity nodes are terminals
+    w = nx.diameter(steiner)
+    d = 0
+    edges = g[0].edges(data=True)
+    for i in range(len(g[0].edges())):
+        d += edges[i][2]["weight"]
+    return d + w
+
 
 if __name__ == '__main__':
     g = read_graph("Heuristic/instance001.gr")
