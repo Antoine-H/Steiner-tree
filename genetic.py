@@ -23,7 +23,7 @@ def first_solution(graph,terminals):
         for i in range(len(path)-1):
             approx_spanning.add_edge(path[i],path[i+1])
     return(approx_spanning)
-
+ 
 
 def fusion(t0,t1):
 	t_new = nx.compose(t0,t1)
