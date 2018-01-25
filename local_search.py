@@ -5,7 +5,7 @@ import parser
 import random
 import matplotlib.pyplot as plt
 
-
+#test test
 # Not checked
 def first_solution(graph,terminals):
     graph_t = nx.Graph()
