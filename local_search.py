@@ -5,23 +5,21 @@ import parser
 import random
 import matplotlib.pyplot as plt
 
-
 # Not checked
 def first_solution(graph,terminals):
     graph_t = nx.Graph()
     too_add = []
     approx_spanning = nx.Graph()
-
-    for i in range(len(terminals.nodes())):
-        for j in range(len(terminals.nodes())-i-1):
-            graph_t.add_weighted_edges_from(rand_edges)
-            w = nx.shortest_path_length(
-                    graph,terminals.nodes()[i], terminals.nodes()[j],"weight")
-            too_add.append((terminals.nodes()[i],terminals.nodes()[j],w))
-
+    ter = terminals.nodes()
+    print(ter)
+    for n1 in ter:
+        for n2 in ter:
+            if n1<n2:
+            #graph_copy.add_weighted_edges_from(rand_edges)()
+                w = nx.shortest_path_length(graph,n1, n2,"weight")
+                too_add.append((n1,n2,w))
     graph_t.add_weighted_edges_from(too_add)
     spanning_tree = nx.minimum_spanning_tree(graph_t)
-
     for (i,j) in spanning_tree.edges():
         path = nx.shortest_path(graph,i, j,"weight")
         for i in range(len(path)-1):
@@ -71,15 +69,16 @@ def gain (steiner):
     return d + w
 
 
-# Local search. With optional parameter p ∈ [0,1]
+# Local search. With optional parameter p \in [0,1]
+# Louis : changement de la fonction, elle renvoyait pas assez new_sol
 def local_search (heuristic, graph, cur_sol, terminals, p=0):
     new_sol = heuristic(graph, cur_sol, terminals)
-    if gain(cur_sol) < gain(new_sol):
-        return cur_sol
+    if gain(cur_sol) > gain(new_sol):
+        return new_sol
     elif random.random() < p:
         return new_sol
     else:
-        return new_sol
+        return cur_sol
 
 
 def test (heuristic, graph, terminals, new=nx.Graph(), p=0):
@@ -93,4 +92,9 @@ def test (heuristic, graph, terminals, new=nx.Graph(), p=0):
 
 if __name__ == '__main__':
     g = parser.read_graph("Heuristic/instance001.gr")
+    g2 = nx.Graph()
+    g2.add_nodes_from([1,2,3,4])
+    f_s = first_solution(g[0],g2)
+    print(f_s.nodes())
+    print(f_s.edges())
 
