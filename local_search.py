@@ -14,7 +14,7 @@ def first_solution(graph,terminals):
 
     for i in range(len(terminals.nodes())):
         for j in range(len(terminals.nodes())-i-1):
-    graph_copy.add_weighted_edges_from(rand_edges)
+            graph_t.add_weighted_edges_from(rand_edges)
             w = nx.shortest_path_length(
                     graph,terminals.nodes()[i], terminals.nodes()[j],"weight")
             too_add.append((terminals.nodes()[i],terminals.nodes()[j],w))

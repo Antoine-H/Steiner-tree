@@ -14,8 +14,10 @@ def read_graph (file):
                                         int(e.split()[2]),
                                         int(e.split()[3]))
                                         for e in input if e.startswith("E ")])
+    with open(file) as input:
         terminals.add_nodes_from([int(u.split()[1])
                                   for u in input if u.startswith("T ")])
+
     return [graph,terminals]
 
 
