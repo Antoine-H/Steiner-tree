@@ -8,6 +8,12 @@ import random
 import local_search as ls 
 import parser
 
+def random_solution(graph, n):
+	ans = []	
+	for i in range(n):
+		ans.append(ls.une_solution(graph))
+	return(ans)
+
 def fusion(t0,t1):
 	t_new = nx.compose(t0,t1)
 	edges = random.shuffle(t_new.edges(data=True))
@@ -33,6 +39,4 @@ def genetic(graph,nb_generation,taille_population):
 	return(population[0])
 
 if __name__ == '__main__':
-	g = parser.read_graph()
-    g_end = genetic(graph,10, 20)
-
+	print(coucou)
