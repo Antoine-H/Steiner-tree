@@ -21,7 +21,8 @@ def first_solution(graph,terminals):
     for (i,j) in spanning_tree.edges():
         path = nx.shortest_path(graph,i, j,"weight")
         for i in range(len(path)-1):
-            approx_spanning.add_edge(path[i],path[i+1])
+            data = graph.get_edge_data(path[i],path[i+1])["weight"]
+            approx_spanning.add_edge(path[i],path[i+1],weight=data)
     return approx_spanning
 
 
@@ -59,21 +60,28 @@ def nm_step_dummy_antoine(graph, cur_sol, terminals, n=5, m=5):
 def nm_step_dummy_louis(graph, cur_sol, terminals, n=5, m=5):
     deletions = 0
     try_deletion = 0
+    graph_copy = cur_sol.copy()
     while(deletions<n and try_deletion<100):
         try_deletion +=1
-        random_edge = random.choice(list(cur_sol.edges(data=True)))
-        cur_sol.remove_edge(*random_edge)
-        if(nx.is_connected(cur_sol)):
+        random_edge = random.choice(list(graph_copy.edges()))
+        graph_copy.remove_edge(*random_edge)
+        if(nx.is_connected(graph_copy)):
             deletions+=1
         else:
-            cur_sol.add_edge(*random_edge)
-    print(deletions)
+            data = graph.get_edge_data(*random_edge)["weight"]
+            graph_copy.add_edge(*random_edge,weight = data)
     incrementation = 0
-    while(incrementation<m):
-        random_edge = random.choice(list(graph.edges(data=True)))
-        cur_sol.add_edge(*random_edge)
-        incrementation +=1
-    print(nx.is_connected(cur_sol))
+    try_incrementation = 0
+    while(incrementation<m and try_incrementation<100):
+        try_incrementation +=1
+        random_edge = random.choice(list(graph_copy.edges()))
+        data = graph.get_edge_data(*random_edge)["weight"]
+        graph_copy.add_edge(*random_edge, weight = data)
+        if(nx.is_connected(graph_copy)):
+            incrementation+=1
+        else:
+            graph_copy.remove_edge(*random_edge)    
+    return(graph_copy)
 
 # Objective function
 def gain (steiner):
@@ -85,36 +93,46 @@ def gain (steiner):
         d += edges[i][2]["weight"]
     return d + w
 
+def gain_louis (steiner):
+    # Assuming that max eccentricity nodes are terminals
+    w = nx.diameter(steiner)
+    d = 0
+    edges = steiner.edges()
+    for e in edges:
+        data= steiner.get_edge_data(*e)["weight"]
+        d += data
+    return d + w
 
-# Local search. With optional parameter p \in [0,1]
+
+
+        # Local search. With optional parameter p \in [0,1]
 # Louis : changement de la fonction, elle renvoyait pas assez new_sol
-def local_search (heuristic, graph, cur_sol, terminals, p=0):
+def local_search (heuristic, graph, cur_sol, terminals, p=0.25):
     new_sol = heuristic(graph, cur_sol, terminals)
-    if gain(cur_sol) > gain(new_sol):
+    if gain_louis(cur_sol) > gain_louis(new_sol):
         return new_sol
     elif random.random() < p:
+        print("choix force")
         return new_sol
     else:
         return cur_sol
 
 
-def test (heuristic, graph, terminals, new=nx.Graph(), p=0):
+def test (heuristic, graph, terminals,nb_test = 20, p=0, new=nx.Graph()):
     new = first_solution (graph, terminals)
-    print(gain(new))
-    while True:
-        new = local_search (heuristic, graph, new, terminals, p=0)
-        print(gain(new))
-
+    print("le premier gain est : "+ str(gain_louis(new)))
+    k = 0
+    while k<nb_test:
+        k+=1
+        new = local_search (heuristic, graph, new, terminals)
+        print("le gain actuel est : "+ str(gain_louis(new)))
 
 
 if __name__ == '__main__':
     g = parser.read_graph("Heuristic/instance001.gr")
-    f_s = first_solution(g[0],g[1 ])
-    edges = list(f_s.edges())
-    e = edges[0]
-    print(edges)
-    f_s.remove_edge(*e)
-    print(e)
-    print(edges)
+    test(nm_step_dummy_louis,g[0],g[1],20, 0.5)
 
+
+    #local_search(nm_step_dummy_louis,g[0],f_s,g[1])
+    
 
