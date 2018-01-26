@@ -11,7 +11,6 @@ def first_solution(graph,terminals):
     too_add = []
     approx_spanning = nx.Graph()
     ter = terminals.nodes()
-    print(ter)
     for n1 in ter:
         for n2 in ter:
             if n1<n2:
@@ -26,17 +25,16 @@ def first_solution(graph,terminals):
     return approx_spanning
 
 
-def display (graph):
+def display (graph,name_of_graph):
     pos=nx.spring_layout(graph)
     nx.draw_networkx_nodes(graph,pos,node_size=30)
     nx.draw_networkx_edges(graph,pos,width=5,alpha=0.5)
     plt.axis('off')
-    plt.savefig("weighted_graph.png")
+    plt.savefig(name_of_graph)
     plt.show()
 
 
-def nm_step_dummy(graph, cur_sol, terminals, n=1, m=1):
-
+def nm_step_dummy_antoine(graph, cur_sol, terminals, n=5, m=5):
     graph_copy = cur_sol.copy()
     print(nx.is_connected(graph_copy))
     rand_edges = [graph.edges(data=True)[i]
@@ -56,6 +54,26 @@ def nm_step_dummy(graph, cur_sol, terminals, n=1, m=1):
     print(nx.is_connected(graph_copy))
     return graph_copy
 
+
+#Louis version, without indexing problem (edges can't be indexed)
+def nm_step_dummy_louis(graph, cur_sol, terminals, n=5, m=5):
+    deletions = 0
+    try_deletion = 0
+    while(deletions<n and try_deletion<100):
+        try_deletion +=1
+        random_edge = random.choice(list(cur_sol.edges(data=True)))
+        cur_sol.remove_edge(*random_edge)
+        if(nx.is_connected(cur_sol)):
+            deletions+=1
+        else:
+            cur_sol.add_edge(*random_edge)
+    print(deletions)
+    incrementation = 0
+    while(incrementation<m):
+        random_edge = random.choice(list(graph.edges(data=True)))
+        cur_sol.add_edge(*random_edge)
+        incrementation +=1
+    print(nx.is_connected(cur_sol))
 
 # Objective function
 def gain (steiner):
@@ -91,9 +109,12 @@ def test (heuristic, graph, terminals, new=nx.Graph(), p=0):
 
 if __name__ == '__main__':
     g = parser.read_graph("Heuristic/instance001.gr")
-    g2 = nx.Graph()
-    g2.add_nodes_from([1,2,3,4])
-    f_s = first_solution(g[0],g[1])
-    print(f_s.nodes())
-    print(f_s.edges())
+    f_s = first_solution(g[0],g[1 ])
+    edges = list(f_s.edges())
+    e = edges[0]
+    print(edges)
+    f_s.remove_edge(*e)
+    print(e)
+    print(edges)
+
 
