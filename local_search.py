@@ -57,31 +57,57 @@ def nm_step_dummy_antoine(graph, cur_sol, terminals, n=5, m=5):
 
 
 #Louis version, without indexing problem (edges can't be indexed)
-def nm_step_dummy_louis(graph, cur_sol, terminals, n=5, m=5):
-    deletions = 0
-    try_deletion = 0
+
+def edges_adjacent(graph, subgraph):
+    edges_adj = []
+    sub_nodes = subgraph.nodes()
+    for n1 in sub_nodes:
+        for n2 in graph.neighbors(n1): 
+            if n2 not in sub_nodes:
+                edges_adj.append((n1,n2))
+    return(edges_adj)
+
+def edges_to_delete(graph, terminals):
+    edges_to_del  = []
+    graph_copy = graph.copy()
+    for e in list(graph.edges()):
+        data = graph.get_edge_data(*e)["weight"]
+        graph_copy.remove_edge(*e)
+        if(nx.is_connected(graph_copy)):
+            edges_to_del.append(e)
+        graph_copy.add_edge(*e,weight = data)
+    return(edges_to_del)
+
+def random_add(graph, cur_sol):
+    list_e = edges_adjacent(graph ,cur_sol )
+    random_edge = random.choice(list_e)
+    data = graph.get_edge_data(*random_edge)["weight"]
+    cur_sol.add_edge(*random_edge,weight = data)
+    
+def random_delation(cur_sol, terminals):
+    list_e = edges_to_delete(cur_sol, terminals)
+    if list_e !=[]:
+        random_edge = random.choice(list_e)
+        cur_sol.remove_edge(*random_edge)
+
+def modif_one_step(graph, cur_sol, terminals, proba_add = 0.8, nb_fois = 1):
     graph_copy = cur_sol.copy()
-    while(deletions<n and try_deletion<100):
-        try_deletion +=1
-        random_edge = random.choice(list(graph_copy.edges()))
-        graph_copy.remove_edge(*random_edge)
-        if(nx.is_connected(graph_copy)):
-            deletions+=1
-        else:
-            data = graph.get_edge_data(*random_edge)["weight"]
-            graph_copy.add_edge(*random_edge,weight = data)
-    incrementation = 0
-    try_incrementation = 0
-    while(incrementation<m and try_incrementation<100):
-        try_incrementation +=1
-        random_edge = random.choice(list(graph_copy.edges()))
-        data = graph.get_edge_data(*random_edge)["weight"]
-        graph_copy.add_edge(*random_edge, weight = data)
-        if(nx.is_connected(graph_copy)):
-            incrementation+=1
-        else:
-            graph_copy.remove_edge(*random_edge)    
+    if(random.random()<proba_add):
+        random_add(graph,graph_copy)
+    else:
+        random_delation(graph_copy, terminals)
     return(graph_copy)
+
+def nm_step_dummy_louis(graph, cur_sol, terminals,  n=40,m=40):
+    if n>0:
+        random_add(graph, cur_sol)
+        return(nm_step_dummy_louis(graph, cur_sol, terminals, n-1, m))
+    else:
+        if m>0:
+            random_delation( cur_sol, terminals)
+            return(nm_step_dummy_louis(graph, cur_sol, terminals, n, m-1))
+        else:
+            return(cur_sol)
 
 # Objective function
 def gain (steiner):
@@ -112,27 +138,30 @@ def local_search (heuristic, graph, cur_sol, terminals, p=0.25):
     if gain_louis(cur_sol) > gain_louis(new_sol):
         return new_sol
     elif random.random() < p:
-        print("choix force")
+        #print("choix force")
         return new_sol
     else:
         return cur_sol
 
 
-def test (heuristic, graph, terminals,nb_test = 20, p=0, new=nx.Graph()):
+def test (heuristic, graph, terminals,nb_test = 5, p=0, new=nx.Graph()):
     new = first_solution (graph, terminals)
-    print("le premier gain est : "+ str(gain_louis(new)))
+
+    #print("le premier gain est : "+ str(gain_louis(new)))
     k = 0
     while k<nb_test:
+        print(nb_test)
         k+=1
         new = local_search (heuristic, graph, new, terminals)
-        print("le gain actuel est : "+ str(gain_louis(new)))
+        #print("le gain actuel est : "+ str(gain_louis(new)))
+    return(new)
 
 
 if __name__ == '__main__':
     g = parser.read_graph("Heuristic/instance001.gr")
-    test(nm_step_dummy_louis,g[0],g[1],20, 0.5)
+    print(len(first_solution(g[0],g[1]).edges()))
+    print("\n\n")
+    print(len(test(nm_step_dummy_louis,g[0],g[1],3, 0.5).edges()))
+    print("\n\n")
 
-
-    #local_search(nm_step_dummy_louis,g[0],f_s,g[1])
     
-
