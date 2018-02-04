@@ -90,7 +90,7 @@ def random_delation(cur_sol, terminals):
         random_edge = random.choice(list_e)
         cur_sol.remove_edge(*random_edge)
 
-def modif_one_step(graph, cur_sol, terminals, proba_add = 0.8, nb_fois = 1):
+def random_modif_one_step(graph, cur_sol, terminals, proba_add = 0.8, nb_fois = 1):
     graph_copy = cur_sol.copy()
     if(random.random()<proba_add):
         random_add(graph,graph_copy)
@@ -108,6 +108,8 @@ def nm_step_dummy_louis(graph, cur_sol, terminals,  n=40,m=40):
             return(nm_step_dummy_louis(graph, cur_sol, terminals, n, m-1))
         else:
             return(cur_sol)
+
+
 
 # Objective function
 def gain (steiner):

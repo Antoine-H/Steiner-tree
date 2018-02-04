@@ -6,3 +6,10 @@ physic like : recuit simulé : se baser sur la local search,
 
 bio like : algo génétique  : pour Louis, génération de population, merge complet puis suppression aléatoire jusqu'a minimum.
 
+
+________________________
+
+a améliorer : 
+fonction de suppression : s'autoriser a supprimer un élément qui ne déconnecte pas les terminaux meme s'il déconnecte le graph
+
+
