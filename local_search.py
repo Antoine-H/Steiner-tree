@@ -167,18 +167,17 @@ def one_step_search(graph, cur_sol, terminals):
 
 
 
-def test_one_step(graph, cur_sol, terminals, nb_test):
+def neighbors_of_solution(graph, cur_sol, terminals, nb_modif = 10):
     act      = gain(cur_sol)
     solution = cur_sol
-    for i in range(nb_test):
+    for i in range(nb_modif):
         new_sol  = solution.copy()
         one_step_search(graph, new_sol, terminals)
         new_gain = gain(new_sol)
         solution = new_sol
         gain_act = new_gain
     clean(solution, terminals)
-    print(gain(solution))
-
+    return(solution)
 
 # Objective function
 def gain (steiner):
