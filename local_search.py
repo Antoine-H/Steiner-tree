@@ -56,7 +56,7 @@ def edges_adjacent (graph, cur_sol):
     edges_adj = []
     sub_nodes = cur_sol.nodes()
     for n1 in sub_nodes:
-        for n2 in graph.neighbors(n1):
+        for n2 in graph.neighbours(n1):
             if not cur_sol.has_edge(n1, n2):
                 edges_adj.append((n1,n2))
     return edges_adj
@@ -161,7 +161,7 @@ def one_step_search (graph, cur_sol, terminals):
 
 
 # Performs multiple one_step_search.
-def neighbors_of_solution (graph, cur_sol, terminals, nb_modifs=10):
+def neighbours_of_solution (graph, cur_sol, terminals, nb_modifs=10):
     act      = gain(cur_sol)
     solution = cur_sol
     for i in range(nb_modifs):
@@ -234,5 +234,5 @@ if __name__ == '__main__':
     print("Premiere valeur : ", str(gain(first_sol)))
 
     for i in range(30):
-        neighbors_of_solution(graph, first_sol, terminals, 10)
+        neighbours_of_solution(graph, first_sol, terminals, 10)
 
