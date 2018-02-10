@@ -101,7 +101,7 @@ def edges_to_delete(subgraph, terminals): #output the list of edges that can be 
     for e in list(subgraph.edges()):
         data = graph.get_edge_data(*e)["weight"]
         graph_copy.remove_edge(*e)
-        if(nx.is_connected(graph_copy)):
+        if(is_admissible(graph_copy,terminals)):
             edges_to_del.append(e)
         graph_copy.add_edge(*e,weight = data)
     return(edges_to_del)
@@ -124,13 +124,14 @@ def clean_composante(subgraph, terminals):
     nb_deletion  = 0 #just for the debug
     n0 = list(terminals.nodes())[0]
     comp = nx.node_connected_component(subgraph,n0)
-    for n in terminals.nodes():
+    l = list(subgraph.nodes())
+    for n in l:
         if n not in comp:
             subgraph.remove_node(n)
             nb_deletion+=1
 
 
-def clean(subgraph,terminals):
+def clean2(subgraph,terminals):
     clean_composante(subgraph, terminals)
     edges_to_del  = []
     go_on = True
@@ -145,6 +146,20 @@ def clean(subgraph,terminals):
             subgraph.add_edge(*e,weight = data)
     return(edges_to_del)    
 
+def clean(subgraph, terminals):
+    clean_composante(subgraph, terminals)
+    l = list(subgraph.edges())
+    random.shuffle(l)
+    for e in l:
+            data = graph.get_edge_data(*e)["weight"]
+            subgraph.remove_edge(*e)
+            if(is_admissible(subgraph, terminals)):
+                clean(subgraph, terminals)
+                break    
+            else:
+                subgraph.add_edge(*e,weight = data)
+
+
 def random_add(graph, cur_sol):
     list_e = edges_adjacent(graph ,cur_sol )
     random_edge = random.choice(list_e)
@@ -156,6 +171,7 @@ def random_deletion(cur_sol, terminals):
     if list_e !=[]:
         random_edge = random.choice(list_e)
         cur_sol.remove_edge(*random_edge)
+        clean_composante(cur_sol, terminals)
 
 def random_modif_one_step(graph, cur_sol, terminals, proba_add = 0.8, nb_fois = 1):
     graph_copy = cur_sol.copy()
@@ -179,16 +195,12 @@ def nm_step_dummy_louis(graph, cur_sol, terminals,  n=40,m=40): #n = nombre de t
 def one_step_search(graph, cur_sol, terminals):
     p =random.random() 
     if p<0.33:
-        print("addition")
         nm_step_dummy_louis(graph, cur_sol, terminals, 10,0)
     else: 
         if p<0.66:
-            print("path addition")
             add_random_path(graph, cur_sol)
         else:
-            print("deletion")
             nm_step_dummy_louis(graph, cur_sol, terminals, 0, 10)
-    clean(cur_sol,terminals)
 
 
 def test_one_step(graph, cur_sol, terminals, nb_test):
@@ -198,11 +210,10 @@ def test_one_step(graph, cur_sol, terminals, nb_test):
         new_sol = solution.copy()
         one_step_search(graph, new_sol, terminals)
         new_gain = gain_louis(new_sol)
-        print new_gain
         solution = new_sol
         act = new_gain
-
-
+    clean(solution, terminals)
+    print(gain_louis(solution))
 
 # Objective function
 def gain (steiner):
@@ -252,9 +263,11 @@ def test (heuristic, graph, terminals,nb_test = 5, p=0, new=nx.Graph()):
 
 
 if __name__ == '__main__':
-    g = parser.read_graph("Heuristic/instance001.gr")
+    g = parser.read_graph("Heuristic/instance039.gr")
     graph = g[0]
     terminals = g[1]
     g0 = first_solution(graph, terminals)
-    test_one_step(graph, g0, terminals, 40)
+    print("premiere valeure : "+str(gain_louis(g0)))
+    for i in range(30):
+        test_one_step(graph, g0, terminals, 10)
 
