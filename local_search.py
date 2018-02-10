@@ -41,9 +41,9 @@ def first_solution (graph,terminals):
 
 # A solution is admissible when all the terminals are in the same connected
 # component.
-def is_admissible (subgraph, terminals):
+def is_admissible (cur_sol, terminals):
     n0   = list(terminals.nodes())[0]
-    comp = nx.node_connected_component(subgraph, n0)
+    comp = nx.node_connected_component(cur_sol, n0)
     for n in terminals.nodes():
         if n not in comp:
             return(False)
@@ -67,22 +67,22 @@ def test_is_admissible():
 
 # An edge can be added when one of its end is in the current solution and the
 # other isn't.
-def edges_adjacent (graph, subgraph):
+def edges_adjacent (graph, cur_sol):
     edges_adj = []
-    sub_nodes = subgraph.nodes()
+    sub_nodes = cur_sol.nodes()
     for n1 in sub_nodes:
         for n2 in graph.neighbors(n1):
-            if not subgraph.has_edge(n1, n2):
+            if not cur_sol.has_edge(n1, n2):
                 edges_adj.append((n1,n2))
     return edges_adj
 
 
 # Edges can be deleted when the solution stays admissible.
-def edges_to_delete (subgraph, terminals):
+def edges_to_delete (cur_sol, terminals):
     edges_to_del = []
-    graph_copy   = subgraph.copy()
-    for e in list(subgraph.edges()):
-        data = subgraph.get_edge_data(*e)["weight"]
+    graph_copy   = cur_sol.copy()
+    for e in list(cur_sol.edges()):
+        data = cur_sol.get_edge_data(*e)["weight"]
         graph_copy.remove_edge(*e)
         if is_admissible(graph_copy, terminals):
             edges_to_del.append(e)
@@ -91,46 +91,46 @@ def edges_to_delete (subgraph, terminals):
 
 
 # Adds a shortest path between node u and v.
-def add_path (graph, subgraph, u ,v):
+def add_path (graph, cur_sol, u ,v):
     path = nx.shortest_path(graph, u, v, "weight")
     for i in range(len(path)-1):
         data = graph.get_edge_data(path[i], path[i+1])["weight"]
-        subgraph.add_edge(path[i],path[i+1], weight=data)
+        cur_sol.add_edge(path[i],path[i+1], weight=data)
 
 
 # Adds a path between two random nodes.
-def add_random_path (graph, subgraph):
-    list_e = list(subgraph.nodes())
+def add_random_path (graph, cur_sol):
+    list_e = list(cur_sol.nodes())
     u      = random.choice(list_e)
     v      = random.choice(list_e)
     if u != v:
-        add_path(graph, subgraph, u, v)
+        add_path(graph, cur_sol, u, v)
 
 
 # No need to keep the vertices outside of the connected component where all the
 # terminals are.
-def clean_component (subgraph, terminals):
+def clean_component (cur_sol, terminals):
     u0   = list(terminals.nodes())[0]
-    comp = nx.node_connected_component(subgraph, u0)
-    l = list(subgraph.nodes())
+    comp = nx.node_connected_component(cur_sol, u0)
+    l = list(cur_sol.nodes())
     for n in l:
         if n not in comp:
-            subgraph.remove_node(n)
+            cur_sol.remove_node(n)
 
 
 # If removing an edge keeps the solution admissible, remove it.
-def clean (subgraph, terminals):
-    clean_component(subgraph, terminals)
-    l = list(subgraph.edges())
+def clean (cur_sol, terminals):
+    clean_component(cur_sol, terminals)
+    l = list(cur_sol.edges())
     random.shuffle(l)
     for e in l:
         data = graph.get_edge_data(*e)["weight"]
-        subgraph.remove_edge(*e)
-        if is_admissible(subgraph, terminals):
-            clean(subgraph, terminals)
+        cur_sol.remove_edge(*e)
+        if is_admissible(cur_sol, terminals):
+            clean(cur_sol, terminals)
             break
         else:
-            subgraph.add_edge(*e, weight=data)
+            cur_sol.add_edge(*e, weight=data)
 
 
 # Adds a random edge to the current solution.
