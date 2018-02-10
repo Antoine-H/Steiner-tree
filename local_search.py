@@ -96,7 +96,7 @@ def add_random_path (graph, subgraph):
     list_e = list(subgraph.nodes())
     n1     = random.choice(list_e)
     n2     = random.choice(list_e)
-    if n1 != n2:
+    if (n1!=n2):
         add_path(graph, subgraph, n1, n2)
 
 
@@ -104,7 +104,7 @@ def add_random_path (graph, subgraph):
 def clean_composante (subgraph, terminals):
     n0   = list(terminals.nodes())[0]
     comp = nx.node_connected_component(subgraph,n0)
-    l    = list(subgraph.nodes())
+    l = list(subgraph.nodes())
     for n in l:
         if n not in comp:
             subgraph.remove_node(n)
@@ -142,6 +142,7 @@ def random_deletion (cur_sol, terminals):
         clean_composante(cur_sol, terminals)
 
 
+
 #n = nombre de test
 def nm_step_dummy (graph, cur_sol, terminals,  n=40,m=40):
     if n > 0:
@@ -175,7 +176,6 @@ def neighbors_of_solution (graph, cur_sol, terminals, nb_modif = 10):
         new_gain = gain(new_sol)
         solution = new_sol
         gain_act = new_gain
-        print(gain_act)
     clean(solution, terminals)
     print(gain(solution))
     return solution
@@ -224,5 +224,5 @@ if __name__ == '__main__':
     g0 = first_solution(graph, terminals)
     print("Premiere valeure : "+str(gain(g0)))
     for i in range(30):
-       neighbors_of_solution(graph, g0, terminals, 10)
+        test_one_step(graph, g0, terminals, 10)
 
