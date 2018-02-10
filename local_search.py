@@ -14,8 +14,6 @@ def display (graph,name_of_graph):
     plt.savefig(name_of_graph)
     plt.show()
 
-data1 = []
-data2 = []
 
 # First solution : 2-approx
 def first_solution(graph,terminals):
@@ -34,7 +32,6 @@ def first_solution(graph,terminals):
         path = nx.shortest_path(graph,i, j,"weight")
         for i in range(len(path)-1):
             data = graph.get_edge_data(path[i],path[i+1])["weight"]
-            data1.append(data)
             approx_spanning.add_edge(path[i],path[i+1],weight=data)
     return approx_spanning
 
@@ -114,21 +111,6 @@ def clean_composante(subgraph, terminals):
             nb_deletion += 1
 
 
-def clean2(subgraph,terminals):
-    clean_composante(subgraph, terminals)
-    edges_to_del = []
-    go_on = True
-    while(go_on):
-        go_on = False
-        for e in list(subgraph.edges()):
-            data = graph.get_edge_data(*e)["weight"]
-            subgraph.remove_edge(*e)
-            if(nx.is_connected(subgraph)):
-                go_on = True
-                break
-            subgraph.add_edge(*e,weight = data)
-    return(edges_to_del)
-
 
 def clean(subgraph, terminals):
     clean_composante(subgraph, terminals)
@@ -158,14 +140,6 @@ def random_deletion(cur_sol, terminals):
         cur_sol.remove_edge(*random_edge)
         clean_composante(cur_sol, terminals)
 
-
-def random_modif_one_step(graph, cur_sol, terminals, proba_add=0.8, nb_fois=1):
-    graph_copy = cur_sol.copy()
-    if(random.random()<proba_add):
-        random_add(graph,graph_copy)
-    else:
-        random_delation(graph_copy, terminals)
-    return(graph_copy)
 
 
 #n = nombre de test
