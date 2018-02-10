@@ -37,30 +37,6 @@ def first_solution(graph,terminals):
             approx_spanning.add_edge(path[i],path[i+1],weight=data)
     return approx_spanning
 
-edges_tot_2 = []
-
-def better_first_solution(graph,terminals):
-    graph_t = nx.Graph()
-    too_add = []
-    approx_spanning = nx.Graph() 
-    ter = list(terminals.nodes())
-    for i in range(len(ter)-1):
-        n1 = ter[i]
-        n2 = ter[i+1]
-        w = nx.shortest_path_length(graph,n1, n2,"weight")
-        too_add.append((n1,n2,w))
-    graph_t.add_weighted_edges_from(too_add)
-    spanning_tree = nx.minimum_spanning_tree(graph_t)
-    for (i,j) in spanning_tree.edges():
-        path = nx.shortest_path(graph,i, j,"weight")
-        for i in range(len(path)-1):
-            data = graph.get_edge_data(path[i],path[i+1])["weight"]
-            data2.append(data)
-            edges_tot_2.append((path[i],path[i+1]))
-            approx_spanning.add_edge(path[i],path[i+1],weight=data)
-    return approx_spanning
-
-
 
 #local search algorithm Antoine
 
@@ -235,10 +211,3 @@ if __name__ == '__main__':
     graph = g[0]
     terminals = g[1]
     g0 = first_solution(graph, terminals)
-    g1 = better_first_solution(graph, terminals)
-    print(gain_louis(g0))
-    print(data1)
-    print(gain_louis(g1))
-    print(data2)
-    edges_tot_2.sort()
-    print(edges_tot_2)
