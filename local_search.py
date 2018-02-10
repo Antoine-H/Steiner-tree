@@ -91,14 +91,14 @@ def edges_adjacent(graph, subgraph): #output the list of edges that can be added
     sub_nodes = subgraph.nodes()
     for n1 in sub_nodes:
         for n2 in graph.neighbors(n1): 
-            if n2 not in sub_nodes:
+            if not subgraph.has_edge(n1,n2):
                 edges_adj.append((n1,n2))
     return(edges_adj)
 
 def edges_to_delete(subgraph, terminals): #output the list of edges that can be removed
     edges_to_del  = []
     graph_copy = subgraph.copy()
-    for e in list(graph.edges()):
+    for e in list(subgraph.edges()):
         data = graph.get_edge_data(*e)["weight"]
         graph_copy.remove_edge(*e)
         if(nx.is_connected(graph_copy)):
@@ -107,14 +107,14 @@ def edges_to_delete(subgraph, terminals): #output the list of edges that can be 
     return(edges_to_del)
 
 def add_path(graph,subgraph, n1 ,n2):
-    path  = nx.shortest_path_length(graph,n1, n2,"weight")
+    path  = nx.shortest_path(graph,n1, n2,"weight")
     for i in range(len(path)-1):
         data = graph.get_edge_data(path[i],path[i+1])["weight"]
         subgraph.add_edge(path[i],path[i+1],weight=data)
 
 
 def add_random_path(graph, subgraph):
-    list_e = subgraph.edges()
+    list_e = list(subgraph.nodes())
     n1 = random.choice(list_e)
     n2 = random.choice(list_e)
     if (n1!=n2):
@@ -133,12 +133,16 @@ def clean_composante(subgraph, terminals):
 def clean(subgraph,terminals):
     clean_composante(subgraph, terminals)
     edges_to_del  = []
-    for e in list(subgraph.edges()):
-        data = graph.get_edge_data(*e)["weight"]
-        subgraph.remove_edge(*e)
-        if(nx.is_connected(graph_copy)):
-            edges_to_del.append(e)
-        graph_copy.add_edge(*e,weight = data)
+    go_on = True
+    while(go_on):
+        go_on = False
+        for e in list(subgraph.edges()):
+            data = graph.get_edge_data(*e)["weight"]
+            subgraph.remove_edge(*e)
+            if(nx.is_connected(subgraph)):
+                go_on = True
+                break
+            subgraph.add_edge(*e,weight = data)
     return(edges_to_del)    
 
 def random_add(graph, cur_sol):
@@ -174,14 +178,30 @@ def nm_step_dummy_louis(graph, cur_sol, terminals,  n=40,m=40): #n = nombre de t
 
 def one_step_search(graph, cur_sol, terminals):
     p =random.random() 
-    if p<1/4:
+    if p<0.33:
+        print("addition")
         nm_step_dummy_louis(graph, cur_sol, terminals, 10,0)
     else: 
-        if p<1/2:
+        if p<0.66:
+            print("path addition")
             add_random_path(graph, cur_sol)
-       else:
+        else:
+            print("deletion")
             nm_step_dummy_louis(graph, cur_sol, terminals, 0, 10)
-    clean(cur_sol)
+    clean(cur_sol,terminals)
+
+
+def test_one_step(graph, cur_sol, terminals, nb_test):
+    act = gain_louis(cur_sol)
+    solution = cur_sol
+    for i in range(nb_test):
+        new_sol = solution.copy()
+        one_step_search(graph, new_sol, terminals)
+        new_gain = gain_louis(new_sol)
+        print new_gain
+        solution = new_sol
+        act = new_gain
+
 
 
 # Objective function
@@ -196,13 +216,13 @@ def gain (steiner):
 
 def gain_louis (steiner):
     # Assuming that max eccentricity nodes are terminals
-    #w = nx.diameter(steiner)
+    w = nx.diameter(steiner)
     d = 0
     edges = steiner.edges()
     for e in edges:
         data= steiner.get_edge_data(*e)["weight"]
         d += data
-    return d 
+    return d + w
 
 
 
@@ -236,4 +256,5 @@ if __name__ == '__main__':
     graph = g[0]
     terminals = g[1]
     g0 = first_solution(graph, terminals)
+    test_one_step(graph, g0, terminals, 40)
 
