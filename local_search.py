@@ -16,7 +16,7 @@ def display (graph,name_of_graph):
 
 
 # First solution : 2-approx
-def first_solution(graph,terminals):
+def first_solution (graph,terminals):
     graph_t = nx.Graph()
     too_add = []
     approx_spanning = nx.Graph()
@@ -37,7 +37,7 @@ def first_solution(graph,terminals):
 
 
 #Louis version, without indexing problem (edges can't be indexed)
-def is_admissible(subgraph, terminals):
+def is_admissible (subgraph, terminals):
     n0   = list(terminals.nodes())[0]
     comp = nx.node_connected_component(subgraph,n0)
     for n in terminals.nodes():
@@ -62,7 +62,7 @@ def test_is_admissible():
 
 
 #output the list of edges that can be added
-def edges_adjacent(graph, subgraph):
+def edges_adjacent (graph, subgraph):
     edges_adj = []
     sub_nodes = subgraph.nodes()
     for n1 in sub_nodes:
@@ -73,7 +73,7 @@ def edges_adjacent(graph, subgraph):
 
 
 #output the list of edges that can be removed
-def edges_to_delete(subgraph, terminals):
+def edges_to_delete (subgraph, terminals):
     edges_to_del = []
     graph_copy   = subgraph.copy()
     for e in list(subgraph.edges()):
@@ -85,14 +85,14 @@ def edges_to_delete(subgraph, terminals):
     return edges_to_del
 
 
-def add_path(graph,subgraph, n1 ,n2):
+def add_path (graph,subgraph, n1 ,n2):
     path = nx.shortest_path(graph,n1, n2,"weight")
     for i in range(len(path)-1):
         data = graph.get_edge_data(path[i],path[i+1])["weight"]
         subgraph.add_edge(path[i],path[i+1],weight=data)
 
 
-def add_random_path(graph, subgraph):
+def add_random_path (graph, subgraph):
     list_e = list(subgraph.nodes())
     n1     = random.choice(list_e)
     n2     = random.choice(list_e)
@@ -101,7 +101,7 @@ def add_random_path(graph, subgraph):
 
 
 #
-def clean_composante(subgraph, terminals):
+def clean_composante (subgraph, terminals):
     n0   = list(terminals.nodes())[0]
     comp = nx.node_connected_component(subgraph,n0)
     l    = list(subgraph.nodes())
@@ -111,7 +111,7 @@ def clean_composante(subgraph, terminals):
 
 
 #
-def clean(subgraph, terminals):
+def clean (subgraph, terminals):
     clean_composante(subgraph, terminals)
     l = list(subgraph.edges())
     random.shuffle(l)
@@ -126,7 +126,7 @@ def clean(subgraph, terminals):
 
 
 # Adds a random edge to the current solution.
-def random_add(graph, cur_sol):
+def random_add (graph, cur_sol):
     list_e = edges_adjacent(graph ,cur_sol)
     random_edge = random.choice(list_e)
     data = graph.get_edge_data(*random_edge)["weight"]
@@ -134,7 +134,7 @@ def random_add(graph, cur_sol):
 
 
 # Deletes a random edge from the current solution.
-def random_deletion(cur_sol, terminals):
+def random_deletion (cur_sol, terminals):
     list_e = edges_to_delete(cur_sol, terminals)
     if list_e != []:
         random_edge = random.choice(list_e)
@@ -143,7 +143,7 @@ def random_deletion(cur_sol, terminals):
 
 
 #n = nombre de test
-def nm_step_dummy(graph, cur_sol, terminals,  n=40,m=40):
+def nm_step_dummy (graph, cur_sol, terminals,  n=40,m=40):
     if n > 0:
         random_add(graph, cur_sol)
         return nm_step_dummy(graph, cur_sol, terminals, n-1, m)
@@ -155,7 +155,7 @@ def nm_step_dummy(graph, cur_sol, terminals,  n=40,m=40):
             return cur_sol
 
 
-def one_step_search(graph, cur_sol, terminals):
+def one_step_search (graph, cur_sol, terminals):
     p = random.random()
     if p < 0.33:
         nm_step_dummy(graph, cur_sol, terminals, 10,0)
@@ -166,7 +166,7 @@ def one_step_search(graph, cur_sol, terminals):
             nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
 
-def neighbors_of_solution(graph, cur_sol, terminals, nb_modif = 10):
+def neighbors_of_solution (graph, cur_sol, terminals, nb_modif = 10):
     act      = gain(cur_sol)
     solution = cur_sol
     for i in range(nb_modif):
