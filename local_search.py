@@ -203,15 +203,15 @@ def one_step_search(graph, cur_sol, terminals):
             nm_step_dummy_louis(graph, cur_sol, terminals, 0, 10)
 
 
-def test_one_step(graph, cur_sol, terminals, nb_test):
-    act = gain_louis(cur_sol)
+def     test_one_step(graph, cur_sol, terminals, nb_test):
+    gain_act = gain_louis(cur_sol)
     solution = cur_sol
     for i in range(nb_test):
         new_sol = solution.copy()
         one_step_search(graph, new_sol, terminals)
         new_gain = gain_louis(new_sol)
         solution = new_sol
-        act = new_gain
+        gain_act = new_gain
     clean(solution, terminals)
     print(gain_louis(solution))
 
