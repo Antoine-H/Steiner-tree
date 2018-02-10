@@ -175,7 +175,9 @@ def neighbors_of_solution(graph, cur_sol, terminals, nb_modif = 10):
         new_gain = gain(new_sol)
         solution = new_sol
         gain_act = new_gain
+        print(gain_act)
     clean(solution, terminals)
+    print(gain(solutioin))
     return(solution)
 
 
