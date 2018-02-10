@@ -43,7 +43,7 @@ def is_admissible(subgraph, terminals):
     for n in terminals.nodes():
         if n not in comp:
             return(False)
-    return(True)
+    return True
 
 
 #test test
@@ -69,7 +69,7 @@ def edges_adjacent(graph, subgraph):
         for n2 in graph.neighbors(n1):
             if not subgraph.has_edge(n1,n2):
                 edges_adj.append((n1,n2))
-    return(edges_adj)
+    return edges_adj
 
 
 #output the list of edges that can be removed
@@ -82,7 +82,7 @@ def edges_to_delete(subgraph, terminals):
         if(is_admissible(graph_copy,terminals)):
             edges_to_del.append(e)
         graph_copy.add_edge(*e,weight = data)
-    return(edges_to_del)
+    return edges_to_del
 
 
 def add_path(graph,subgraph, n1 ,n2):
@@ -146,13 +146,13 @@ def random_deletion(cur_sol, terminals):
 def nm_step_dummy(graph, cur_sol, terminals,  n=40,m=40):
     if n > 0:
         random_add(graph, cur_sol)
-        return(nm_step_dummy(graph, cur_sol, terminals, n-1, m))
+        return nm_step_dummy(graph, cur_sol, terminals, n-1, m)
     else:
         if m > 0:
             random_deletion( cur_sol, terminals)
-            return(nm_step_dummy(graph, cur_sol, terminals, n, m-1))
+            return nm_step_dummy(graph, cur_sol, terminals, n, m-1)
         else:
-            return(cur_sol)
+            return cur_sol
 
 
 def one_step_search(graph, cur_sol, terminals):
@@ -177,7 +177,8 @@ def neighbors_of_solution(graph, cur_sol, terminals, nb_modif = 10):
         solution = new_sol
         gain_act = new_gain
     clean(solution, terminals)
-    return(solution)
+    print(gain(solution))
+    return solution
 
 # Objective function
 def gain (steiner):
@@ -186,8 +187,8 @@ def gain (steiner):
     d = 0
     edges = steiner.edges()
     for e in edges:
-        data= steiner.get_edge_data(*e)["weight"]
-        d += data
+        data = steiner.get_edge_data(*e)["weight"]
+        d   += data
     return d + w
 
 
@@ -212,7 +213,7 @@ def test (heuristic, graph, terminals,nb_test = 5, p=0, new=nx.Graph()):
         k+=1
         new = local_search (heuristic, graph, new, terminals)
         #print("le gain actuel est : "+ str(gain(new)))
-    return(new)
+    return new
 
 
 if __name__ == '__main__':
