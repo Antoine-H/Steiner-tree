@@ -50,21 +50,6 @@ def is_admissible (cur_sol, terminals):
     return True
 
 
-#test test
-########################################
-def test_is_admissible():
-    g = parser.read_graph("Heuristic/instance001.gr")
-    graph     = g[0]
-    terminals = g[1]
-    g0 = first_solution(graph, terminals)
-    print(is_admissible(g0, terminals))
-    e = list(g0.edges())
-    random_edge = random.choice(e)
-    g0.remove_edge(*random_edge)
-    print(is_admissible(g0, terminals))
-########################################
-
-
 # An edge can be added when one of its end is in the current solution and the
 # other isn't.
 def edges_adjacent (graph, cur_sol):
@@ -213,23 +198,41 @@ def local_search (heuristic, graph, cur_sol, terminals, p=0.25):
         return cur_sol
 
 
-def test (heuristic, graph, terminals, nb_tests=5, p=0, new=nx.Graph()):
-    new = first_solution (graph, terminals)
-    #print("Le premier gain est : ", str(gain(new)))
-    k = 0
-    while k < nb_tests:
-        k  += 1
-        new = local_search (heuristic, graph, new, terminals)
-        #print("Le gain actuel est : ", str(gain(new)))
-    return new
-
-
-if __name__ == '__main__':
-    g = parser.read_graph("Heuristic/instance039.gr")
+#test test
+########################################
+def test_is_admissible():
+    g = parser.read_graph("Heuristic/instance001.gr")
     graph     = g[0]
     terminals = g[1]
     g0 = first_solution(graph, terminals)
-    print("Premiere valeure : ", str(gain(g0)))
+    print(is_admissible(g0, terminals))
+    e = list(g0.edges())
+    random_edge = random.choice(e)
+    g0.remove_edge(*random_edge)
+    print(is_admissible(g0, terminals))
+########################################
+
+
+def test (heuristic, graph, terminals, nb_tests=5, p=0, cur_sol=nx.Graph()):
+    cur_sol = first_solution (graph, terminals)
+    #print("Le premier gain est :", str(gain(cur_sol)))
+    k = 0
+    while k < nb_tests:
+        k  += 1
+        cur_sol = local_search (heuristic, graph, cur_sol, terminals)
+        #print("Le gain actuel est :", str(gain(cur_sol)))
+    return cur_sol
+
+
+if __name__ == '__main__':
+
+    g         = parser.read_graph("Heuristic/instance039.gr")
+    graph     = g[0]
+    terminals = g[1]
+    first_sol = first_solution(graph, terminals)
+
+    print("Premiere valeur : ", str(gain(first_sol)))
+
     for i in range(30):
-        test_one_step(graph, g0, terminals, 10)
+        neighbors_of_solution(graph, first_sol, terminals, 10)
 
