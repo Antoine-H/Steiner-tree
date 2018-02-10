@@ -12,13 +12,10 @@ import parser
 def random_solution(graph, terminals, n):
 	ans = []	
 	first_sol= ls.first_solution(graph, terminals)
-	print("on cree les solutions aleatoires")
 	for i in range(n):
-		print(i)
 		n_graph =ls.neighbors_of_solution(graph,first_sol, terminals,10)
 		poids = ls.gain(n_graph)
 		ans.append((poids, n_graph,0))
-	print("solutions crees")
 	return(ans)
 
 
@@ -55,7 +52,13 @@ if __name__ == '__main__':
 	graph = g[0]
 	terminals = g[1]
 	print(ls.gain(ls.first_solution(graph, terminals)))
-	my_sol = genetic(graph, terminals,20,24)
-	last_graph = my_sol[0]
-	print("on a fait "+str(my_sol[1])+" fusions pour arriver a la meilleure solution")
-	print(ls.gain(my_sol[0]))
+	nb_gene = []
+	nb_fusions = []
+	for i in range(5):
+		nb_gene_act = i*5+5
+		nb_gene.append(nb_gene_act) 
+		my_sol = genetic(graph, terminals,nb_gene_act,24)
+		last_graph = my_sol[0]
+		nb_fusions.append(my_sol[1])
+	print (nb_gene)
+	print(nb_fusions)
