@@ -211,3 +211,4 @@ if __name__ == '__main__':
     graph = g[0]
     terminals = g[1]
     g0 = first_solution(graph, terminals)
+
