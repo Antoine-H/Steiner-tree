@@ -95,9 +95,9 @@ def edges_adjacent(graph, subgraph): #output the list of edges that can be added
                 edges_adj.append((n1,n2))
     return(edges_adj)
 
-def edges_to_delete(graph, terminals): #output the list of edges that can be removed
+def edges_to_delete(subgraph, terminals): #output the list of edges that can be removed
     edges_to_del  = []
-    graph_copy = graph.copy()
+    graph_copy = subgraph.copy()
     for e in list(graph.edges()):
         data = graph.get_edge_data(*e)["weight"]
         graph_copy.remove_edge(*e)
@@ -106,17 +106,32 @@ def edges_to_delete(graph, terminals): #output the list of edges that can be rem
         graph_copy.add_edge(*e,weight = data)
     return(edges_to_del)
 
-def add_path(graph, subgraph):
+def add_path(graph,subgraph, n1 ,n2):
+    path  = nx.shortest_path_length(graph,n1, n2,"weight")
+    for i in range(len(path)-1):
+        data = graph.get_edge_data(path[i],path[i+1])["weight"]
+        subgraph.add_edge(path[i],path[i+1],weight=data)
+
+
+def add_random_path(graph, subgraph):
     list_e = subgraph.edges()
     n1 = random.choice(list_e)
     n2 = random.choice(list_e)
     if (n1!=n2):
-        path  = nx.shortest_path_length(graph,n1, n2,"weight")
-        for i in range(len(path)-1):
-            data = graph.get_edge_data(path[i],path[i+1])["weight"]
-            subgraph.add_edge(path[i],path[i+1],weight=data)
+        add_path(graph, subgraph, n1, n2)
 
-def clean(graph,subgraph,terminals):
+def clean_composante(subgraph, terminals):
+    nb_deletion  = 0 #just for the debug
+    n0 = list(terminals.nodes())[0]
+    comp = nx.node_connected_component(subgraph,n0)
+    for n in terminals.nodes():
+        if n not in comp:
+            subgraph.remove_node(n)
+            nb_deletion+=1
+
+
+def clean(subgraph,terminals):
+    clean_composante(subgraph, terminals)
     edges_to_del  = []
     for e in list(subgraph.edges()):
         data = graph.get_edge_data(*e)["weight"]
@@ -132,7 +147,7 @@ def random_add(graph, cur_sol):
     data = graph.get_edge_data(*random_edge)["weight"]
     cur_sol.add_edge(*random_edge,weight = data)
     
-def random_delation(cur_sol, terminals):
+def random_deletion(cur_sol, terminals):
     list_e = edges_to_delete(cur_sol, terminals)
     if list_e !=[]:
         random_edge = random.choice(list_e)
@@ -146,17 +161,27 @@ def random_modif_one_step(graph, cur_sol, terminals, proba_add = 0.8, nb_fois = 
         random_delation(graph_copy, terminals)
     return(graph_copy)
 
-def nm_step_dummy_louis(graph, cur_sol, terminals,  n=40,m=40):
+def nm_step_dummy_louis(graph, cur_sol, terminals,  n=40,m=40): #n = nombre de test 
     if n>0:
         random_add(graph, cur_sol)
         return(nm_step_dummy_louis(graph, cur_sol, terminals, n-1, m))
     else:
         if m>0:
-            random_delation( cur_sol, terminals)
+            random_deletion( cur_sol, terminals)
             return(nm_step_dummy_louis(graph, cur_sol, terminals, n, m-1))
         else:
             return(cur_sol)
 
+def one_step_search(graph, cur_sol, terminals):
+    p =random.random() 
+    if p<1/4:
+        nm_step_dummy_louis(graph, cur_sol, terminals, 10,0)
+    else: 
+        if p<1/2:
+            add_random_path(graph, cur_sol)
+       else:
+            nm_step_dummy_louis(graph, cur_sol, terminals, 0, 10)
+    clean(cur_sol)
 
 
 # Objective function

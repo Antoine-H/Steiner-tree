@@ -10,6 +10,12 @@ bio like : algo génétique  : pour Louis, génération de population, merge com
 ________________________
 
 a améliorer : 
-fonction de suppression : s'autoriser a supprimer un élément qui ne déconnecte pas les terminaux meme s'il déconnecte le graph
 
+
+
+__________________________
+a faire :
+clean les composantes connexes inutiles
+fonction clean générale
+ajout de chemins. 
 
