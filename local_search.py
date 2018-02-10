@@ -96,22 +96,21 @@ def add_random_path(graph, subgraph):
     list_e = list(subgraph.nodes())
     n1     = random.choice(list_e)
     n2     = random.choice(list_e)
-    if (n1!=n2):
+    if n1 != n2:
         add_path(graph, subgraph, n1, n2)
 
 
+#
 def clean_composante(subgraph, terminals):
-    nb_deletion  = 0 #just for the debug
-    n0 = list(terminals.nodes())[0]
+    n0   = list(terminals.nodes())[0]
     comp = nx.node_connected_component(subgraph,n0)
-    l = list(subgraph.nodes())
+    l    = list(subgraph.nodes())
     for n in l:
         if n not in comp:
             subgraph.remove_node(n)
-            nb_deletion += 1
 
 
-
+#
 def clean(subgraph, terminals):
     clean_composante(subgraph, terminals)
     l = list(subgraph.edges())
@@ -126,20 +125,21 @@ def clean(subgraph, terminals):
                 subgraph.add_edge(*e,weight = data)
 
 
+# Adds a random edge to the current solution.
 def random_add(graph, cur_sol):
-    list_e = edges_adjacent(graph ,cur_sol )
+    list_e = edges_adjacent(graph ,cur_sol)
     random_edge = random.choice(list_e)
     data = graph.get_edge_data(*random_edge)["weight"]
     cur_sol.add_edge(*random_edge,weight = data)
 
 
+# Deletes a random edge from the current solution.
 def random_deletion(cur_sol, terminals):
     list_e = edges_to_delete(cur_sol, terminals)
     if list_e != []:
         random_edge = random.choice(list_e)
         cur_sol.remove_edge(*random_edge)
         clean_composante(cur_sol, terminals)
-
 
 
 #n = nombre de test
@@ -166,7 +166,6 @@ def one_step_search(graph, cur_sol, terminals):
             nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
 
-
 def neighbors_of_solution(graph, cur_sol, terminals, nb_modif = 10):
     act      = gain(cur_sol)
     solution = cur_sol
@@ -178,6 +177,7 @@ def neighbors_of_solution(graph, cur_sol, terminals, nb_modif = 10):
         gain_act = new_gain
     clean(solution, terminals)
     return(solution)
+
 
 # Objective function
 def gain (steiner):
@@ -222,5 +222,5 @@ if __name__ == '__main__':
     g0 = first_solution(graph, terminals)
     print("Premiere valeure : "+str(gain(g0)))
     for i in range(30):
-        test_one_step(graph, g0, terminals, 10)
+       neighbors_of_solution(graph, g0, terminals, 10)
 
