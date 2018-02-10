@@ -77,7 +77,7 @@ def edges_to_delete (subgraph, terminals):
     edges_to_del = []
     graph_copy   = subgraph.copy()
     for e in list(subgraph.edges()):
-        data = graph.get_edge_data(*e)["weight"]
+        data = subgraph.get_edge_data(*e)["weight"]
         graph_copy.remove_edge(*e)
         if(is_admissible(graph_copy,terminals)):
             edges_to_del.append(e)

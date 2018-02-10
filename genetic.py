@@ -8,36 +8,31 @@ import random
 import local_search as ls 
 import parser
 
+
 def random_solution(graph, terminals, n):
 	ans = []	
 	first_sol= ls.first_solution(graph, terminals)
 	print("on cree les premieres solution")
 	for i in range(n):
 		print(i)
-		ans.append(ls.nm_step_dummy_louis(graph,first_sol, terminals, 5,5))
+		n_graph =ls.neighbors_of_solution(graph,first_sol, terminals,10)
+		poids = ls.gain(n_graph)
+		ans.append((poids, n_graph))
 	print("solutions crees")
 	return(ans)
 
 
-def fusion(t0,t1): #juste fusion des deux graphs
+def fusion(t0,t1, terminals): #juste fusion des deux graphs
 	t_new = nx.compose(t0,t1)
+	ls.clean(t_new, terminals)
 	return(t_new)
  
-def fusion_v2(t0,t1): #je sais pas ce que je voulais faire a relire ?
-	t_new = nx.compose(t0,t1)
-	edges = random.shuffle(t_new.edges(data=True))
-	for e in edges:
-		t_new.remove_edge(e)
-		if(not(nx.is_connected(t_new))):
-			t_new.add_adge(e)
-	return(t_new)
-
 
 def genetic(graph,terminals, nb_generation,taille_population):
 	population = random_solution(graph,terminals, taille_population)
+	population.sort()
+	population.reverse()
 	for i in range(nb_generation):
-		#population.sort()
-		print i,len(population)
 		for j in range(taille_population/2):
 			population.pop()
 		for j in range(taille_population/4):
@@ -50,9 +45,10 @@ def genetic(graph,terminals, nb_generation,taille_population):
 	population.sort()
 	return(population[0])
 
+
 if __name__ == '__main__':
-	g = parser.read_graph("Heuristic/instance001.gr")
+	g = parser.read_graph("Heuristic/instance039.gr")
 	graph = g[0]
 	terminals = g[1]
-	print(ls.gain_louis(ls.first_solution(graph, terminals)))
-	print(ls.gain_louis(genetic(graph, terminals,2,8)))
+	print(ls.gain(ls.first_solution(graph, terminals)))
+	print(ls.gain(genetic(graph, terminals,2,8)))
