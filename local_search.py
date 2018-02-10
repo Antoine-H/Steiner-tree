@@ -23,19 +23,23 @@ def first_solution (graph,terminals):
     graph_t = nx.Graph()
     too_add = []
     approx_spanning = nx.Graph()
-    ter = terminals.nodes()
+    ter     = terminals.nodes()
+
     for n1 in ter:
         for n2 in ter:
             if n1 < n2:
                 w = nx.shortest_path_length(graph, n1, n2,"weight")
                 too_add.append((n1, n2, w))
+
     graph_t.add_weighted_edges_from(too_add)
     spanning_tree = nx.minimum_spanning_tree(graph_t)
+
     for (i,j) in spanning_tree.edges():
         path = nx.shortest_path(graph, i, j, "weight")
         for i in range(len(path)-1):
             data = graph.get_edge_data(path[i], path[i+1])["weight"]
             approx_spanning.add_edge(path[i], path[i+1], weight=data)
+
     return approx_spanning
 
 
@@ -56,7 +60,7 @@ def edges_adjacent (graph, cur_sol):
     edges_adj = []
     sub_nodes = cur_sol.nodes()
     for n1 in sub_nodes:
-        for n2 in graph.neighbours(n1):
+        for n2 in graph.neighbors(n1):
             if not cur_sol.has_edge(n1, n2):
                 edges_adj.append((n1,n2))
     return edges_adj
@@ -161,8 +165,8 @@ def one_step_search (graph, cur_sol, terminals):
 
 
 # Performs multiple one_step_search.
-def neighbours_of_solution (graph, cur_sol, terminals, nb_modifs=10):
-    act      = gain(cur_sol)
+def neighbors_of_solution (graph, cur_sol, terminals, nb_modifs=10):
+    #act      = gain(cur_sol)
     solution = cur_sol
     for i in range(nb_modifs):
         new_sol  = solution.copy()
@@ -199,7 +203,6 @@ def local_search (heuristic, graph, cur_sol, terminals, p=0.25):
 
 
 #test test
-########################################
 def test_is_admissible():
     g = parser.read_graph("Heuristic/instance001.gr")
     graph     = g[0]
@@ -210,7 +213,6 @@ def test_is_admissible():
     random_edge = random.choice(e)
     g0.remove_edge(*random_edge)
     print(is_admissible(g0, terminals))
-########################################
 
 
 def test (heuristic, graph, terminals, nb_tests=5, p=0, cur_sol=nx.Graph()):
@@ -234,5 +236,5 @@ if __name__ == '__main__':
     print("Premiere valeur : ", str(gain(first_sol)))
 
     for i in range(30):
-        neighbours_of_solution(graph, first_sol, terminals, 10)
+        neighbors_of_solution(graph, first_sol, terminals, 10)
 
