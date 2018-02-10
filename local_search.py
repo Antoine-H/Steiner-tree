@@ -116,7 +116,7 @@ def clean (subgraph, terminals):
     l = list(subgraph.edges())
     random.shuffle(l)
     for e in l:
-            data = graph.get_edge_data(*e)["weight"]
+            data = subgraph.get_edge_data(*e)["weight"]
             subgraph.remove_edge(*e)
             if(is_admissible(subgraph, terminals)):
                 clean(subgraph, terminals)
