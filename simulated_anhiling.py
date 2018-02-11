@@ -46,8 +46,9 @@ def local_search_accept_error(nb_step  = 10,p = .1):
 def heat_strategy_linear(nb_step, act_gain, new_gain):
 	if act_gain > new_gain:
 		return 1
-	heat    = 5000/nb_step
-	r_seuil = math.exp(float(act_gain-new_gain)/heat)
+	heat    = 5000/nb_step #a changer
+	delta   = float(act_gain-new_gain)/act_gain
+	r_seuil = math.exp(delta/heat)
 	print(r_seuil, nb_step,act_gain,new_gain, act_gain-new_gain)
 	return r_seuil
 
