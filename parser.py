@@ -4,6 +4,7 @@
 #
 
 import networkx as nx
+import sys
 
 # Reads graphs.
 def read_graph (file):
@@ -23,4 +24,3 @@ def read_graph (file):
 
 if __name__ == '__main__':
     g = read_graph(sys.argv[1])
-
