@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
@@ -54,7 +55,7 @@ Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = 
 \subsection{Presentation du précédent papier}
 Par la suite la pluspart de nos optimisation se baseront sur une notion de "voisin" des solutions. Il faut évidemment que ces "voisins" soit proche d'un point de vue de score face au problème. Cette proximité dans le cas de graphes comme les notre sera logiquement proche d'une métrique comparant les ensembles de sommets. Cependant comme expliqué dans REFERENCE, il n'est pas suffisant de regarder les ensembles de d'aretes directement. L'ajout ou la suppression d'arete ne suffit pas. On a donc implémenté un nouveau "modificateur" : l'ajout de chemin. 
 Pour résumer nous avons quatre "modificateurs" d'une solution courante :
-\begin{itemize} 
+\begin{itemize}   
 \item[\textbf{L'addition  d'aretes : }] on ajoute un certain nombre d'arêtes "voisine" de notre graphe. C'est à dire d'arêtes dont au moins un des noeuds fait déjà partie de la solution. En effet sinon on risque de souvent rajouter des arêtes complétement déconnectées de notre graphe qui n'ont que très peu D’Intérêt.
 \item[\textbf{La suppresion d'aretes : }] on supprime des arretes qui laisse notre solution admissible. Apres cette suppression on recalcule les composantes connexes et on ne garde que la composante connexe contenant tous les terminaux (ils sont tous dans la meme car la solution reste faisable)
 \item[\textbf{Add a path : }] We randomly choose two nodes of our current solution and we add all the edges of a shortest path between this ndoes
@@ -63,18 +64,63 @@ Pour résumer nous avons quatre "modificateurs" d'une solution courante :
 
 \subsection{Neighbour choice}
 
-We randomly perform $k$ of the first 3 modifications and then clear the results. The resulting solution is a solution at distance $k$ of the first solution. In most of our test $k$ is set to 7. We tried to not to randomized it but to make some precalculated serie of operation like :add nodes x3, add path x3, clean (problem was our deletion was really costly).
+On a de nombreux choix pour comment parcourir notre espace de solution. Nous appellerons "modifications élémentaires" les trois premieres modifications décrites plus haut. Le clear sera généralement utilisé en fin de création d'une solution. J'ai implémenté 3 différentes manière d'obtenir un voisin. Toutes dépendent d'un radius $ r$ de recherche qui va correspondre au nombre de modifications élémentaires qu'on va s'autoriser. 
+
+La fonction voisin renvoie une solution : la solution qu'on lui donne à laquelle on a appliqué $r$ fois une des fonctions $one\_step\_search$ décrites ci dessous, puis applique clean sur cette solution.
+
+\subsubsection{Version 1}
+
+Cf one\_step\_search() dans le fichier local\_search.
+
+La version la plus simple qui consiste à tirer aléatoirement l'une des trois modification élémentaire et l'appliquer. Cette méthode est relativement efficace. Seul problème le coup de la suppression d'arête est (dans mon implémentation) très elevée. En effet il faut pour cahque arêtes de la solution en cours calculer toutes les composantes connexes de la solution privée de cette arête. Après calcul il était évident que cette modification élémentaire était plus de 10 fois plus coûteuse en pratique que les autres modifications élémentaires. D'ou l'idée de la seconde version.
+
+\subsubsection{Version 2}
+Cf one\_step\_search\_v2() dans le fichier local\_search.
+
+Cette version voulait s'affranchir du problème du coût de suppression... Elle s'est donc complètement affranchie de la suppression d'arête. En effet cette version est environs 5 fois plus rapide mais comme décrit ci dessous, ses résultats sont bien plus faibles. On remarque donc que cette manière d'explorer l'ensemble des solutions semble nécessaire et que un simple clean régulier des solutions ne suffit pas. Fort de ce constat nous avons donc proposé la version 3.
+
+\subsubsection{Version 3}
+
+Cf one\_step\_search\_v3() dans le fichier local\_search.
+
+Cette ultime version n'est pas spécialement plus rapide (bien que légèrement) que la précédente. Elle est légèrement moins randomisée. En effet on remarque que faire des suppression a tour de bras avant d'avoir modifié notre solution ne semble pas pertinent. On va donc forcer une modification d'ajout (aléatoirement ajout d'arêtes ou de chemin) puis une suppression, puis à nouveau une modification d'ajout. Ceci donne de meilleurs résultats que la version 1 entièrement randomisée. Un idéal serait sans doute une version 4 a mi chemin entre les deux, forçant avec haute probabilité des additions puis des suppressions puis des additions mais laissant un léger aléatoire. On peut pour certains tests choisir aléatoirement entre appliquer la version 1 et la version 3. 
 
 
+\subsubsection{Comparaison des versions}
+
+La figure ... nous présente un exemple de test sur une instance (instance 039) de la fonction local\_search\_only\_better (décrite dans la partie suivante) avec 1000 itérations. Le temps d’exécution est relativement long (environs 25 minutes pour la version 1 et 3 et 5 pour la version 2). Les points rouges sont le gain de notre meilleure solution a l'instant $k$ et les points bleus le gain du voisin calculé pour l'instant $k$.
+
+On voit clairement que la version 2 n'est pas très efficace : convergence plus lente pour des valeurs équivalentes, convergence finale beaucoup plus haute que les autres versions et gains des solutions visitées bien plus hauts que celles des deux autres. 
+
+Les versions 1 et 3 semblent assez proches, bien que la version 3 semble donner de meilleurs résultats.
+
+\begin{figure}
+
+\includegraphics[scale=.3]{images/without_error_1000_v1}
+\includegraphics[scale=.4]{images/without_error_1000_v2}
+\includegraphics[scale=.3
+]{images/without_error_1000_v3}
+\caption{Dans l'ordre de gauche à droite : version 1, 2, 3}
+\end{figure}
 
 
 \section{Local Searchs}
 
-On va vouloir parcourir l'ensemble des solutions a la recherche de minimum locaux. Tout le problème de ces parcours est d'arriver a trouver de "bons" minimums locaux, il faut donc en général continuer a trouver un bon trade off entre l'exploration et l'exploitation des points visités 
+On va vouloir parcourir l'ensemble des solutions a la recherche de minimum locaux. Tout le problème de ces parcours est d'arriver a trouver de "bons" minimums locaux, il faut donc en général continuer a trouver un bon trade off entre l'exploration et l'exploitation des points visités.  
 
 \subsection{Sans erreur}
 
+
+Cf local\_search\_only\_better() dans le fichier simulated\_annealing.
+
+Cette première version est la plus "simple". On n'explore pas du tout de nouvelles parties de notre espace de solution et on se contente de choisir de manière greedy la meilleure solution possible à chaque étape. Nous avons largement utilisé cette fonction pour comparer nos version de choix de voisins. 
+
 \subsection{Avec erreur}
+
+Cf local\_search\_with\_errors() dans le fichier simulated\_annealing.
+
+Cette fois a chaque tour de boucle on s'autorise le choix d'une mauvaise solution. Ce choix est entierement arbitraire 
+
 
 \subsection{Recuit simulé}
 

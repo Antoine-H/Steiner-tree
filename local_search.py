@@ -166,29 +166,39 @@ def one_step_search (graph, cur_sol, terminals):
         else:
             nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
-def one_step_search_v2(graph, cur_sol, terminals, k = 4):
-    for i in range(k):
+def one_step_search_v2(graph, cur_sol, terminals):
         p = random.random()
         if p < 0.5:
-            add_random_path(graph,cur_sol)
+            add_random_path(graph,cur_sol) #ajout de path
         else: 
-            nm_step_dummy(graph, cur_sol, terminals, 10,0)
+            nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
 
-def neighbors_of_solution_v2 (graph, cur_sol, terminals, nb_modif = 10):
-    act      = gain(cur_sol)
-    solution = cur_sol
-    one_step_search_v2(graph, cur_sol, terminals, nb_modif)
-    clean(solution, terminals)
-    return solution
+def one_step_search_v3(graph, cur_sol, terminals):
+        p = random.random()
+        if p < 0.5:
+            add_random_path(graph,cur_sol) #ajout de path
+        else: 
+            nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
+        p = random.random()
+        if p < 0.5:
+            add_random_path(graph,cur_sol) #ajout de path
+        else: 
+            nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
+        nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
-
-
-def neighbors_of_solution (graph, cur_sol, terminals, nb_modif = 10):
+def neighbors_of_solution (graph, cur_sol, terminals, version_number = 1, nb_modif = 10):
     act      = gain(cur_sol)
     solution = cur_sol
     for i in range(nb_modif):
         new_sol  = solution.copy()
-        one_step_search(graph, new_sol, terminals)
+        if version_number==2:
+            one_step_search_v2(graph, new_sol, terminals)
+        else:
+            if version_number==3:
+                one_step_search_v3(graph, new_sol, terminals)
+            else:
+                one_step_search(graph, new_sol, terminals)
+        
         new_gain = gain(new_sol)
         solution = new_sol
         gain_act = new_gain
@@ -208,6 +218,15 @@ def gain (steiner):
         d   += data
     return d + w
 
+
+def final_value (steiner):
+    # Assuming that max eccentricity nodes are terminals
+    d = 0
+    edges = steiner.edges()
+    for e in edges:
+        data = steiner.get_edge_data(*e)["weight"]
+        d   += data
+    return d 
 
 # Local search. With optional parameter p \in [0,1]
 # Louis : changement de la fonction, elle renvoyait pas assez new_sol

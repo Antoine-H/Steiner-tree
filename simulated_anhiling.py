@@ -10,36 +10,23 @@ import parser
 import matplotlib.pyplot as plt
 import math
 
-def local_search_only_better(nb_step  = 10):
+def local_search_only_better(nb_step  = 10, version = 1):
 	cur_sol  = (ls.first_solution(graph, terminals))
 	act_gain = ls.gain(cur_sol)
 	l_act    = [act_gain]
 	l_new    = [act_gain]
 	for i in range(nb_step):
-		#print(i)
-		new_sol  = ls.neighbors_of_solution(graph, cur_sol, terminals)
+		print(i)
+		new_sol  = ls.neighbors_of_solution(graph, cur_sol, terminals,version,5)
 		new_gain = ls.gain(new_sol)
 		l_new.append(new_gain)
 		if new_gain < act_gain:
 			act_gain = new_gain
 			cur_sol  = new_sol
 		l_act.append(act_gain)
-	return l_act, l_new
 
-def local_search_only_better_v2(nb_step  = 10):
-	cur_sol  = (ls.first_solution(graph, terminals))
-	act_gain = ls.gain(cur_sol)
-	l_act    = [act_gain]
-	l_new    = [act_gain]
-	for i in range(nb_step):
-		#print(i)
-		new_sol  = ls.neighbors_of_solution_v2(graph, cur_sol, terminals)
-		new_gain = ls.gain(new_sol)
-		l_new.append(new_gain)
-		if new_gain < act_gain:
-			act_gain = new_gain
-			cur_sol  = new_sol
-		l_act.append(act_gain)
+	print ls.final_value(cur_sol)
+	print ls.gain(cur_sol)
 	return l_act, l_new
 
 
@@ -98,7 +85,7 @@ if __name__ == '__main__':
 	graph     = g[0]
 	terminals = g[1]
 	temps1 = time.clock()
-	sol = local_search_only_better_v2(100)
+	sol = local_search_only_better(1000,2)
 	temps2 = time.clock()
 	print("temps ecoule pour v2 de "+str(temps2-temps1))
 	plt.plot(sol[0],'ro')
