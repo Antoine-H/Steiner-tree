@@ -31,26 +31,26 @@ def fusion(graph0, graph1, terminals):
 #
 def genetic(graph, terminals, nb_generation, taille_population):
 	population = random_solution(graph, terminals, taille_population)
-	#population.sort(reverse=True) ?
-	population.sort()
-	population.reverse()
+	population.sort(key=lambda pop: pop[2], reverse=True)
+	#population.sort()
+	#population.reverse()
 	for i in range(nb_generation):
-		print("on attaque la generation numero", str(i))
-		#del population[-taille_population/2:] ?
-		for j in range(taille_population/2):
-			population.pop()
-		for j in range(taille_population/4):
+		print("On attaque la génération numéro", str(i))
+		del population[-taille_population // 2:]
+		#for j in range(taille_population/2):
+		#	population.pop()
+		for j in range(taille_population // 4):
 			##fusions
-			occurence1 = population[taille_population/4 + j][2]
+			occurence1 = population[taille_population // 4 + j][2]
 			occurence0 = population[j][2]
-			t1 = population[taille_population/4 + j][1]
+			t1 = population[taille_population // 4 + j][1]
 			t0 = population[j][1]
 			t_new = fusion(t0, t1, terminals)
 			w = ls.gain(t_new)
 			population.append((w, t_new, occurence0+occurence1 + 1))
 		population_a_ajouter = random_solution( graph,
 							terminals,
-							taille_population/4)
+							taille_population // 4)
 		population += population_a_ajouter
 	population.sort()
 	return((population[0][1], population[0][2]))
