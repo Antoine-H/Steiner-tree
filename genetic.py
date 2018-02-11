@@ -58,7 +58,6 @@ if __name__ == '__main__':
 	g = parser.read_graph("Heuristic/instance039.gr")
 	graph     = g[0]
 	terminals = g[1]
-<<<<<<< HEAD
 	print(ls.gain(ls.first_solution(graph, terminals))) 
 	nb_gene = []
 	for i in range(10):
@@ -73,17 +72,3 @@ if __name__ == '__main__':
 			print(nb_fusions)
 			print(better_res)
 	
-=======
-	print(ls.gain(ls.first_solution(graph, terminals)))
-	nb_gene    = []
-	nb_fusions = []
-	for i in range(5):
-		nb_gene_act = i * 5 + 5
-		nb_gene.append(nb_gene_act)
-		my_sol     = genetic(graph, terminals, nb_gene_act, 24)
-		last_graph = my_sol[0]
-		nb_fusions.append(my_sol[1])
-	print(nb_gene)
-	print(nb_fusions)
-
->>>>>>> e1685df82c719ad1f5f81cc1f75a5765445725ca
