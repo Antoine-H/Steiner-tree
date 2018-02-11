@@ -8,6 +8,7 @@ import random
 import local_search as ls
 import parser
 import math
+import matplotlib.pyplot as plt
 
 
 # Generates solutions based on local search.
@@ -94,7 +95,7 @@ def variation_mutation (terminals, population, lda):
 						2,
 						1))
 
-		population[-1] = (ls.gain(population[-1]), #beurk beurk beurk, l'append pas cree le graph et append apres LOUIS
+		population[-1] = (ls.gain(population[-1]), 
 				population[-1],
 				to_mutate[0][2] + 1)
 	return population
@@ -131,12 +132,11 @@ def selection_elitist_offsprings (population, mu, t):
 # fitness_proportional = fitness over sum for all solution
 def selection_fitness_proportional (population, mu, t):
 	selected = []
-	#sorties de la boucle car independant de i LOUIS
-	total_gain = sum(element[0] for element in population) #somme des poids des solutions de la generation LOUIS
-	proba_vect = [(total_gain - element[0]) / total_gain for element in population] # normalisation par le poids le plus faible LOUIS
-	total_gain = sum(element for element in proba_vect) #nouvelle somme des poids (devrait etre egale a elle meme -mu*element[0]) LOUIS
-	proba_vect = [element / total_gain for element in proba_vect] #on normalise les poids par la somem des poids LOUIS
 	for i in range(mu):
+		total_gain = sum(element[0] for element in population) #somme des poids des solutions de la generation LOUIS
+		proba_vect = [(total_gain - element[0]) / total_gain for element in population] # normalisation par le poids le plus faible LOUIS
+		total_gain = sum(element for element in proba_vect) #nouvelle somme des poids (devrait etre egale a elle meme -mu*element[0]) LOUIS
+		proba_vect = [element / total_gain for element in proba_vect] #on normalise les poids par la somem des poids LOUIS
 		r = random.uniform(0, 1)
 		for p in proba_vect:
 			if r < p:
@@ -157,7 +157,7 @@ def selection_Boltzmann (population, mu, t):
 	sol = []
 	for a in population[mu:]:
 		r = random.uniform(0,1)
-		if a[0] < best or r < math.exp((best - a[0])/t): #condition etrange LOUIS
+		if a[0] < best or r < math.exp((best - a[0])/t):
 			sol.append(a)
 	if len(sol) < mu:
 		to_add = population[:mu]
@@ -230,9 +230,29 @@ def genetic2 (graph, terminals, mu, lda, variation, selection, t, threshold=3):
 	return current_solutions
 
 
+def genetic_no_blabla (graph, terminals, mu, lda, variation, selection, t, threshold=3):
+	initial_solutions = initialisation(graph, terminals, mu)
+	current_solutions = variation(terminals, initial_solutions, lda)
+	current_solutions = selection(current_solutions, mu, t)
+	min_at_time = [min(current_solutions, key=lambda solution: solution[0])[0]]
+	iteration =1
+	while iteration <= threshold:
+		print iteration
+		iteration += 1
+		current_solutions = variation(terminals, current_solutions, lda)
+
+		current_solutions = selection(current_solutions, mu, t)
+		min_at_time .append(min(current_solutions, key=lambda solution: solution[0])[0])
+
+	#return min(current_solutions, key=lambda solution: solution[0])
+	return min_at_time
+
 if __name__ == '__main__':
 	graph,terminals = parser.read_graph("Heuristic/instance039.gr")
-	a = genetic2 (graph, terminals, 24, 2, variation_mutation, selection_Boltzmann, 1000, 10)
+	a = genetic_no_blabla (graph, terminals, 5	, 2, variation_mutation, selection_Boltzmann, 1000, 1000)
+	print(a)
+	plt.plot(a, 'ro')
+	plt.show()
 #	lda = 2
 #	mu  = 3
 #	init_sols = initialisation(graph, terminals, mu)
