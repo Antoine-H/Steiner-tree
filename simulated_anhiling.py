@@ -30,7 +30,7 @@ def local_search_only_better(nb_step  = 10, version = 1):
 	return l_act, l_new
 
 
-def local_search_accept_error(nb_step  = 10,p = .1):
+def local_search_accept_error(nb_step  = 10, version =2,p = .1):
 	cur_sol  = (ls.first_solution(graph, terminals))
 	act_gain = ls.gain(cur_sol)
 	l_act    = [act_gain]
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 	graph     = g[0]
 	terminals = g[1]
 	temps1 = time.clock()
-	sol = local_search_only_better(1000,2)
+	sol = local_search_accept_error(3000,2,0.05 )
 	temps2 = time.clock()
 	print("temps ecoule pour v2 de "+str(temps2-temps1))
 	plt.plot(sol[0],'ro')

@@ -118,18 +118,24 @@ Cette première version est la plus "simple". On n'explore pas du tout de nouvel
 
 Cf local\_search\_with\_errors() dans le fichier simulated\_annealing.
 
-Cette fois a chaque tour de boucle on s'autorise le choix d'une mauvaise solution. Ce choix est entierement arbitraire 
+Cette fois a chaque tour de boucle on s'autorise le choix d'une mauvaise solution. Ce choix est entièrement arbitraire et ne dépend pas de l'erreur que l'on va faire. On pourrait l'améliorer en choisissant une probabilité d'erreur dépendant de l'écart entre la solution actuelle  et de la solution que l'on va peut choisir.
 
 
 \subsection{Recuit simulé}
 
+
 \subsubsection{Présentation basique}
+
+Le recuit simulé s'appuie sur ce principe de pouvoir choisir une mauvaise solution. Cependant la probabilité d'acceptation de la solution va être indexée sur deux paramètre : le delta entre les deux solutions, et les
 
 \subsubsection{Choix de la température}
 
+
 \section{Algorithmes biologiques}
 
+
 \subsection{Algorithme moléculaire}
+
 
 \subsubsection{Choix des }
 

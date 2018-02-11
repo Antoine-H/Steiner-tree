@@ -4,7 +4,6 @@
 #
 
 import networkx as nx
-import sys
 
 # Reads graphs.
 def read_graph (file):
