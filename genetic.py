@@ -35,7 +35,7 @@ def genetic(graph, terminals, nb_generation, taille_population):
 	#population.sort()
 	#population.reverse()
 	for i in range(nb_generation):
-		print("On attaque la génération numéro", str(i))
+		print("On attaque la generation numero", str(i))
 		del population[-taille_population // 2:]
 		#for j in range(taille_population/2):
 		#	population.pop()

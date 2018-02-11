@@ -174,7 +174,7 @@ def one_step_search_v2(graph, cur_sol, terminals, k = 4):
         else: 
             nm_step_dummy(graph, cur_sol, terminals, 10,0)
 
-def neighbors_of_solution_v2 (graph, cur_sol, terminals, nb_modif = 5):
+def neighbors_of_solution_v2 (graph, cur_sol, terminals, nb_modif = 10):
     act      = gain(cur_sol)
     solution = cur_sol
     one_step_search_v2(graph, cur_sol, terminals, nb_modif)
