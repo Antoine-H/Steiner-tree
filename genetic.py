@@ -7,10 +7,11 @@ import networkx as nx
 import random
 import local_search as ls
 import parser
+import math
 
 
 # Generates solutions based on local search.
-def random_solution(graph, terminals, n):
+def random_solution (graph, terminals, n):
 	sols      = []
 	first_sol = ls.first_solution(graph, terminals)
 	for i in range(n):
@@ -21,56 +22,211 @@ def random_solution(graph, terminals, n):
 	return sols
 
 
-# Merges two graphs g0 and g1.
-def fusion(graph0, graph1, terminals):
+# Merges two graphs graph0 and graph1.
+def fusion (graph0, graph1, terminals):
 	new_graph = nx.compose(graph0, graph1)
 	ls.clean(new_graph, terminals)
 	return new_graph
 
 
 #
-def genetic(graph, terminals, nb_generation, taille_population):
+def genetic (graph, terminals, nb_generation, taille_population):
 	population = random_solution(graph, terminals, taille_population)
 	population.sort(key=lambda pop: pop[0], reverse=True)
-	#population.sort()
-	#population.reverse()
 	for i in range(nb_generation):
 		print("On attaque la generation numero", str(i))
 		del population[-taille_population // 2:]
-		#for j in range(taille_population/2):
-		#	population.pop()
 		for j in range(taille_population // 4):
 			##fusions
-			occurence1 = population[taille_population // 4 + j][2]
-			occurence0 = population[j][2]
+			fusions0 = population[taille_population // 4 + j][2]
+			fusions1 = population[j][2]
 			t1 = population[taille_population // 4 + j][1]
 			t0 = population[j][1]
 			t_new = fusion(t0, t1, terminals)
 			w = ls.gain(t_new)
-			population.append((w, t_new, occurence0+occurence1 + 1))
+			population.append((w, t_new, fusions0 + fusions1 + 1))
 		population_a_ajouter = random_solution( graph,
 							terminals,
 							taille_population // 4)
 		population += population_a_ajouter
-	population.sort()
+	population.sort(key=lambda pop: pop[0], reverse=True)
 	return((population[0][1], population[0][2]))
 
 
+# Generates mu graphs.
+def initialisation (graph, terminals, mu):
+	return random_solution(graph, terminals, mu)
+
+
+# Samples lda out of mu graphs based on crossover technique.
+def variation_crossover (terminals, population, lda):
+	for i in range(lda):
+		to_merge = random.sample(population, 2)
+		population.append(fusion(to_merge[0][1],
+					to_merge[1][1],
+					terminals))
+
+		population[-1] = (ls.gain(population[-1]),
+				population[-1],
+				to_merge[0][2] + to_merge[1][2] + 1)
+	return population
+
+
+# Samples lda out of mu graphs based on mutation technique.
+def variation_mutation (terminals, population, lda):
+	for i in range(lda):
+		to_mutate = random.sample(population, 1)
+		population.append(ls.neighbors_of_solution (graph,
+						to_mutate[0][1],
+						terminals,
+						2,
+						1))
+
+		population[-1] = (ls.gain(population[-1]),
+				population[-1],
+				to_mutate[0][2] + 1)
+	return population
+
+
+# Selects mu graphs out of lda + mu graphs.
+# elitist := max gain
+def selection_elitist_classic (population, mu, t):
+	population.sort(key=lambda pop: pop[0])
+	return population[:mu]
+
+
+# Precondition: mu <= lda. If mu > lda, falls back to selection_elitist_classic.
+def selection_elitist_offsprings (population, mu, t):
+	to_consider = population[-max(mu,len(population)-mu):]
+	to_consider.sort(key=lambda pop: pop[0])
+	return selection_elitist_classic(to_consider, mu, t)
+
+
+# fitness_proportional = fitness over sum for all solution
+def selection_fitness_proportional (population, mu, t):
+	selected = []
+	for i in range(mu):
+		total_gain = sum(element[0] for element in population)
+		proba_vect = [(total_gain - element[0]) / total_gain for element in population]
+		total_gain = sum(element for element in proba_vect)
+		proba_vect = [element / total_gain for element in proba_vect]
+		r = random.uniform(0, 1)
+		for p in proba_vect:
+			if r < p:
+				selected.append(population.pop(proba_vect.index(p)))
+				r = 2
+			else:
+				r -= p
+	selected.sort(key=lambda pop: pop[0])
+	return selected
+
+
+# Boltzmann := accept if e^((f(y) - f(x))/T)
+# T could change over time
+def selection_Boltzmann (population, mu, t):
+	best = min(population[:mu], key=lambda pop: pop[0])[0]
+	#sol = [a for a in population[mu:]
+	#		if ((a[0] < best) or (random.uniform(0, 1) < math.exp(best - a[0])/t))]
+	sol = []
+	for a in population[mu:]:
+		r = random.uniform(0,1)
+		if a[0] < best or r < math.exp((best - a[0])/t):
+			sol.append(a)
+	if len(sol) < mu:
+		to_add = population[:mu]
+		to_add.sort(key=lambda pop: pop[0])
+		#print("population to be added:", to_add)
+		to_add = to_add[:mu-len(sol)]
+		sol += to_add
+	sol = sol[:mu]
+	sol.sort(key=lambda pop: pop[0])
+	return sol
+
+
+# Threshold := accepft if f(y) - f(x) > T
+def selection_threshold (population, mu, t):
+	best = min(population[:mu], key=lambda pop: pop[0])[0]
+	sol = [a for a in population[mu:] if a[0] < (best + t)]
+	if len(sol) < mu:
+		to_add = population[:mu]
+		to_add.sort(key=lambda pop: pop[0])
+		#print("population to be added:", to_add)
+		to_add = to_add[:mu-len(sol)]
+		sol += to_add
+	sol = sol[:mu]
+	sol.sort(key=lambda pop: pop[0])
+	return sol
+
+
+def pretty_print(list):
+	for i in list:
+		print(i)
+
+
+# mu + lambda evolutionary algorithm : mutation, elitist
+# mu + lambda EA variant: mutation, elitist within offsprings (mu within lambda)
+# Crossover, standard bit mutation, elitist
+# Variant: wp proportional to fitness, mutation, otherwise crossover.
+def genetic2 (graph, terminals, mu, lda, variation, selection, t, threshold=3):
+	initial_solutions = initialisation(graph, terminals, mu)
+
+	print("Initial solution:")
+	pretty_print(initial_solutions)
+
+	current_solutions = variation(terminals, initial_solutions, lda)
+
+	print("Variations:")
+	pretty_print(current_solutions)
+
+	current_solutions = selection(current_solutions, mu, t)
+
+	print("Selection:")
+	pretty_print(current_solutions)
+	print("MIN:", min(current_solutions, key=lambda solution: solution[0]))
+
+	iteration = 1
+	while iteration <= threshold:
+		iteration += 1
+		current_solutions = variation(terminals, current_solutions, lda)
+
+		print("Variations:")
+		pretty_print(current_solutions)
+
+		current_solutions = selection(current_solutions, mu, t)
+
+		print("Selection:")
+		pretty_print(current_solutions)
+		print("MIN:",
+		min(current_solutions, key=lambda solution: solution[0]))
+
+	#return min(current_solutions, key=lambda solution: solution[0])
+	return current_solutions
+
+
 if __name__ == '__main__':
-	g = parser.read_graph("Heuristic/instance039.gr")
-	graph     = g[0]
-	terminals = g[1]
-	print(ls.gain(ls.first_solution(graph, terminals)))
-	nb_gene = []
-	for i in range(10):
-			nb_gene_act = (i+1)*5
-			print(nb_gene_act)
-			nb_fusions = []
-			better_res = []
-			for j in range(10):
-				my_sol =genetic(graph, terminals,nb_gene_act,16)
-				nb_fusions.append(my_sol[1])
-				better_res.append(ls.gain(my_sol[0]))
-			print(nb_fusions)
-			print(better_res)
+	graph,terminals = parser.read_graph("Heuristic/instance039.gr")
+	a = genetic2 (graph, terminals, 3, 2, variation_mutation, selection_Boltzmann, 1000)
+#	lda = 2
+#	mu  = 3
+#	init_sols = initialisation(graph, terminals, mu)
+#	cur_sols  = variation_crossover(terminals, init_sols, lda)
+#	cur_sols2 = variation_mutation(terminals, cur_sols, lda)
+#	sols1     = selection_elitist_classic(cur_sols2, mu, 0)
+#	sols2     = selection_elitist_offsprings(cur_sols, mu, 0)
+#	sols3     = selection_fitness_proportional(cur_sols2, mu, 0)
+#	sols4     = selection_Boltzmann(cur_sols2, mu, 1000)
+#	sols5     = selection_threshold(cur_sols2, mu, -100)
+#	print(ls.gain(ls.first_solution(graph, terminals)))
+#	nb_gene = []
+#	for i in range(10):
+#		nb_gene_act = (i+1)*5
+#		print(nb_gene_act)
+#		nb_fusions = []
+#		better_res = []
+#		for j in range(10):
+#			my_sol = genetic(graph, terminals, nb_gene_act, 16)
+#			nb_fusions.append(my_sol[1])
+#			better_res.append(ls.gain(my_sol[0]))
+#		print(nb_fusions)
+#		print(better_res)
 
