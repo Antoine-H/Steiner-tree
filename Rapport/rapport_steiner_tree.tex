@@ -77,7 +77,7 @@ La version la plus simple qui consiste à tirer aléatoirement l'une des trois m
 \subsubsection{Version 2}
 Cf one\_step\_search\_v2() dans le fichier local\_search.
 
-Cette version voulait s'affranchir du problème du coût de suppression... Elle s'est donc complètement affranchie de la suppression d'arête. En effet cette version est environs 5 fois plus rapide mais comme décrit ci dessous, ses résultats sont bien plus faibles. On remarque donc que cette manière d'explorer l'ensemble des solutions semble nécessaire et que un simple clean régulier des solutions ne suffit pas. Fort de ce constat nous avons donc proposé la version 3.
+Cette version voulait s'affranchir du problème du coût de suppression... Elle s'est donc complètement affranchie de la suppression d'arête. En effet cette version est environs 5 fois plus rapide mais comme décrit ci dessous, ses résultats sont legerement plus faibles on peut donc vouloir garder la notion de suppression d'arêtes.
 
 \subsubsection{Version 3}
 
@@ -90,16 +90,15 @@ Cette ultime version n'est pas spécialement plus rapide (bien que légèrement)
 
 La figure ... nous présente un exemple de test sur une instance (instance 039) de la fonction local\_search\_only\_better (décrite dans la partie suivante) avec 1000 itérations. Le temps d’exécution est relativement long (environs 25 minutes pour la version 1 et 3 et 5 pour la version 2). Les points rouges sont le gain de notre meilleure solution a l'instant $k$ et les points bleus le gain du voisin calculé pour l'instant $k$.
 
-On voit clairement que la version 2 n'est pas très efficace : convergence plus lente pour des valeurs équivalentes, convergence finale beaucoup plus haute que les autres versions et gains des solutions visitées bien plus hauts que celles des deux autres. 
+On voit clairement que la version 2 est aussi efficace : convergence legerement plus lente pour des valeurs équivalentes, convergence finale beaucoup plus haute que les autres versions et gains des solutions visitées bien plus hauts que celles des deux autres. 
 
 Les versions 1 et 3 semblent assez proches, bien que la version 3 semble donner de meilleurs résultats.
 
 \begin{figure}
 
-\includegraphics[scale=.3]{images/without_error_1000_v1}
+\includegraphics[scale=.4]{images/without_error_1000_v1}
 \includegraphics[scale=.4]{images/without_error_1000_v2}
-\includegraphics[scale=.3
-]{images/without_error_1000_v3}
+\includegraphics[scale=.4]{images/without_error_1000_v3}
 \caption{Dans l'ordre de gauche à droite : version 1, 2, 3}
 \end{figure}
 

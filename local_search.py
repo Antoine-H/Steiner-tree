@@ -186,7 +186,7 @@ def one_step_search_v3(graph, cur_sol, terminals):
             nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
         nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
-def neighbors_of_solution (graph, cur_sol, terminals, version_number = 1, nb_modif = 10):
+def neighbors_of_solution (graph, cur_sol, terminals, version_number = 2, nb_modif = 10):
     act      = gain(cur_sol)
     solution = cur_sol
     for i in range(nb_modif):

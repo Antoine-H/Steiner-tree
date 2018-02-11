@@ -81,7 +81,7 @@ def simulated_anhilling(nb_step = 10, heat_strategy = heat_strategy_linear):
 
 
 if __name__ == '__main__':
-	g = parser.read_graph("Heuristic/instance039.gr")
+	g = parser.read_graph("Heuristic/instance001.gr")
 	graph     = g[0]
 	terminals = g[1]
 	temps1 = time.clock()
