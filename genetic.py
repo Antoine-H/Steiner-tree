@@ -31,7 +31,7 @@ def fusion(graph0, graph1, terminals):
 #
 def genetic(graph, terminals, nb_generation, taille_population):
 	population = random_solution(graph, terminals, taille_population)
-	population.sort(key=lambda pop: pop[2], reverse=True)
+	population.sort(key=lambda pop: pop[0], reverse=True)
 	#population.sort()
 	#population.reverse()
 	for i in range(nb_generation):
