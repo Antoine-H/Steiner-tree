@@ -30,7 +30,6 @@ def genetic(graph,terminals, nb_generation,taille_population):
 	population.sort()
 	population.reverse()
 	for i in range(nb_generation):
-		print("on attaque la generation numero " + str(i))
 		for j in range(taille_population/2):
 			population.pop()
 		for j in range(taille_population/4):
@@ -51,14 +50,17 @@ if __name__ == '__main__':
 	g = parser.read_graph("Heuristic/instance039.gr")
 	graph = g[0]
 	terminals = g[1]
-	print(ls.gain(ls.first_solution(graph, terminals)))
+	print(ls.gain(ls.first_solution(graph, terminals))) 
 	nb_gene = []
-	nb_fusions = []
-	for i in range(5):
-		nb_gene_act = i*5+5
-		nb_gene.append(nb_gene_act) 
-		my_sol = genetic(graph, terminals,nb_gene_act,24)
-		last_graph = my_sol[0]
-		nb_fusions.append(my_sol[1])
-	print (nb_gene)
-	print(nb_fusions)
+	for i in range(10):
+			nb_gene_act = (i+1)*5
+			print(nb_gene_act)
+			nb_fusions = []
+			better_res = []
+			for j in range(10):
+				my_sol = genetic(graph, terminals,nb_gene_act,16)
+				nb_fusions.append(my_sol[1])
+				better_res.append(ls.gain(my_sol[0]))
+			print(nb_fusions)
+			print(better_res)
+	

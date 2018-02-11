@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{Abstract}{}% 1
+\BOOKMARK [1][-]{section.2}{Introduction}{}% 2
+\BOOKMARK [1][-]{section.3}{Probl\350mes des arbres de Steiner}{}% 3
+\BOOKMARK [1][-]{section.4}{Optimisation d\351terministes}{}% 4
+\BOOKMARK [1][-]{section.5}{Notion de voisin}{}% 5
+\BOOKMARK [2][-]{subsection.5.1}{Presentation du pr\351c\351dent papier}{section.5}% 6
+\BOOKMARK [2][-]{subsection.5.2}{Neighbour choice}{section.5}% 7
+\BOOKMARK [1][-]{section.6}{Local Searchs}{}% 8
+\BOOKMARK [2][-]{subsection.6.1}{Sans erreur}{section.6}% 9
+\BOOKMARK [2][-]{subsection.6.2}{Avec erreur}{section.6}% 10
+\BOOKMARK [2][-]{subsection.6.3}{Recuit simul\351}{section.6}% 11
+\BOOKMARK [3][-]{subsubsection.6.3.1}{Pr\351sentation basique}{subsection.6.3}% 12
+\BOOKMARK [3][-]{subsubsection.6.3.2}{Choix de la temp\351rature}{subsection.6.3}% 13
+\BOOKMARK [1][-]{section.7}{Algorithmes biologiques}{}% 14
+\BOOKMARK [2][-]{subsection.7.1}{Algorithme mol\351culaire}{section.7}% 15
+\BOOKMARK [3][-]{subsubsection.7.1.1}{Choix des }{subsection.7.1}% 16

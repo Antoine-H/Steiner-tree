@@ -218,7 +218,7 @@ def test (heuristic, graph, terminals,nb_test = 5, p=0, new=nx.Graph()):
 
 
 if __name__ == '__main__':
-    g = parser.read_graph("Heuristic/instance039.gr")
+    g = parser.read_graph("Heuristic/instance051.gr")
     graph     = g[0]
     terminals = g[1]
     g0 = first_solution(graph, terminals)
