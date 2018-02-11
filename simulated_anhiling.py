@@ -44,7 +44,11 @@ def local_search_accept_error(nb_step  = 10,p = .1):
 	return(l_act, l_new)
 
 def heat_strategy_linear(nb_step, act_gain, new_gain):
-	r_seuil = math.exp((act_gain-new_gain)/float(10*nb_step))
+	if act_gain>new_gain:
+		return(1)
+	heat    =  5000/nb_step 
+	r_seuil = math.exp(float(act_gain-new_gain)/heat) 
+	print(r_seuil,nb_step,act_gain,new_gain, act_gain-new_gain)
 	return(r_seuil)
 
 def test_exp():
@@ -56,7 +60,7 @@ def simulated_anhilling(nb_step = 10, heat_strategy = heat_strategy_linear):
 	act_gain = ls.gain(cur_sol)
 	l_act = [act_gain]
 	l_new = [act_gain]
-	l_seuils = [0]
+	l_seuils = [1]
 	for nb_step_act in range(nb_step):
 		new_sol = ls.neighbors_of_solution(graph, cur_sol, terminals)
 		new_gain = ls.gain(new_sol)
@@ -76,10 +80,9 @@ if __name__ == '__main__':
 	g = parser.read_graph("Heuristic/instance039.gr")
 	graph = g[0]
 	terminals = g[1]
-	sol = simulated_anhilling(10,heat_strategy_linear)
+	sol = local_search_accept_error(1000,0.005)
 	plt.plot(sol[0],'ro')
 	plt.plot(sol[1],'b^')
-	plt.show()
-	plt.plot(sol[2],'b^')
+	#plt.plot(sol[2],'b^')
 	plt.show()
 
