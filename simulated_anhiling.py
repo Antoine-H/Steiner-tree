@@ -16,12 +16,7 @@ def local_search_only_better(nb_step  = 10):
 	l_act    = [act_gain]
 	l_new    = [act_gain]
 	for i in range(nb_step):
-<<<<<<< HEAD
-		print(i)
-		new_sol = ls.neighbors_of_solution(graph, cur_sol, terminals)
-=======
 		new_sol  = ls.neighbors_of_solution(graph, cur_sol, terminals)
->>>>>>> e1685df82c719ad1f5f81cc1f75a5765445725ca
 		new_gain = ls.gain(new_sol)
 		l_new.append(new_gain)
 		if new_gain < act_gain:
@@ -38,12 +33,7 @@ def local_search_accept_error(nb_step  = 10,p = .1):
 	l_act    = [act_gain]
 	l_new    = [act_gain]
 	for i in range(nb_step):
-<<<<<<< HEAD
-		print(i)
-		new_sol = ls.neighbors_of_solution(graph, cur_sol, terminals)
-=======
 		new_sol  = ls.neighbors_of_solution(graph, cur_sol, terminals)
->>>>>>> e1685df82c719ad1f5f81cc1f75a5765445725ca
 		new_gain = ls.gain(new_sol)
 		l_new.append(new_gain)
 		r = random.random()
@@ -87,13 +77,8 @@ def simulated_anhilling(nb_step = 10, heat_strategy = heat_strategy_linear):
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-	g = parser.read_graph("Heuristic/instance051.gr")
-	graph = g[0]
-=======
 	g = parser.read_graph("Heuristic/instance039.gr")
 	graph     = g[0]
->>>>>>> e1685df82c719ad1f5f81cc1f75a5765445725ca
 	terminals = g[1]
 	sol = local_search_accept_error(100,0.005)
 	plt.plot(sol[0],'ro')
