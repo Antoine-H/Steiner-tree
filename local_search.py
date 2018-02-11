@@ -166,6 +166,22 @@ def one_step_search (graph, cur_sol, terminals):
         else:
             nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
+def one_step_search_v2(graph, cur_sol, terminals, k = 4):
+    for i in range(k):
+        p = random.random()
+        if p < 0.5:
+            add_random_path(graph,cur_sol)
+        else: 
+            nm_step_dummy(graph, cur_sol, terminals, 10,0)
+
+def neighbors_of_solution_v2 (graph, cur_sol, terminals, nb_modif = 5):
+    act      = gain(cur_sol)
+    solution = cur_sol
+    one_step_search_v2(graph, cur_sol, terminals, nb_modif)
+    clean(solution, terminals)
+    return solution
+
+
 
 def neighbors_of_solution (graph, cur_sol, terminals, nb_modif = 10):
     act      = gain(cur_sol)

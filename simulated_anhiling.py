@@ -16,7 +16,8 @@ def local_search_only_better(nb_step  = 10):
 	l_act    = [act_gain]
 	l_new    = [act_gain]
 	for i in range(nb_step):
-		new_sol  = ls.neighbors_of_solution(graph, cur_sol, terminals)
+		print(i)
+		new_sol  = ls.neighbors_of_solution_v2(graph, cur_sol, terminals)
 		new_gain = ls.gain(new_sol)
 		l_new.append(new_gain)
 		if new_gain < act_gain:
@@ -81,7 +82,7 @@ if __name__ == '__main__':
 	g = parser.read_graph("Heuristic/instance039.gr")
 	graph     = g[0]
 	terminals = g[1]
-	sol = local_search_accept_error(100,0.005)
+	sol = local_search_only_better(100)
 	plt.plot(sol[0],'ro')
 	plt.plot(sol[1],'b^')
 	#plt.plot(sol[2],'b^')
