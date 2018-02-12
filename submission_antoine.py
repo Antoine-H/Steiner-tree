@@ -20,8 +20,8 @@ def read_graph_stdin ():
 	for e in sys.stdin:
 		if e.startswith("E "):
 			graph.add_weighted_edges_from([(int(e.split()[1]),
-											int(e.split()[2]),
-											int(e.split()[3]))])
+							int(e.split()[2]),
+							int(e.split()[3]))])
 		if e.startswith("T "):
 			terminals.add_nodes_from([int(e.split()[1])])
 
@@ -216,20 +216,15 @@ def is_admissible (subgraph, terminals):
 
 
 # First solution : 2-approx
-def first_solution (graph,terminals):
+def first_solution(graph,terminals):
 	graph_t = nx.Graph()
 	too_add = []
 	approx_spanning = nx.Graph()
 	ter = terminals.nodes()
-	#n = len(list(ter))
-	#i =0
 	for n1 in ter:
-		#print(i,n)
-		#i+=1
-		sh_path_l = nx.single_source_dijkstra_path_length(graph,n1)
 		for n2 in ter:
 			if n1 < n2:
-				w = sh_path_l[n2]
+				w = nx.shortest_path_length(graph,n1, n2,"weight")
 				too_add.append((n1,n2,w))
 	graph_t.add_weighted_edges_from(too_add)
 	spanning_tree = nx.minimum_spanning_tree(graph_t)
@@ -239,6 +234,30 @@ def first_solution (graph,terminals):
 			data = graph.get_edge_data(path[i],path[i+1])["weight"]
 			approx_spanning.add_edge(path[i],path[i+1],weight=data)
 	return approx_spanning
+
+#def first_solution (graph,terminals):
+#	graph_t = nx.Graph()
+#	too_add = []
+#	approx_spanning = nx.Graph()
+#	ter = terminals.nodes()
+#	#n = len(list(ter))
+#	#i =0
+#	for n1 in ter:
+#		#print(i,n)
+#		#i+=1
+#		sh_path_l = nx.single_source_dijkstra_path_length(graph,n1)
+#		for n2 in ter:
+#			if n1 < n2:
+#				w = sh_path_l[n2]
+#				too_add.append((n1,n2,w))
+#	graph_t.add_weighted_edges_from(too_add)
+#	spanning_tree = nx.minimum_spanning_tree(graph_t)
+#	for (i,j) in spanning_tree.edges():
+#		path = nx.shortest_path(graph,i, j,"weight")
+#		for i in range(len(path)-1):
+#			data = graph.get_edge_data(path[i],path[i+1])["weight"]
+#			approx_spanning.add_edge(path[i],path[i+1],weight=data)
+#	return approx_spanning
 
 
 # Generates solutions based on local search.
@@ -405,6 +424,7 @@ def signal_term_handler(signal, frame):
 def print_output (solution):
 	print("VALUE", solution[0])
 	for e in solution[1].edges():
+		#print("E",e[0], e[1], solution[1].get_edge_data(*e)["weight"])
 		print(e[0], e[1])
 
 

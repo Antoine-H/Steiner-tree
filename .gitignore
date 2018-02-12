@@ -4,3 +4,4 @@ weighted_graph.png
 first_solution.png
 *.pyc
 instanceXYZ.ost
+.gitignore
