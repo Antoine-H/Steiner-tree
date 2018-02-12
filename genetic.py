@@ -262,6 +262,7 @@ def genetic_no_blabla (graph, terminals, mu, lda, variation,
 
 if __name__ == '__main__':
 	graph,terminals = parser.read_graph("Heuristic/instance039.gr")
+<<<<<<< HEAD
 	a = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_offsprings, 1000, 1000)
 	b = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_classic, 1000, 1000)
 	c = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_Boltzmann, 1000, 1000)
@@ -277,6 +278,42 @@ if __name__ == '__main__':
 	#plt.plot(d)
 	#plt.plot(e)
 
+=======
+	#LOUIS#a = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_offsprings, 1000, 1000)
+	#LOUIS#b = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_classic, 1000, 1000)
+	#LOUIS#c = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_Boltzmann, 1000, 1000)
+	#LOUIS#d = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_threshold, 1000, -100)
+
+	#LOUIS##print(d)
+	#LOUIS##print(e)
+
+	#LOUIS#plt.plot(a,'ro')
+	#LOUIS#plt.plot(b , 'gx')
+	#LOUIS#plt.plot(c, 'b^')
+	#LOUIS#plt.plot(d, 'ko')
+	#LOUIS##plt.plot(d)
+	#LOUIS##plt.plot(e)
+
+	a = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_elitist_classic, -500, 1000)
+	b = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_elitist_offsprings, -500, 1000)
+	#c = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_, -500, 1000)
+	d = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_Boltzmann, 1000, 1000)
+	e = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_threshold, 1000, -100)
+
+	print(a)
+	print(b)
+	#print(c)
+	print(d)
+	print(e)
+
+	plt.plot(a)
+	plt.plot(b)
+	#plt.plot(c)
+	plt.plot(d)
+	plt.plot(e)
+
+	#plt.savefig("Plots_Antoine/5,2,classoffbolt1000Tre-100,mutation2")
+>>>>>>> 07b13a835f8257682664a9ecad50c9880f04932c
 	plt.show()
 
 #	lda = 2
