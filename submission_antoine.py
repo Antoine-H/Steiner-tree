@@ -150,28 +150,28 @@ def one_step_search (graph, cur_sol, terminals):
 def one_step_search_v2(graph, cur_sol, terminals):
 		p = random.random()
 		if p < 0.5:
-			add_random_path(graph,cur_sol) #ajout de path
+			add_random_path(graph,cur_sol)
 		else:
-			nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
+			nm_step_dummy(graph, cur_sol, terminals, 10,0)
 
 
 def one_step_search_v3(graph, cur_sol, terminals):
 		p = random.random()
 		if p < 0.5:
-			add_random_path(graph,cur_sol) #ajout de path
+			add_random_path(graph,cur_sol)
 		else:
-			nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
+			nm_step_dummy(graph, cur_sol, terminals, 10,0)
 		p = random.random()
 		if p < 0.5:
-			add_random_path(graph,cur_sol) #ajout de path
+			add_random_path(graph,cur_sol)
 		else:
-			nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
+			nm_step_dummy(graph, cur_sol, terminals, 10,0)
 		nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
 
 def neighbors_of_solution (graph, cur_sol, terminals,
-										version_number = 2, nb_modif = 10):
-	act		 = gain(cur_sol)
+					version_number = 2, nb_modif = 10):
+	act      = gain(cur_sol)
 	solution = cur_sol
 	for i in range(nb_modif):
 		new_sol  = solution.copy()
@@ -224,7 +224,8 @@ def first_solution(graph,terminals):
 	for n1 in ter:
 		for n2 in ter:
 			if n1 < n2:
-				w = nx.shortest_path_length(graph,n1, n2,"weight")
+				w = nx.shortest_path_length(graph,
+							n1, n2,"weight")
 				too_add.append((n1,n2,w))
 	graph_t.add_weighted_edges_from(too_add)
 	spanning_tree = nx.minimum_spanning_tree(graph_t)
@@ -234,6 +235,7 @@ def first_solution(graph,terminals):
 			data = graph.get_edge_data(path[i],path[i+1])["weight"]
 			approx_spanning.add_edge(path[i],path[i+1],weight=data)
 	return approx_spanning
+
 
 #def first_solution (graph,terminals):
 #	graph_t = nx.Graph()
@@ -266,7 +268,7 @@ def random_solution (graph, terminals, n):
 	first_sol = first_solution(graph, terminals)
 	for i in range(n):
 		n_graph = neighbors_of_solution(
-						graph, first_sol, terminals, 10)
+					graph, first_sol, terminals, 10)
 		poids	= gain(n_graph)
 		sols.append((poids, n_graph, 0))
 	return sols
@@ -422,13 +424,16 @@ def signal_term_handler(signal, frame):
 
 
 def print_output (solution):
-	print("VALUE", solution[0])
-	for e in solution[1].edges():
-		#print("E",e[0], e[1], solution[1].get_edge_data(*e)["weight"])
-		print(e[0], e[1])
+	if solution:
+		print("VALUE", solution[0])
+		for e in solution[1].edges():
+			#print("E",e[0], e[1],
+			#	solution[1].get_edge_data(*e)["weight"])
+			print(e[0], e[1])
 
 
-def genetic_sigterm (graph, terminals, mu, lda, variation, selection, t, threshold=3):
+def genetic_sigterm (graph, terminals, mu,
+			lda, variation, selection, t, threshold=3):
 
 	signal.signal(signal.SIGTERM, signal_term_handler)
 
@@ -447,5 +452,6 @@ def genetic_sigterm (graph, terminals, mu, lda, variation, selection, t, thresho
 
 if __name__ == '__main__':
 	graph,terminals = read_graph_stdin()
-	genetic_sigterm (graph, terminals, 30, 4, variation_mutation, selection_Boltzmann, 1000, 1000)
+	genetic_sigterm (graph, terminals, 30, 4, variation_mutation,
+					selection_Boltzmann, 1000, 1000)
 
