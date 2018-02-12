@@ -4,6 +4,9 @@ import networkx as nx
 import parser
 import random
 import matplotlib.pyplot as plt
+import time
+import sys
+sys.setrecursionlimit(1000000)
 
 
 def display (graph,name_of_graph):
@@ -21,6 +24,30 @@ def first_solution (graph,terminals):
     too_add = []
     approx_spanning = nx.Graph()
     ter = terminals.nodes()
+    #n = len(list(ter))
+    #i =0
+    for n1 in ter:
+        #print(i,n)
+        #i+=1
+        sh_path_l = nx.single_source_dijkstra_path_length(graph,n1)
+        for n2 in ter:
+            if n1 < n2:
+                w = sh_path_l[n2]
+                too_add.append((n1,n2,w))
+    graph_t.add_weighted_edges_from(too_add)
+    spanning_tree = nx.minimum_spanning_tree(graph_t)
+    for (i,j) in spanning_tree.edges():
+        path = nx.shortest_path(graph,i, j,"weight")
+        for i in range(len(path)-1):
+            data = graph.get_edge_data(path[i],path[i+1])["weight"]
+            approx_spanning.add_edge(path[i],path[i+1],weight=data)
+    return approx_spanning
+
+def first_solution_non_opti(graph,terminals):
+    graph_t = nx.Graph()
+    too_add = []
+    approx_spanning = nx.Graph()
+    ter = terminals.nodes()
     for n1 in ter:
         for n2 in ter:
             if n1 < n2:
@@ -34,7 +61,6 @@ def first_solution (graph,terminals):
             data = graph.get_edge_data(path[i],path[i+1])["weight"]
             approx_spanning.add_edge(path[i],path[i+1],weight=data)
     return approx_spanning
-
 
 #Louis version, without indexing problem (edges can't be indexed)
 def is_admissible (subgraph, terminals):
@@ -253,11 +279,21 @@ def test (heuristic, graph, terminals,nb_test = 5, p=0, new=nx.Graph()):
 
 
 if __name__ == '__main__':
-    g = parser.read_graph("Heuristic/instance051.gr")
+    g = parser.read_graph("Heuristic/instance143.gr")
     graph     = g[0]
     terminals = g[1]
     g0 = first_solution(graph, terminals)
-    print("Premiere valeure : "+str(gain(g0)))
-    for i in range(30):
-        test_one_step(graph, g0, terminals, 10)
-
+    t0 = time.clock()
+    nm_step_dummy(graph, g0, terminals, 50, 0 )
+    t1 = time.clock()
+    delta1 = t1 - t0
+    print(delta1)
+    for i in range(5):
+        add_random_path(graph, g0)
+    t2 = time.clock()
+    delta2 = t2 - t1
+    print(delta2)
+    nm_step_dummy(graph, g0, terminals, 0, 50 )
+    t3 = time.clock()
+    delta3 = t3 - t2
+    print(delta3)

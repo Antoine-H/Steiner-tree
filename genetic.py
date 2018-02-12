@@ -265,7 +265,7 @@ if __name__ == '__main__':
 	a = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_offsprings, 1000, 1000)
 	b = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_classic, 1000, 1000)
 	c = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_Boltzmann, 1000, 1000)
-	d = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_threshold, 1000, -100)
+	d = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_threshold, -100, 1000)
 
 	#print(d)
 	#print(e)
