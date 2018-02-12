@@ -13,6 +13,7 @@
     urlcolor=black
 }
 \usepackage{amsmath}
+\usepackage{algorithm2e}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \author{Louis Cohen}
@@ -44,9 +45,35 @@ On dira par la suite qu'une solution est optimale si elle est admissible et que 
 
 \subsection{Algorithme}
 La plus-part de nos approximations auront pour solution de base une 2-approximation déterministe (dans le code fonction first\_solution() dans le fichier local\_search() ).
-Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = {T, E_T}$. Les nœuds sont donc les terminaux et les arêtes sont étiquetées par le poids du plus court chemin entre les deux terminaux. On va ensuite calculer un arbre couvrant minimal $Tree_{ter}$ de $G_{ter}$. Enfin va créer notre solution (2-approximation) du problème d'arbre de steiner $First\_solution$ :  pour chaque arête présente dans $Tree_{ter}$ on ajoute toutes les arêtes du plus court chemin correspondant dans $G_{ter} $ a $First\_solution$. On remarque donc que $First\_solution$ est bien une solution admissible vu que tous les terminaux seront ajoutés. On peut prouver que cet algorithme donne une deux approximation (voir ...). Je ne ferai pas ici la démonstration mais me contenterai de présenter un cas ou la borne est atteinte : (voir figure \ref{exborne} On voit que notre algorithme va choisir les arêtes $(1,2)$ $(2,3)$ et $(1,3)$ sans passer par le nœud $4$ alors que l'optimum (si $2a<b$ est de choisir les arêtes $(1,4)$ $(2,4)$ et $(3,4)$. Quand b tend vers 2a le ratio entre les deux tends vers 2.
+Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = {T, E_T}$. Les nœuds sont donc les terminaux et les arêtes sont étiquetées par le poids du plus court chemin entre les deux terminaux. On va ensuite calculer un arbre couvrant minimal $Tree_{ter}$ de $G_{ter}$. Enfin va créer notre solution (2-approximation) du problème d'arbre de steiner $First\_solution$ :  pour chaque arête présente dans $Tree_{ter}$ on ajoute toutes les arêtes du plus court chemin correspondant dans $G_{ter} $ a $First\_solution$. On remarque donc que $First\_solution$ est bien une solution admissible vu que tous les terminaux seront ajoutés. On peut prouver que cet algorithme donne une deux approximation\footnote{pour une demonstration de ce principe voir https://people.eecs.berkeley.edu/~luca/cs261/lecture02.pdf}. Je ne ferai pas ici la démonstration mais me contenterai de présenter un cas ou la borne est atteinte : (voir figure \ref{exborne} On voit que notre algorithme va choisir les arêtes $(1,2)$ $(2,3)$ et $(1,3)$ sans passer par le nœud $4$ alors que l'optimum (si $2a<b$ est de choisir les arêtes $(1,4)$ $(2,4)$ et $(3,4)$. Quand b tend vers 2a le ratio entre les deux tends vers 2.
 
 
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{graph, terminals}
+\KwResult{2-approximation solution}
+$G_{ter}$ = empty graph\;
+\For{$n_1 \in terminals$ }
+{
+	calculer tous les plus courts chemins de n1\;
+	\For{$n_2 \in terminals$, $n_2>n_1$ }
+	{
+		w = poids ( shortest\_path($n_1,n_2$))\;
+		add  ($n_1,n_2,w $) to $G_{ter}$ \; 
+	}
+}
+T = spanning\_tree($G_ter$)
+$First\_Solution$ = empty graph\;
+\For{ $(n_i, n_j) \in T$}
+{
+	\For{$(a,b)\in $ shortest\_path($n_1,n_2$)}
+	{
+		add $(a,b)$ to $First\_Solution$ \;
+	}
+}
+return($First\_Solution$ )\;
+\caption{first\_solution}
+\end{algorithm}
 
 \begin{figure}
 \includegraphics[scale=.5]{images/exemple_borne}
@@ -99,6 +126,28 @@ Cf one\_step\_search() dans le fichier local\_search.
 
 La version la plus simple qui consiste à tirer aléatoirement l'une des trois modification élémentaire et l'appliquer. Cette méthode est relativement efficace. Seul problème le coup de la suppression d'arête est (dans mon implémentation) très élevée. En effet il faut pour chaque arêtes de la solution en cours calculer toutes les composantes connexes de la solution privée de cette arête. Après calcul il était évident que cette modification élémentaire était largement plus coûteuse en pratique que les autres modifications élémentaires. D’où l'idée de la seconde version.
 
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{graph, terminals, solution}
+\KwResult{voisin de solution}
+r = random()\;
+\If{$r<1/3$}
+{
+	edge\_addition(graph, solution)\;
+}
+\If{$r\geq 1/3$ et $r<2/3$}
+{
+	add\_random\_path(graph, solution)\;
+}
+\If{$r\geq 2/3$}
+{
+	edge\_suppresion(solution, terminals)\;
+}
+\Return(solution)\;
+\caption{version\_1}
+\end{algorithm}
+
+
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline 
 temps & ajout & ajout path & suppression & nœuds & arêtes & terminaux  \\ 
@@ -107,7 +156,7 @@ instance 001 & 0,03 & 0,01 & 6,63 & 320 & 640 & 80 \\
 \hline 
 instance 039 & 0,07 & 0,01 & 58,34 & 6405 & 10454 & 16 \\ 
 \hline 
-instance  19 & 0,25 & 0,59 & 375,2 & 38307 & 71546 & 58 \\
+instance  19 & 0,32 & 1,70 & 1052 & 38307 & 71546 & 58 \\
 \hline 
 instance  143 & 0,17 & 0,03 & 423,4 & 2676 & 3894 & 1000 \\ 
 \hline 
@@ -118,11 +167,39 @@ Cf one\_step\_search\_v2() dans le fichier local\_search.
 
 Cette version voulait s'affranchir du problème du coût de suppression... Elle s'est donc complètement affranchie de la suppression d'arête. En effet cette version est environs 5 fois plus rapide mais comme décrit ci dessous, ses résultats sont légèrement plus faibles on peut donc vouloir garder la notion de suppression d'arêtes.
 
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{graph, terminals, solution}
+\KwResult{voisin de solution}
+r = random()\;
+\If{$r<1/2$}
+{
+	edge\_addition(graph, solution)\;
+}
+\If{$r\geq 1/2$}
+{
+	add\_random\_path(graph, solution)\;
+}
+\Return(solution)\;
+\caption{version\_2}
+\end{algorithm}
+
 \subsubsection{Version 3}
 
 Cf one\_step\_search\_v3() dans le fichier local\_search.
 
 Cette ultime version n'est pas spécialement plus rapide (bien que légèrement) que la précédente. Elle est légèrement moins randomisée. En effet on remarque que faire des suppression a tour de bras avant d'avoir modifié notre solution ne semble pas pertinent. On va donc forcer une modification d'ajout (aléatoirement ajout d'arêtes ou de chemin) puis une suppression, puis à nouveau une modification d'ajout. Ceci donne de meilleurs résultats que la version 1 entièrement randomisée. Un idéal serait sans doute une version 4 a mi chemin entre les deux, forçant avec haute probabilité des additions puis des suppressions puis des additions mais laissant un léger aléatoire. On peut pour certains tests choisir aléatoirement entre appliquer la version 1 et la version 3. 
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{graph, terminals, solution}
+\KwResult{voisin de solution}
+solution = version\_2(graph, terminals,solution)\;
+edge\_suppresion(solution, terminals)\;
+solution = version\_2(graph, terminals,solution)\;
+\Return(solution)\;
+\caption{version\_3}
+\end{algorithm}
 
 
 \subsubsection{Comparaison des versions}
@@ -206,6 +283,17 @@ En vert crossover, rouge mutation, bleu mix de deux}
 \label{compareajout}
 \end{figure}
 
+
+Un autre bon indicateur de l'utilité du crossover est le nombre de crossover de la meilleure solution a chaque génération. Nous définissons le nombre de crossover d'une solution par : la somme du nombre de crossover de ses parents +1 si elle issue d'un crossover, son nombre de crossover si elle est issue d'une mutation. Ce nombre est initialisé à 0. La figure \ref{nbcrossover} montre bien que ce nombre suis une loi quasimment (attention les courbes sont en echelle logarithmique), ce qui prouve qu'a chaque génération le crossover à tendance à améliorer la solution. Une première version naive n'avait tendance qu'à rester aux alentours de 1 ou 3. On voit qu'avec de petites population le nombre de crossover est relaticement plus faible mais que la courbe est bien plus croissante du au manque d'exploration de nouvelles solutions, les améliorations doivent se greffer directement sur les solutions déjà bonne. Quand le nombre de génération est plus grand ce nombre fluctue plus 
+
+\begin{figure}
+\centering
+\includegraphics[scale=.4]{images/nombre_fusion_log_5_1000.pdf}
+\includegraphics[scale=.6]{images/nombre_fusion_log_30_1000.pdf}
+\caption{Logarithme du nombre de crossover au cours 1000 générations. En haut génération de taille 5, en bas de taille 30}
+\label{nbcrossover}
+\end{figure}
+
 \subsection{Choix de la sélection des survivants}
 
 A chaque génération on choisit un certain nombre de survivants et on élimine les autres solutions. Notre fonction génétique prend en paramètre une fonction de choix des survivants "sélection". 
@@ -226,4 +314,23 @@ En vert classic, rouge offsprings, bleu Boltzmann et noir threshold}
 \label{compareselection}
 \end{figure}
 
+\section{Comparaisons globales}
+
+Notre dernière comparaison visait à comparer l'algorithme génétiques aux approches locales. Après de nombreux tests l'approche génétique c'est révélée meilleure. Ces comparaisons ont été faites à temps d'execution équivalente, on ne peut pas comparer le nombre de génération au nombre d'itération des algorithmes locaux (vu que les générations sont composées de plusieurs éléments sur lesquels on peut appliquer des algorithmes locaux). La figure \ref{comparegeneral} compare le meilleur algorithme de recherche locale que nous ayons au meilleur algorithme moléculaire. 
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=.4]{images/comparaison_genetic_without_error.pdf}
+\caption{Abscisses : temps (normalisé unité non disponible), ordonnées meilleure valeure au temps donné. En rouge algorithme génétique, en vert algorithme de recherche locale}
+\label{comparegeneral}
+\end{figure}
+
+
+\section{Conclusion}
+
+En conclusion les résultats trouvé semblent correctent. Je n'ai malheureusement pas eu le temps de comparer sur le site aux autres personnes mais en comparaison avec d'autres élèves sur l'instance 039 mes résultats semblent tout à fait valable (justification légère mais seule possible pour l'instant). Le fait que le crossover de l'algorithme génétique améliore réellement les solutions est une vraie satisfaction.
+ Quelques problèmes d'implémentation m'ont empechés de travailler suffisamment sur le recuit simulé (temps d'executions trop longs pour accepter trop d'erreurs).
+ 
+ 
 \end{document}

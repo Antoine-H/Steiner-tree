@@ -1,4 +1,4 @@
-\contentsline {section}{\numberline {1}Abstract}{1}{section.1}
+\contentsline {section}{\numberline {1}Abstract}{2}{section.1}
 \contentsline {section}{\numberline {2}Introduction}{2}{section.2}
 \contentsline {section}{\numberline {3}Probl\IeC {\`e}mes des arbres de Steiner}{2}{section.3}
 \contentsline {section}{\numberline {4}Optimisation d\IeC {\'e}terministes}{2}{section.4}
@@ -6,18 +6,20 @@
 \contentsline {subsection}{\numberline {4.2}Une anecdote d'optimisation}{3}{subsection.4.2}
 \contentsline {section}{\numberline {5}Notion de voisin}{4}{section.5}
 \contentsline {subsection}{\numberline {5.1}Pr\IeC {\'e}sentation du pr\IeC {\'e}c\IeC {\'e}dent papier}{4}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Choix de voisin}{4}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.2}Choix de voisin}{5}{subsection.5.2}
 \contentsline {subsubsection}{\numberline {5.2.1}Version 1}{5}{subsubsection.5.2.1}
-\contentsline {subsubsection}{\numberline {5.2.2}Version 2}{5}{subsubsection.5.2.2}
-\contentsline {subsubsection}{\numberline {5.2.3}Version 3}{5}{subsubsection.5.2.3}
-\contentsline {subsubsection}{\numberline {5.2.4}Comparaison des versions}{5}{subsubsection.5.2.4}
-\contentsline {section}{\numberline {6}Local Searchs}{6}{section.6}
-\contentsline {subsection}{\numberline {6.1}Sans erreur}{6}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Avec erreur}{6}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Recuit simul\IeC {\'e}}{6}{subsection.6.3}
-\contentsline {subsubsection}{\numberline {6.3.1}Pr\IeC {\'e}sentation basique}{6}{subsubsection.6.3.1}
-\contentsline {subsubsection}{\numberline {6.3.2}Choix de la temp\IeC {\'e}rature}{6}{subsubsection.6.3.2}
-\contentsline {section}{\numberline {7}Algorithmes mol\IeC {\'e}culaire}{9}{section.7}
-\contentsline {subsection}{\numberline {7.1}Principe g\IeC {\'e}n\IeC {\'e}ral}{9}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Ajouts de solutions \IeC {\`a} la population }{9}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Choix de la s\IeC {\'e}lection des survivants}{9}{subsection.7.3}
+\contentsline {subsubsection}{\numberline {5.2.2}Version 2}{6}{subsubsection.5.2.2}
+\contentsline {subsubsection}{\numberline {5.2.3}Version 3}{6}{subsubsection.5.2.3}
+\contentsline {subsubsection}{\numberline {5.2.4}Comparaison des versions}{6}{subsubsection.5.2.4}
+\contentsline {section}{\numberline {6}Local Searchs}{7}{section.6}
+\contentsline {subsection}{\numberline {6.1}Sans erreur}{7}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Avec erreur}{7}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Recuit simul\IeC {\'e}}{7}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}Pr\IeC {\'e}sentation basique}{7}{subsubsection.6.3.1}
+\contentsline {subsubsection}{\numberline {6.3.2}Choix de la temp\IeC {\'e}rature}{10}{subsubsection.6.3.2}
+\contentsline {section}{\numberline {7}Algorithmes mol\IeC {\'e}culaire}{10}{section.7}
+\contentsline {subsection}{\numberline {7.1}Principe g\IeC {\'e}n\IeC {\'e}ral}{10}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Ajouts de solutions \IeC {\`a} la population }{10}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Choix de la s\IeC {\'e}lection des survivants}{11}{subsection.7.3}
+\contentsline {section}{\numberline {8}Comparaisons globales}{13}{section.8}
+\contentsline {section}{\numberline {9}Conclusion}{13}{section.9}

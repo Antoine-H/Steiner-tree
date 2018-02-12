@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.10)  12 FEB 2018 12:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.10)  12 FEB 2018 14:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -552,36 +552,92 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 14.
 
-(./rapport_steiner_tree.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2013/01/06 v5.00 algorithms environments
+\c@AlgoLine=\count110
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\algocf@hangindent=\skip47
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+********************************************************
+Package `algorithm2e' Release 5.1 -- october 19 2015 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (christophe.fiorio@umontpellier.fr)
+********************************************************
+\skiptotal=\skip48
+\skiplinenumber=\skip49
+\skiprule=\skip50
+\skiphlne=\skip51
+\skiptext=\skip52
+\skiplength=\skip53
+\algomargin=\skip54
+\skipalgocfslide=\skip55
+\algowidth=\dimen118
+\inoutsize=\dimen119
+\inoutindent=\dimen120
+\interspacetitleruled=\dimen121
+\interspacealgoruled=\dimen122
+\interspacetitleboxruled=\dimen123
+\algocf@ruledwidth=\skip56
+\algocf@inoutbox=\box28
+\algocf@inputbox=\box29
+\AlCapSkip=\skip57
+\AlCapHSkip=\skip58
+\algoskipindent=\skip59
+\algocf@nlbox=\box30
+\algocf@hangingbox=\box31
+\algocf@untilbox=\box32
+\algocf@skipuntil=\skip60
+\algocf@capbox=\box33
+\algoheightruledefault=\skip61
+\algoheightrule=\skip62
+\algotitleheightruledefault=\skip63
+\algotitleheightrule=\skip64
+\c@algocfline=\count111
+\c@algocfproc=\count112
+\c@algocf=\count113
+\algocf@algoframe=\box34
+\algocf@algobox=\box35
+) (./rapport_steiner_tree.aux)
 \openout1 = `rapport_steiner_tree.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count110
-\scratchdimen=\dimen118
-\scratchbox=\box28
-\nofMPsegments=\count111
-\nofMParguments=\count112
+\scratchcounter=\count114
+\scratchdimen=\dimen124
+\scratchbox=\box36
+\nofMPsegments=\count115
+\nofMParguments=\count116
 \everyMPshowfont=\toks22
-\MPscratchCnt=\count113
-\MPscratchDim=\dimen119
-\MPnumerator=\count114
-\makeMPintoPDFobject=\count115
+\MPscratchCnt=\count117
+\MPscratchDim=\dimen125
+\MPnumerator=\count118
+\makeMPintoPDFobject=\count119
 \everyMPtoPDFconversion=\toks23
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -598,7 +654,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box29
+\AtBeginShipoutBox=\box37
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2016/01/03 v1.1b Standard LaTeX Color (DPC)
@@ -608,7 +664,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 143.
 )
-Package hyperref Info: Link coloring ON on input line 20.
+Package hyperref Info: Link coloring ON on input line 21.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -616,22 +672,22 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count116
+\c@section@level=\count120
 )
-LaTeX Info: Redefining \ref on input line 20.
-LaTeX Info: Redefining \pageref on input line 20.
-LaTeX Info: Redefining \nameref on input line 20.
+LaTeX Info: Redefining \ref on input line 21.
+LaTeX Info: Redefining \pageref on input line 21.
+LaTeX Info: Redefining \nameref on input line 21.
 
 (./rapport_steiner_tree.out) (./rapport_steiner_tree.out)
 \@outlinefile=\write3
 \openout3 = `rapport_steiner_tree.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 23.
+LaTeX Font Info:    Try loading font information for U+msa on input line 24.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 23.
+LaTeX Font Info:    Try loading font information for U+msb on input line 24.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -643,106 +699,112 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (21.66742pt too wide) in paragraph at lines 46--48
+Overfull \hbox (44.30005pt too wide) in paragraph at lines 48--48
+[][][]\OT1/cmr/m/n/8 pour une demon-stra-tion de ce principe voir https://peopl
+e.eecs.berkeley.edu/ luca/cs261/lecture02.pdf| 
+ []
+
+
+Overfull \hbox (21.66742pt too wide) in paragraph at lines 47--49
 \OT1/cmr/m/n/10 La plus-part de nos ap-prox-i-ma-tions au-ront pour so-lu-tion 
 de base une 2-approximation
  []
 
-[2] <images/exemple_borne.png, id=141, 623.32875pt x 488.82625pt>
+[2] <images/exemple_borne.png, id=152, 623.32875pt x 488.82625pt>
 File: images/exemple_borne.png Graphic file (type png)
 
 <use images/exemple_borne.png>
-Package pdftex.def Info: images/exemple_borne.png used on input line 52.
+Package pdftex.def Info: images/exemple_borne.png used on input line 79.
 (pdftex.def)             Requested size: 311.6636pt x 244.41252pt.
 
-Overfull \hbox (3.44498pt too wide) in paragraph at lines 61--74
+Overfull \hbox (3.44498pt too wide) in paragraph at lines 88--101
 [][] 
  []
 
-[3 <./images/exemple_borne.png (PNG copy)>] [4]
-Overfull \hbox (26.36171pt too wide) in paragraph at lines 102--115
+[3] [4 <./images/exemple_borne.png (PNG copy)>]
+Overfull \hbox (26.36171pt too wide) in paragraph at lines 151--164
 [][] 
  []
 
-[5] <images/without_error_1000_v1.pdf, id=159, 987.20822pt x 495.04951pt>
+[5] [6] <images/without_error_1000_v1.pdf, id=186, 987.20822pt x 495.04951pt>
 File: images/without_error_1000_v1.pdf Graphic file (type pdf)
 
 <use images/without_error_1000_v1.pdf>
-Package pdftex.def Info: images/without_error_1000_v1.pdf used on input line 13
-8.
+Package pdftex.def Info: images/without_error_1000_v1.pdf used on input line 21
+5.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-<images/without_error_1000_v2.pdf, id=160, 987.20822pt x 495.04951pt>
+<images/without_error_1000_v2.pdf, id=187, 987.20822pt x 495.04951pt>
 File: images/without_error_1000_v2.pdf Graphic file (type pdf)
 
 <use images/without_error_1000_v2.pdf>
-Package pdftex.def Info: images/without_error_1000_v2.pdf used on input line 13
-9.
+Package pdftex.def Info: images/without_error_1000_v2.pdf used on input line 21
+6.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-<images/without_error_1000_v3.pdf, id=161, 987.20822pt x 495.04951pt>
+<images/without_error_1000_v3.pdf, id=188, 987.20822pt x 495.04951pt>
 File: images/without_error_1000_v3.pdf Graphic file (type pdf)
 
 <use images/without_error_1000_v3.pdf>
-Package pdftex.def Info: images/without_error_1000_v3.pdf used on input line 14
-0.
+Package pdftex.def Info: images/without_error_1000_v3.pdf used on input line 21
+7.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 138--141
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 215--218
 [][]
  []
 
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 138--141
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 215--218
 []
  []
 
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 138--141
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 215--218
 [] 
  []
 
 
-LaTeX Warning: Float too large for page by 21.99329pt on input line 143.
+LaTeX Warning: Float too large for page by 21.99329pt on input line 220.
 
-<images/with_error_01_1000.pdf, id=163, 987.20822pt x 495.04951pt>
+<images/with_error_01_1000.pdf, id=190, 987.20822pt x 495.04951pt>
 File: images/with_error_01_1000.pdf Graphic file (type pdf)
 
 <use images/with_error_01_1000.pdf>
-Package pdftex.def Info: images/with_error_01_1000.pdf used on input line 163.
+Package pdftex.def Info: images/with_error_01_1000.pdf used on input line 240.
 (pdftex.def)             Requested size: 345.52805pt x 173.26991pt.
 
-<images/with_error_005_1000.pdf, id=164, 987.20822pt x 495.04951pt>
+<images/with_error_005_1000.pdf, id=191, 987.20822pt x 495.04951pt>
 File: images/with_error_005_1000.pdf Graphic file (type pdf)
 
 <use images/with_error_005_1000.pdf>
-Package pdftex.def Info: images/with_error_005_1000.pdf used on input line 164.
+Package pdftex.def Info: images/with_error_005_1000.pdf used on input line 241.
 
 (pdftex.def)             Requested size: 345.52805pt x 173.26991pt.
 
-<images/with_error_001_1000.pdf, id=165, 987.20822pt x 495.04951pt>
+<images/with_error_001_1000.pdf, id=192, 987.20822pt x 495.04951pt>
 File: images/with_error_001_1000.pdf Graphic file (type pdf)
 
 <use images/with_error_001_1000.pdf>
-Package pdftex.def Info: images/with_error_001_1000.pdf used on input line 165.
+Package pdftex.def Info: images/with_error_001_1000.pdf used on input line 242.
 
 (pdftex.def)             Requested size: 345.52805pt x 173.26991pt.
 
-Overfull \hbox (0.52805pt too wide) in paragraph at lines 163--167
+Overfull \hbox (0.52805pt too wide) in paragraph at lines 240--244
 [][]
  []
 
 
-Overfull \hbox (0.52805pt too wide) in paragraph at lines 163--167
+Overfull \hbox (0.52805pt too wide) in paragraph at lines 240--244
 []
  []
 
 
-Overfull \hbox (0.52805pt too wide) in paragraph at lines 163--167
+Overfull \hbox (0.52805pt too wide) in paragraph at lines 240--244
 []
  []
 
-[6] [7 <./images/without_error_1000_v1.pdf> <./images/without_error_1000_v2.pdf
+[7] [8 <./images/without_error_1000_v1.pdf> <./images/without_error_1000_v2.pdf
 
 
 pdfTeX warning: pdflatex (file ./images/without_error_1000_v2.pdf): PDF inclusi
@@ -751,7 +813,7 @@ on: multiple pdfs with page group included in a single page
 
 pdfTeX warning: pdflatex (file ./images/without_error_1000_v3.pdf): PDF inclusi
 on: multiple pdfs with page group included in a single page
->] [8 <./images/with_error_01_1000.pdf> <./images/with_error_005_1000.pdf
+>] [9 <./images/with_error_01_1000.pdf> <./images/with_error_005_1000.pdf
 
 pdfTeX warning: pdflatex (file ./images/with_error_005_1000.pdf): PDF inclusion
 : multiple pdfs with page group included in a single page
@@ -759,50 +821,87 @@ pdfTeX warning: pdflatex (file ./images/with_error_005_1000.pdf): PDF inclusion
 
 pdfTeX warning: pdflatex (file ./images/with_error_001_1000.pdf): PDF inclusion
 : multiple pdfs with page group included in a single page
->] <images/comparaison_genetic_ajout.pdf, id=273, 987.20822pt x 495.04951pt>
+>] <images/comparaison_genetic_ajout.pdf, id=300, 987.20822pt x 495.04951pt>
 File: images/comparaison_genetic_ajout.pdf Graphic file (type pdf)
 
 <use images/comparaison_genetic_ajout.pdf>
 Package pdftex.def Info: images/comparaison_genetic_ajout.pdf used on input lin
-e 203.
+e 280.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 203--205
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 280--282
  [][] 
  []
 
-[9]
-<images/comparaison_genetic_selection.pdf, id=280, 987.20822pt x 495.04951pt>
+[10] <images/nombre_fusion_log_5_1000.pdf, id=307, 987.20822pt x 495.04951pt>
+File: images/nombre_fusion_log_5_1000.pdf Graphic file (type pdf)
+
+<use images/nombre_fusion_log_5_1000.pdf>
+Package pdftex.def Info: images/nombre_fusion_log_5_1000.pdf used on input line
+ 291.
+(pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
+
+<images/nombre_fusion_log_30_1000.pdf, id=308, 462.52798pt x 346.89601pt>
+File: images/nombre_fusion_log_30_1000.pdf Graphic file (type pdf)
+
+<use images/nombre_fusion_log_30_1000.pdf>
+Package pdftex.def Info: images/nombre_fusion_log_30_1000.pdf used on input lin
+e 292.
+(pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
+
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 291--293
+ [][] 
+ []
+
+<images/comparaison_genetic_selection.pdf, id=310, 987.20822pt x 495.04951pt>
 File: images/comparaison_genetic_selection.pdf Graphic file (type pdf)
 
 <use images/comparaison_genetic_selection.pdf>
 Package pdftex.def Info: images/comparaison_genetic_selection.pdf used on input
- line 223.
+ line 311.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 223--225
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 311--313
  [][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 229.
-[10 <./images/comparaison_genetic_ajout.pdf>] [11 <./images/comparaison_genetic
-_selection.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 229.
+[11 <./images/comparaison_genetic_ajout.pdf>] [12 <./images/nombre_fusion_log_5
+_1000.pdf> <./images/nombre_fusion_log_30_1000.pdf
+
+pdfTeX warning: pdflatex (file ./images/nombre_fusion_log_30_1000.pdf): PDF inc
+lusion: multiple pdfs with page group included in a single page
+>]
+<images/comparaison_genetic_without_error.pdf, id=363, 987.20822pt x 495.04951p
+t>
+File: images/comparaison_genetic_without_error.pdf Graphic file (type pdf)
+ <use images/comparaison_genetic_without_error.pdf>
+Package pdftex.def Info: images/comparaison_genetic_without_error.pdf used on i
+nput line 324.
+(pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
+
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 324--325
+ [][] 
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 336.
+[13 <./images/comparaison_genetic_selection.pdf>] [14 <./images/comparaison_gen
+etic_without_error.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 336.
  (./rapport_steiner_tree.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 229.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 229.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 336.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 336.
 Package rerunfilecheck Info: File `rapport_steiner_tree.out' has not changed.
-(rerunfilecheck)             Checksum: E1F6C80DF999F9BEE1EBD64DD7E6EC75;1572.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 229.
+(rerunfilecheck)             Checksum: F16EE2BDD2A32C89E98BDF011FF09AFB;1675.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 336.
  ) 
 Here is how much of TeX's memory you used:
- 6400 strings out of 493029
- 90879 string characters out of 6136234
- 180337 words of memory out of 5000000
- 9812 multiletter control sequences out of 15000+600000
- 11503 words of font info for 45 fonts, out of 8000000 for 9000
+ 7394 strings out of 493029
+ 106989 string characters out of 6136234
+ 206684 words of memory out of 5000000
+ 10773 multiletter control sequences out of 15000+600000
+ 11849 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,8n,28p,1478b,385s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,17n,30p,1478b,423s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
@@ -813,13 +912,16 @@ t/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts
 public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on rapport_steiner_tree.pdf (11 pages, 255605 bytes).
+6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on rapport_steiner_tree.pdf (14 pages, 306614 bytes).
 PDF statistics:
- 383 PDF objects out of 1000 (max. 8388607)
- 263 compressed objects within 3 object streams
- 41 named destinations out of 1000 (max. 500000)
- 230 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 479 PDF objects out of 1000 (max. 8388607)
+ 326 compressed objects within 4 object streams
+ 57 named destinations out of 1000 (max. 500000)
+ 261 words of extra memory for PDF output out of 10000 (max. 10000000)
 

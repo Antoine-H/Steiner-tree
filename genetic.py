@@ -6,6 +6,7 @@
 import networkx as nx
 import random
 import local_search as ls
+import simulated_anhiling as sa
 import parser
 import math
 import matplotlib.pyplot as plt
@@ -246,7 +247,7 @@ def genetic_no_blabla (graph, terminals, mu, lda, variation,
 	current_solutions = variation(terminals, initial_solutions, lda)
 	current_solutions = selection(current_solutions, mu, t)
 	min_at_time = [min(current_solutions,
-			key=lambda solution: solution[0])[0]]
+			key=lambda solution: solution[0])[2]]
 	iteration =1
 	while iteration <= threshold:
 		print(iteration)
@@ -255,28 +256,39 @@ def genetic_no_blabla (graph, terminals, mu, lda, variation,
 
 		current_solutions = selection(current_solutions, mu, t)
 		min_at_time.append(min(current_solutions,
-					key=lambda solution: solution[0])[0])
+					key=lambda solution: solution[0])[2])
 
 	#return min(current_solutions, key=lambda solution: solution[0])
 	return min_at_time
 
+
+
+
+def local_search_only_better(nb_step  = 10, version = 2):
+	cur_sol  = (ls.first_solution(graph, terminals))
+	act_gain = ls.gain(cur_sol)
+	l_act    = [act_gain]
+	l_new    = [act_gain]
+	for i in range(nb_step):
+		print(i)
+		new_sol  = ls.neighbors_of_solution(graph, cur_sol, terminals,version,5)
+		new_gain = ls.gain(new_sol)
+		l_new.append(new_gain)
+		if new_gain < act_gain:
+			act_gain = new_gain
+			cur_sol  = new_sol
+		l_act.append(act_gain)
+
+	print ls.final_value(cur_sol)
+	print ls.gain(cur_sol)
+	return l_act, l_new
+
 if __name__ == '__main__':
 	graph,terminals = parser.read_graph("Heuristic/instance039.gr")
-	a = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_offsprings, 1000, 1000)
-	b = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_classic, 1000, 1000)
-	c = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_Boltzmann, 1000, 1000)
-	d = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_threshold, -100, 1000)
-
-	#print(d)
-	#print(e)
-
-	plt.plot(a,'ro')
-	plt.plot(b , 'gx')
-	plt.plot(c, 'b^')
-	plt.plot(d, 'ko')
-	#plt.plot(d)
-	#plt.plot(e)
-
+	print(math.log(10))
+	a = genetic_no_blabla (graph, terminals, 30, 2, variation_multiple, selection_elitist_offsprings, 1000, 1000)
+	a = [math.log(n+1) for n in a]
+	plt.plot(a)
 	plt.show()
 
 #	lda = 2
