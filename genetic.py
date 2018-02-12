@@ -10,7 +10,10 @@ import simulated_annealing as sa
 import parser
 import math
 import matplotlib.pyplot as plt
+import signal
+import sys
 
+min_sol = []
 
 # Generates solutions based on local search.
 def random_solution (graph, terminals, n):
@@ -215,6 +218,35 @@ def genetic (graph, terminals, mu, lda, variation, selection, t, threshold=3):
 	return min_at_time
 
 
+def signal_term_handler(signal, frame):
+	print_output(min_sol)
+	sys.exit(0)
+
+
+def print_output (solution):
+	print("VALUE", solution[0])
+	for e in solution[1].edges():
+		print(e[0], e[1])
+
+
+def genetic_sigterm (graph, terminals, mu, lda, variation, selection, t, threshold=3):
+
+	signal.signal(signal.SIGTERM, signal_term_handler)
+
+	global min_sol
+	initial_solutions = initialisation(graph, terminals, mu)
+	current_solutions = variation(terminals, initial_solutions, lda)
+	current_solutions = selection(current_solutions, mu, t)
+
+	while True:
+		current_solutions = variation(terminals,
+						current_solutions, lda)
+
+		current_solutions = selection(current_solutions, mu, t)
+		min_sol = min(current_solutions, key=lambda sol: sol[0])
+		print("GO")
+
+
 def local_search_only_better(nb_step  = 10, version = 2):
 	cur_sol  = (ls.first_solution(graph, terminals))
 	act_gain = ls.gain(cur_sol)
@@ -238,24 +270,24 @@ def local_search_only_better(nb_step  = 10, version = 2):
 if __name__ == '__main__':
 	graph,terminals = parser.read_graph("Heuristic/instance039.gr")
 
-	a = genetic_no_blabla (graph, terminals, 30, 4, variation_mutation, selection_Boltzmann, 1000, 1000)
-	#b = genetic_no_blabla (graph, terminals, 5, 2, variation_crossover, selection_threshold, -80, 1000)
+	genetic_sigterm (graph, terminals, 30, 4, variation_mutation, selection_Boltzmann, 1000, 1000)
+	#b = genetic (graph, terminals, 5, 2, variation_crossover, selection_threshold, -80, 1000)
 	#c = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_threshold, -80, 1000)
 	#d = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_Boltzmann, 1000, 1000)
 	#e = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_threshold, -150, 1000)
 
-	print(a)
+	#print(a)
 	#print(b)
 	#print(c)
 	#print(d)
 	#print(e)
 
-	plt.plot(a)
+	#plt.plot(a)
 	#plt.plot(b)
 	#plt.plot(c)
 	#plt.plot(d)
 	#plt.plot(e)
 
 	#plt.savefig("Plots_Antoine/new/5,2,mutcmul,Threshold")
-	plt.show()
+	#plt.show()
 

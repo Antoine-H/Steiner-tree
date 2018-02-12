@@ -1,12 +1,31 @@
+#!/usr/bin/python3
 
-import random
-import networkx as nx
-import parser
-import random
-import matplotlib.pyplot as plt
+#
+#  Parser.
+#
+
 import time
+import networkx as nx
+import random
+import math
 import sys
-sys.setrecursionlimit(1000000)
+
+# Reads graphs.
+def read_graph (file):
+	graph	  = nx.Graph()
+	terminals = nx.Graph()
+	with open(file) as input:
+		graph.add_weighted_edges_from([(int(e.split()[1]),
+						int(e.split()[2]),
+						int(e.split()[3]))
+										for e in input if e.startswith("E ")])
+	with open(file) as input:
+		terminals.add_nodes_from([int(u.split()[1])
+					for u in input if u.startswith("T ")])
+
+	return [graph,terminals]
+
+
 
 
 def read_graph_stdin ():
@@ -15,51 +34,19 @@ def read_graph_stdin ():
 
 	for e in sys.stdin:
 		if e.startswith("E "):
-			graph.add_weighted_edges_from([(int(e.split()[1]),
-											int(e.split()[2]),
-											int(e.split()[3]))])
+			graph.add_weighted_edges_from([(int(e.split()[1]),int(e.split()[2]),int(e.split()[3]))])
 		if e.startswith("T "):
 			terminals.add_nodes_from([int(e.split()[1])])
 
 	return [graph,terminals]
 
 
-def display_graph (graph,name_of_graph):
-	pos = nx.spring_layout(graph)
-	nx.draw_networkx_nodes(graph,pos,node_size=30)
-	nx.draw_networkx_edges(graph,pos,width=5,alpha=0.5)
-	plt.axis('off')
-	plt.savefig(name_of_graph)
-	plt.show()
+########################################################################################################################
+
 
 
 # First solution : 2-approx
-def first_solution_opti (graph,terminals):
-	graph_t = nx.Graph()
-	too_add = []
-	approx_spanning = nx.Graph()
-	ter = terminals.nodes()
-	#n = len(list(ter))
-	#i =0
-	for n1 in ter:
-		#print(i,n)
-		#i+=1
-		sh_path_l = nx.single_source_dijkstra_path_length(graph,n1)
-		for n2 in ter:
-			if n1 < n2:
-				w = sh_path_l[n2]
-				too_add.append((n1,n2,w))
-	graph_t.add_weighted_edges_from(too_add)
-	spanning_tree = nx.minimum_spanning_tree(graph_t)
-	for (i,j) in spanning_tree.edges():
-		path = nx.shortest_path(graph,i, j,"weight")
-		for i in range(len(path)-1):
-			data = graph.get_edge_data(path[i],path[i+1])["weight"]
-			approx_spanning.add_edge(path[i],path[i+1],weight=data)
-	return approx_spanning
-
-
-def first_solution(graph,terminals):
+def first_solution (graph,terminals):
 	graph_t = nx.Graph()
 	too_add = []
 	approx_spanning = nx.Graph()
@@ -79,8 +66,7 @@ def first_solution(graph,terminals):
 	return approx_spanning
 
 
-# A solution is admissible if all terminals are in the same connected
-# component.
+#Louis version, without indexing problem (edges can't be indexed)
 def is_admissible (subgraph, terminals):
 	n0	 = list(terminals.nodes())[0]
 	comp = nx.node_connected_component(subgraph,n0)
@@ -105,7 +91,7 @@ def test_is_admissible():
 ########################################
 
 
-# Outputs the list of edges that can be added.
+#output the list of edges that can be added
 def edges_adjacent (graph, subgraph):
 	edges_adj = []
 	sub_nodes = subgraph.nodes()
@@ -116,7 +102,7 @@ def edges_adjacent (graph, subgraph):
 	return edges_adj
 
 
-# Outputs the list of edges that can be removed.
+#output the list of edges that can be removed
 def edges_to_delete (subgraph, terminals):
 	edges_to_del = []
 	graph_copy	 = subgraph.copy()
@@ -129,7 +115,6 @@ def edges_to_delete (subgraph, terminals):
 	return edges_to_del
 
 
-# Adds a shortest path between two given nodes in the current solution.
 def add_path (graph,subgraph, n1 ,n2):
 	path = nx.shortest_path(graph,n1, n2,"weight")
 	for i in range(len(path)-1):
@@ -137,7 +122,6 @@ def add_path (graph,subgraph, n1 ,n2):
 		subgraph.add_edge(path[i],path[i+1],weight=data)
 
 
-# Adds a shortest path between two random nodes in the current solution.
 def add_random_path (graph, subgraph):
 	list_e = list(subgraph.nodes())
 	n1	   = random.choice(list_e)
@@ -146,8 +130,7 @@ def add_random_path (graph, subgraph):
 		add_path(graph, subgraph, n1, n2)
 
 
-# Remove unnecessary edges.
-# Edges that do not disconnect the solution.
+#
 def clean_composante (subgraph, terminals):
 	n0	 = list(terminals.nodes())[0]
 	comp = nx.node_connected_component(subgraph,n0)
@@ -157,7 +140,7 @@ def clean_composante (subgraph, terminals):
 			subgraph.remove_node(n)
 
 
-# Remove edges as long as the solution stays admissible.
+#
 def clean (subgraph, terminals):
 	clean_composante(subgraph, terminals)
 	l = list(subgraph.edges())
@@ -190,7 +173,7 @@ def random_deletion (cur_sol, terminals):
 
 
 
-# Adds n edges, removes m edges.
+#n = nombre de test
 def nm_step_dummy (graph, cur_sol, terminals,  n=40,m=40):
 	if n > 0:
 		random_add(graph, cur_sol)
@@ -213,14 +196,12 @@ def one_step_search (graph, cur_sol, terminals):
 		else:
 			nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
-
 def one_step_search_v2(graph, cur_sol, terminals):
 		p = random.random()
 		if p < 0.5:
 			add_random_path(graph,cur_sol) #ajout de path
 		else:
 			nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
-
 
 def one_step_search_v3(graph, cur_sol, terminals):
 		p = random.random()
@@ -235,9 +216,7 @@ def one_step_search_v3(graph, cur_sol, terminals):
 			nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
 		nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
-
-def neighbors_of_solution (graph, cur_sol, terminals,
-										version_number = 2, nb_modif = 10):
+def neighbors_of_solution (graph, cur_sol, terminals, version_number = 2, nb_modif = 10):
 	act		 = gain(cur_sol)
 	solution = cur_sol
 	for i in range(nb_modif):
@@ -269,6 +248,13 @@ def gain (steiner):
 		d	+= data
 	return d + w
 
+def real_gain (steiner):
+	d = 0
+	edges = steiner.edges()
+	for e in edges:
+		data = steiner.get_edge_data(*e)["weight"]
+		d	+= data
+	return d
 
 def final_value (steiner):
 	# Assuming that max eccentricity nodes are terminals
@@ -280,6 +266,7 @@ def final_value (steiner):
 	return d
 
 # Local search. With optional parameter p \in [0,1]
+# Louis : changement de la fonction, elle renvoyait pas assez new_sol
 def local_search (heuristic, graph, cur_sol, terminals, p=0.25):
 	new_sol = heuristic(graph, cur_sol, terminals)
 	if gain(cur_sol) > gain(new_sol):
@@ -296,45 +283,116 @@ def test (heuristic, graph, terminals,nb_test = 5, p=0, new=nx.Graph()):
 	#print("le premier gain est : "+ str(gain(new)))
 	k = 0
 	while k < nb_test:
-		k  += 1
+		k+=1
 		new = local_search (heuristic, graph, new, terminals)
 		#print("le gain actuel est : "+ str(gain(new)))
 	return new
 
 
-temps_debut = 0
-temps_step = 0
 
 
-def get_step():
-	t = time.clock()
-	delta = t-temps_step
-	temps_step = t
-	return(delta)
+
+########################################################################################################################
+
+def local_search_only_better(nb_step  = 10, version = 1):
+	cur_sol  = ( first_solution(graph, terminals))
+	act_gain =	gain(cur_sol)
+	l_act	 = [act_gain]
+	l_new	 = [act_gain]
+	for i in range(nb_step):
+		print(i)
+		new_sol  =	neighbors_of_solution(graph, cur_sol, terminals,version,5)
+		new_gain =	gain(new_sol)
+		l_new.append(new_gain)
+		if new_gain < act_gain:
+			act_gain = new_gain
+			cur_sol  = new_sol
+		l_act.append(act_gain)
+	return l_act, l_new
+
+def local_search_only_better_graph(nb_step	= 10, version = 1):
+	cur_sol  = ( first_solution(graph, terminals))
+	act_gain =	gain(cur_sol)
+	l_act	 = [act_gain]
+	l_new	 = [act_gain]
+	for i in range(nb_step):
+		new_sol  =	neighbors_of_solution(graph, cur_sol, terminals,version,5)
+		new_gain =	gain(new_sol)
+		l_new.append(new_gain)
+		if new_gain < act_gain:
+			act_gain = new_gain
+			cur_sol  = new_sol
+		l_act.append(act_gain)
+	return cur_sol
+
+def local_search_accept_error(nb_step  = 10, version =2,p = .1):
+	cur_sol  = ( first_solution(graph, terminals))
+	act_gain =	gain(cur_sol)
+	l_act	 = [act_gain]
+	l_new	 = [act_gain]
+	for i in range(nb_step):
+		new_sol  =	neighbors_of_solution(graph, cur_sol, terminals)
+		new_gain =	gain(new_sol)
+		l_new.append(new_gain)
+		r = random.random()
+		if new_gain<act_gain or r<p:
+			act_gain = new_gain
+			cur_sol  = new_sol
+		l_act.append(act_gain)
+	return l_act, l_new
+
+def heat_strategy_linear(nb_step, act_gain, new_gain):
+	if act_gain > new_gain:
+		return 1
+	heat	= 5000/nb_step #a changer
+	delta	= float(act_gain-new_gain)/act_gain
+	r_seuil = math.exp(delta/heat)
+	print(r_seuil, nb_step,act_gain,new_gain, act_gain-new_gain)
+	return r_seuil
+
+def test_exp():
+	for i in range(10):
+		print(math.exp(-i))
+
+def simulated_anhilling(nb_step = 10, heat_strategy = heat_strategy_linear):
+	cur_sol  = ( first_solution(graph, terminals))
+	act_gain =	gain(cur_sol)
+	l_act	 = [act_gain]
+	l_new	 = [act_gain]
+	l_seuils = [1]
+	for nb_step_act in range(nb_step):
+		new_sol  =	neighbors_of_solution(graph, cur_sol, terminals)
+		new_gain =	gain(new_sol)
+		l_new.append(new_gain)
+		r		= random.random()
+		r_seuil = heat_strategy(nb_step_act+1, act_gain, new_gain)
+		l_seuils.append(r_seuil)
+		if r < r_seuil:
+			act_gain = new_gain
+			cur_sol  = new_sol
+		l_act.append(act_gain)
+	return l_act, l_new, l_seuils
+
+
+###############################################################################
+
+
+def print_solution(solution):
+	print("VALUE "+str(real_gain(solution)))
+	l_e = list(solution.edges())
+	for a in l_e:
+		print(str(a[0])+" "+str(a[1]))
 
 
 if __name__ == '__main__':
-	g = parser.read_graph("Heuristic/instance019.gr")
-	graph	  = g[0]
-	print(len(graph.edges()), len(graph.nodes()))
+	g = read_graph_stdin()
+	temps0 = time.clock()
+	graph = g[0]
 	terminals = g[1]
-	print(len(terminals))
-	g0 = first_solution_opti(graph, terminals)
-	t0 = time.clock()
-	temps_debut = time.clock()
-	temps_step = temps_debut
-	nm_step_dummy(graph, g0, terminals, 100, 0 )
-	t1 = time.clock()
-	delta1 = t1 -t0
-	print(delta1)
-
-	for i in range(10):
-		add_random_path(graph, g0)
-	t2 = time.clock()
-	delta2 = t2 - t1
-	print(delta2)
-	nm_step_dummy(graph, g0, terminals, 0, 100 )
-	t3 = time.clock()
-	delta3 = t3 - t2
-	print(delta3)
+	temps1 = time.clock()
+	print(temps1-temps0)
+	sol = local_search_only_better_graph(100,2)
+	print_solution(sol)
+	temps2 = time.clock()
+	print(temps2-temps1)
 
