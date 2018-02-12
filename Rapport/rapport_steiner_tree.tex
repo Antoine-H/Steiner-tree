@@ -42,6 +42,7 @@ On dira par la suite qu'une solution est optimale si elle est admissible et que 
 
 \section{Optimisation déterministes}
 
+\subsection{Algorithme}
 La plus-part de nos approximations auront pour solution de base une 2-approximation déterministe (dans le code fonction first\_solution() dans le fichier local\_search() ).
 Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = {T, E_T}$. Les nœuds sont donc les terminaux et les arêtes sont étiquetées par le poids du plus court chemin entre les deux terminaux. On va ensuite calculer un arbre couvrant minimal $Tree_{ter}$ de $G_{ter}$. Enfin va créer notre solution (2-approximation) du problème d'arbre de steiner $First\_solution$ :  pour chaque arête présente dans $Tree_{ter}$ on ajoute toutes les arêtes du plus court chemin correspondant dans $G_{ter} $ a $First\_solution$. On remarque donc que $First\_solution$ est bien une solution admissible vu que tous les terminaux seront ajoutés. On peut prouver que cet algorithme donne une deux approximation (voir ...). Je ne ferai pas ici la démonstration mais me contenterai de présenter un cas ou la borne est atteinte : (voir figure \ref{exborne} On voit que notre algorithme va choisir les arêtes $(1,2)$ $(2,3)$ et $(1,3)$ sans passer par le nœud $4$ alors que l'optimum (si $2a<b$ est de choisir les arêtes $(1,4)$ $(2,4)$ et $(3,4)$. Quand b tend vers 2a le ratio entre les deux tends vers 2.
 
@@ -52,7 +53,27 @@ Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = 
 \caption{Exemple de graphe sur lequel la borne de la 2-approximation est atteinte}
 \label{exborne}
 \end{figure}
+
+\subsection{Une anecdote d'optimisation}
+Une petite anecdote pour bien rappeler le concept de "avant de trouver des stratégies efficaces déjà optimise ton code" :
+Après avoir remarqué que mon algorithme d'optimisation était particulièrement lent (voir même ne marchait pas du tout sur les tres larges instances) j'ai remarqué que pour chaque tour de boucle pour les couples de terminaux je calculais le plus court chemin entre ces deux terminaux. Ce qui revenait à faire $O(t^2)$ Dijkstra (avec $t$ le nombre de terminaux).  Il suffit en réalité de calculer pour chaque $t_1$ son plus court chemin à tous les points du graphe (ce qui ne coûte qu'un seul Dijkstra) et d'utiliser le résultat pour tous les $t_2$ pour le plus court chemin entre $t_1$ et $t_2$. Cela améliore grandement les performances de notre algorithme. 
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 
+temps de calcul & non optimisé & optimisé & noeuds & arêtes & terminaux \\ 
+\hline 
+instance 039 & 3,31 & 0,143 & 320 & 640 & 80 \\ 
+\hline 
+instance 001 & 1,09 & 0,525 & 6405 & 10454 & 16 \\ 
+\hline 
+instance 019 & 177,8 & 13,4 & 38307 & 71546 & 58 \\ 
+\hline 
+instance 143 & ???   & ???  & 2676 & 3894 & 1000 \\
+\hline 
+\end{tabular} 
+
 \section{Notion de voisin}
+
 
 
 
@@ -78,15 +99,17 @@ Cf one\_step\_search() dans le fichier local\_search.
 
 La version la plus simple qui consiste à tirer aléatoirement l'une des trois modification élémentaire et l'appliquer. Cette méthode est relativement efficace. Seul problème le coup de la suppression d'arête est (dans mon implémentation) très élevée. En effet il faut pour chaque arêtes de la solution en cours calculer toutes les composantes connexes de la solution privée de cette arête. Après calcul il était évident que cette modification élémentaire était largement plus coûteuse en pratique que les autres modifications élémentaires. D’où l'idée de la seconde version.
 
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline 
-temps pour 10 opération (s) & ajout arêtes & ajout path & suppression arêtes \\ 
+temps & ajout & ajout path & suppression & nœuds & arêtes & terminaux  \\ 
 \hline 
-instance 001 & 0,03 & 0,01 & 6,63 \\ 
+instance 001 & 0,03 & 0,01 & 6,63 & 320 & 640 & 80 \\ 
 \hline 
-instance 039 & 0,07 & 0,01 & 58,34 \\ 
+instance 039 & 0,07 & 0,01 & 58,34 & 6405 & 10454 & 16 \\ 
 \hline 
-instance  143 & 0,17 & 0,03 & • \\ 
+instance  19 & 0,25 & 0,59 & 375,2 & 38307 & 71546 & 58 \\
+\hline 
+instance  143 & 0,17 & 0,03 & 423,4 & 2676 & 3894 & 1000 \\ 
 \hline 
 \end{tabular} 
 

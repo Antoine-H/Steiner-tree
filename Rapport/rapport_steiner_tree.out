@@ -2,20 +2,22 @@
 \BOOKMARK [1][-]{section.2}{Introduction}{}% 2
 \BOOKMARK [1][-]{section.3}{Probl\350mes des arbres de Steiner}{}% 3
 \BOOKMARK [1][-]{section.4}{Optimisation d\351terministes}{}% 4
-\BOOKMARK [1][-]{section.5}{Notion de voisin}{}% 5
-\BOOKMARK [2][-]{subsection.5.1}{Pr\351sentation du pr\351c\351dent papier}{section.5}% 6
-\BOOKMARK [2][-]{subsection.5.2}{Choix de voisin}{section.5}% 7
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Version 1}{subsection.5.2}% 8
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Version 2}{subsection.5.2}% 9
-\BOOKMARK [3][-]{subsubsection.5.2.3}{Version 3}{subsection.5.2}% 10
-\BOOKMARK [3][-]{subsubsection.5.2.4}{Comparaison des versions}{subsection.5.2}% 11
-\BOOKMARK [1][-]{section.6}{Local Searchs}{}% 12
-\BOOKMARK [2][-]{subsection.6.1}{Sans erreur}{section.6}% 13
-\BOOKMARK [2][-]{subsection.6.2}{Avec erreur}{section.6}% 14
-\BOOKMARK [2][-]{subsection.6.3}{Recuit simul\351}{section.6}% 15
-\BOOKMARK [3][-]{subsubsection.6.3.1}{Pr\351sentation basique}{subsection.6.3}% 16
-\BOOKMARK [3][-]{subsubsection.6.3.2}{Choix de la temp\351rature}{subsection.6.3}% 17
-\BOOKMARK [1][-]{section.7}{Algorithmes mol\351culaire}{}% 18
-\BOOKMARK [2][-]{subsection.7.1}{Principe g\351n\351ral}{section.7}% 19
-\BOOKMARK [2][-]{subsection.7.2}{Ajouts de solutions \340 la population }{section.7}% 20
-\BOOKMARK [2][-]{subsection.7.3}{Choix de la s\351lection des survivants}{section.7}% 21
+\BOOKMARK [2][-]{subsection.4.1}{Algorithme}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Une anecdote d'optimisation}{section.4}% 6
+\BOOKMARK [1][-]{section.5}{Notion de voisin}{}% 7
+\BOOKMARK [2][-]{subsection.5.1}{Pr\351sentation du pr\351c\351dent papier}{section.5}% 8
+\BOOKMARK [2][-]{subsection.5.2}{Choix de voisin}{section.5}% 9
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Version 1}{subsection.5.2}% 10
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Version 2}{subsection.5.2}% 11
+\BOOKMARK [3][-]{subsubsection.5.2.3}{Version 3}{subsection.5.2}% 12
+\BOOKMARK [3][-]{subsubsection.5.2.4}{Comparaison des versions}{subsection.5.2}% 13
+\BOOKMARK [1][-]{section.6}{Local Searchs}{}% 14
+\BOOKMARK [2][-]{subsection.6.1}{Sans erreur}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.2}{Avec erreur}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.3}{Recuit simul\351}{section.6}% 17
+\BOOKMARK [3][-]{subsubsection.6.3.1}{Pr\351sentation basique}{subsection.6.3}% 18
+\BOOKMARK [3][-]{subsubsection.6.3.2}{Choix de la temp\351rature}{subsection.6.3}% 19
+\BOOKMARK [1][-]{section.7}{Algorithmes mol\351culaire}{}% 20
+\BOOKMARK [2][-]{subsection.7.1}{Principe g\351n\351ral}{section.7}% 21
+\BOOKMARK [2][-]{subsection.7.2}{Ajouts de solutions \340 la population }{section.7}% 22
+\BOOKMARK [2][-]{subsection.7.3}{Choix de la s\351lection des survivants}{section.7}% 23
