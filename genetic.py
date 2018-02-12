@@ -285,10 +285,26 @@ def local_search_only_better(nb_step  = 10, version = 2):
 
 if __name__ == '__main__':
 	graph,terminals = parser.read_graph("Heuristic/instance039.gr")
-	print(math.log(10))
-	a = genetic_no_blabla (graph, terminals, 30, 2, variation_multiple, selection_elitist_offsprings, 1000, 1000)
-	a = [math.log(n+1) for n in a]
+
+	a = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_threshold, -150, 1000)
+	b = genetic_no_blabla (graph, terminals, 5, 2, variation_crossover, selection_threshold, -150, 1000)
+	c = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_threshold, -150, 1000)
+	#d = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_Boltzmann, 1000, 1000)
+	#e = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_threshold, -150, 1000)
+
+	print(a)
+	print(b)
+	print(c)
+	#print(d)
+	#print(e)
+
 	plt.plot(a)
+	plt.plot(b)
+	plt.plot(c)
+	#plt.plot(d)
+	#plt.plot(e)
+
+	plt.savefig("Plots_Antoine/new/5,2,mutcmul,threshold-150")
 	plt.show()
 
 #	lda = 2

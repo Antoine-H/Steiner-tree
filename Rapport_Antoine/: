@@ -252,118 +252,26 @@ to uniform.
 
 \subsection{Boltzmann selection}
 
-The Boltzmann selection samples $\mu$ solutions out of the $\lambda$
-offsprings. It selects an offspring $x$ if it is better than the best previous
-solutions $y$. If it is worse, it selects it with probability $e^{\frac{gain(x)
-- gain(y)}{T}}$. For some value of T.
+
 
 \subsection{Threshold selection}
 
-The Threshold selection samples $\mu$ solutions out of the $\lambda$
-offsprings. It selects an offspring $x$ if it is better than the best previous
-solutions $y$. If it is worse, it selects it with probability $gain(x) >
-gain(y) + T$. For some value of T.
+
 
 \section{Comparison}
 
-Here I will be comparing the variation and selection strategies.
-
-\subsection{Variations}
-
-%MUTATION
 \begin{figure}
 \centering
-\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,mutation,eofb1000t-150.pdf}
-\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and mutation variation of
-classic elitist selection (in blue), elitist selection on offsprings (in
-orange), fitness proportional (in green), Boltzmann with constant $T = 1000$
-(in red) and Threshold selection with constant parameter $T = -150$}
-\label{Mutationcompareselection}
-\end{figure}
-
-%CROSSOVER
-\begin{figure}
-\centering
-\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,crossover,eofb1000t-150.pdf}
-\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and crossover variation of
-classic elitist selection (in blue), elitist selection on offsprings (in
-orange), fitness proportional (in green), Boltzmann with constant $T = 1000$
-(in red) and Threshold selection with constant parameter $T = -150$}
-\label{Crossovercompareselection}
-\end{figure}
-
-%MULTIPLE
-\begin{figure}
-\centering
-\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,multiple,eofb1000t-150.pdf}
-\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and multiple variation of
-classic elitist selection (in blue), elitist selection on offsprings (in
-orange), fitness proportional (in green), Boltzmann with constant $T = 1000$
-(in red) and Threshold selection with constant parameter $T = -150$}
-\label{Multiplecompareselection}
-\end{figure}
-
-\subsection{Selections}
-
-%ELITIST
-\begin{figure}
-\centering
-%\includegraphics[scale=.6]{../Plots_Antoine/5,2,elitist,mutcrossmult.pdf}
-\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,mutcmul,elitist.pdf}
-\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and classic elitist selection
-of mutation variation (in blue), crossover variation (in orange)  and another
+\includegraphics[scale=.8]{../Plots_Antoine/5,2,Boltzmann,mutcrossmult.pdf}
+\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and Boltzmann selection of
+mutation variation (in blue), crossover variation (in orange)  and another
 variation consisting of a mix of both (in green).}
-\label{Elitistcomparevariation}
-\end{figure}
-
-%OFFSPRINGS
-\begin{figure}
-\centering
-%\includegraphics[scale=.6]{../Plots_Antoine/5,2,offsprings,mutcrossmult.pdf}
-\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,mutcmul,offsprings.pdf}
-\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and offsprings elitist
-selection of mutation variation (in blue), crossover variation (in orange)  and
-another variation consisting of a mix of both (in green).}
-\label{Offspringscomparevariation}
-\end{figure}
-
-%FITNESS
-\begin{figure}
-\centering
-%\includegraphics[scale=.6]{../Plots_Antoine/5,2,fitness_prop,mutcrossmult.pdf}
-\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,mutcmul,fitness.pdf}
-\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and Fitness proportional
-selection of mutation variation (in blue), crossover variation (in orange) and
-another variation consisting of a mix of both (in green).}
-\label{Fitnesscomparevariation}
-\end{figure}
-
-%BOLTZMANN
-\begin{figure}
-\centering
-\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,mutcmul,Boltzmann1000.pdf}
-\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and Boltzmann selection with
-constant parameter $T = 1000$ of mutation variation (in blue), crossover
-variation (in orange) and another variation consisting of a mix of both (in
-green).}
-\label{Boltzmanncomparevariation}
-\end{figure}
-
-%THRESHOLD
-\begin{figure}
-\centering
-%\includegraphics[scale=.6]{../Plots_Antoine/5,2,Threshold-100,mutcrossmult.pdf}
-\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,mutcmul,threshold-150.pdf}
-\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and threshold selection with
-constant parameter $T = -150$ of mutation variation (in blue), crossover
-variation (in orange) and another variation consisting of a mix of both (in
-green).}
-\label{Mutationcomparevariation}
+\label{comparevariation}
 \end{figure}
 
 \section{Conclusion}
 
-For this problem,
+
 
 \end{document}
 
