@@ -47,21 +47,83 @@
 
 \section{Problem description}
 
+We are going to study the Steiner tree problem. The problem is defined as
+follows: Given a graph $G=(V,E)$, a weight function $w: e \mapsto \mathbb{R}$
+assigning a weight w(e) for every $e \in V$  and a set of terminal nodes $T
+\subset V$. The goal is to find a subset of edges $M \subset E$ of minimal
+weight that connects all terminals in $G$.
+
+This problem is \textsc{np-complete}. Here we are going to be presenting and
+comparing different heuristic approaches to the problem.
+
+The basic framework I will use is the one seen in class. I will first
+initialise a solution from a known approximation algorithm for the problem.
+Then I will generate new solutions to the problem by modifying my current
+solution. Finally I will select a few solutions from which I will iterate,
+optimizing the gain function. I will stop after a fixed amount of iteration.
+
 \section{Admissible solution}
+
+\subsection{Check admissibility}
+
+A solution needs to connect all terminal nodes. I will define a solution to be
+admissible when all terminal nodes $t \in T$ are in the same connected
+component.
+
+\subsection{Gain function}
+
+My gain function will simply be the sum of all edges plus the diameter of the
+graph. The diameter being the maximum eccentricity over all vertices. The
+eccentricity of a vertex being the distance (shortest path over the weighted
+edges) from that vertex to the furthest away vertex.
+
+EXPLAIN:::::::Note that an optimal solution will always have its terminal nodes
+as leaves.
 
 \section{Initialisation}
 
+The problem will be initialised by the following 2-apprximation algorithm.
+
+For all pair of terminals, compute the shortest path between all pair of
+terminal vertices. Then return the minimum spanning tree of this subgraph.
+
+This algorithm is clearly correct as terminal nodes are never disconnected from the connected component. Is is a known 2-approximation REFERENCE.
+
 \section{Variation}
+
+Here I will present the different ways of generating a new solution based on an
+already computed solutions that I studied.
 
 \subsection{Mutation}
 
+I will refer as mutation all variations that modify a solution by only changing
+it a little bit.
+
 \subsubsection{Adding an edge}
+
+An straight-forward mutation that could be applied to an admissible solution
+would be adding an edge. The solution will obviously stay admissible as no
+terminal nodes can be disconnected from that operation.
+
+This operation is quite limited as it doesn't change the solution much. We
+might want to modify the solution more to bypass potential local optimums.
 
 \subsubsection{Adding a path}
 
-\subsubsection{Deleting an edge}
+Another mutation that would be worth considering is adding a whole path to
+our current solution. In order to do so, we would randomly select two nodes
+from out curent solution then add a shortest path based on the graph $G$ we
+started with.
+
+\subsubsection{Removing an edge}
+
+After either of the previous two mutations, it would be interesting to try to
+remove an edge. This operation is more time consuming as it would entail
+checking if the solution is still feasible.
 
 \subsection{Crossover}
+
+I will refer as crossover a variation that merges from two previous solutions.
 
 \subsection{Combining both}
 
