@@ -262,25 +262,21 @@ def genetic_no_blabla (graph, terminals, mu, lda, variation,
 
 if __name__ == '__main__':
 	graph,terminals = parser.read_graph("Heuristic/instance039.gr")
-	a = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_elitist_offsprings, 1000, 1000)
-	b = genetic_no_blabla (graph, terminals, 5, 2, variation_crossover, selection_elitist_offsprings, 1000, 1000)
-	c = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_offsprings, 1000, 1000)
-	#d = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_Boltzmann, 1000, 1000)
-	#e = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_threshold, 1000, -100)
+	a = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_offsprings, 1000, 1000)
+	b = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_elitist_classic, 1000, 1000)
+	c = genetic_no_blabla (graph, terminals, 5, 2, variation_multiple, selection_Boltzmann, 1000, 1000)
+	d = genetic_no_blabla (graph, terminals, 5, 2, variation_mutation, selection_threshold, 1000, -100)
 
-	print(a)
-	print(b)
-	print(c)
 	#print(d)
 	#print(e)
 
-	plt.plot(a)
-	plt.plot(b)
-	plt.plot(c)
+	plt.plot(a,'ro')
+	plt.plot(b , 'gx')
+	plt.plot(c, 'b^')
+	plt.plot(d, 'ko')
 	#plt.plot(d)
 	#plt.plot(e)
 
-	plt.savefig("Plots_Antoine/5,2,offsprings")
 	plt.show()
 
 #	lda = 2

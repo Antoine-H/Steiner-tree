@@ -29,7 +29,7 @@ Dans ce rapport je presenterai différentes approches choisies pour approximer l
 
 \section{Introduction}
 
-Le problème des arbres de Steiner est un problème de graphe NP Complet. Il consiste à, pour un graphe pondéré et un sous ensemble de noeuds (les terminaux), trouver le sous ensemble d'aretes de poids minimal connectant ces terminaux. Ce problème largement étudié trouve de nombreuses applications blablabla. Il n'est évidemmnet pas possible de résoudre completement le problème dans le cas général. Cependant dans certains cas le calcul de l'optimum est possible, par exemple avec un nombre faible de terminaux ou encore pour un graphe avec faible treewidth. Enfin dans le cas général il reste comme approche l'approximation de l'optimum. Dans la majeure partie des cas en effet une approximation est largement appréciable. Dans un premier temps certaines approximations peuvent être deterministes.  Nous nous baserons sur l'une d'entre elle \textbf{ref ref }. Nous randomiserons ensuite nos approches. Dans la section 1 je décrirais le problèmes et lui donnerais un cadre théorique. La section 2 sera dédiée à la description d'une approximation déterministe. La section 3 expliquera la notion de voisin de solution qui servira dans pour toutes les approximations suivantes. La section 4 se penchera sur des recherches locales tandis que la section 5 présentera des algorithmes biologiques (principalement un algorithme moléculaire). Enfin la section 6 comparera les différentes approximations.
+Le problème des arbres de Steiner est un problème de graphe NP Complet. Il consiste à, pour un graphe pondéré et un sous ensemble de noeuds (les terminaux), trouver le sous ensemble d'aretes de poids minimal connectant ces terminaux. Ce problème largement étudié trouve de nombreuses applications blablabla. Il n'est évidemmnet pas possible de résoudre completement le problème dans le cas général. Cependant dans certains cas le calcul de l'optimum est possible, par exemple avec un nombre faible de terminaux ou encore pour un graphe avec faible treewidth. Enfin dans le cas général il reste comme approche l'approximation de l'optimum. Dans la majeure partie des cas en effet une approximation est largement appréciable. Dans un premier temps certaines approximations peuvent être deterministes.  Nous nous baserons sur l'une d'entre elle décrite dans\textbf{?}. Nous randomiserons ensuite nos approches. Dans la section 1 je décrirais le problèmes et lui donnerais un cadre théorique. La section 2 sera dédiée à la description d'une approximation déterministe. La section 3 expliquera la notion de voisin de solution qui servira dans pour toutes les approximations suivantes. La section 4 se penchera sur des recherches locales tandis que la section 5 présentera des algorithmes biologiques (principalement un algorithme moléculaire). Enfin la section 6 comparera les différentes approximations.
 
 
 \section{Problèmes des arbres de Steiner}
@@ -43,11 +43,15 @@ On dira par la suite qu'une solution est optimale si elle est admissible et que 
 \section{Optimisation déterministes}
 
 La plus-part de nos approximations auront pour solution de base une 2-approximation déterministe (dans le code fonction first\_solution() dans le fichier local\_search() ).
-Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = {T, E_T}$. Les noeuds sont donc les terminaux et les arêtes sont étiquetées par le poids du plus court chemin entre les deux terminaux. On va ensuite calculer un arbre couvrant minimal $Tree_{ter}$ de $G_{ter}$. Enfin va créer notre solution (2-approximation) du problème d'arbre de steiner $First\_solution$ :  pour chaque arête présente dans $Tree_{ter}$ on ajoute toutes les arêtes du plus court chemin correspondant dans $G_{ter} $ a $First\_solution$. On remarque donc que $First\_solution$ est bien une solution admissible vu que tous les terminaux seront ajoutés. On peut prouver que cet algorithme donne une deux approximation (voir ...). Je ne ferai pas ici la démonstration mais me contenterai de présenter un cas ou la borne est atteinte : FIGURE A RAJOUTER... On voit que notre algorithme va choisir les arêtes $(1,2)$ $(2,3)$ et $(1,3)$ sans passer par le noeud $4$ alors que l'optimum (si $2a<b$ est de choisir les arêtes $(1,4)$ $(2,4)$ et $(3,4)$. Quand b tend vers 2a le ratio entre les deux tends vers 2.
+Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = {T, E_T}$. Les noeuds sont donc les terminaux et les arêtes sont étiquetées par le poids du plus court chemin entre les deux terminaux. On va ensuite calculer un arbre couvrant minimal $Tree_{ter}$ de $G_{ter}$. Enfin va créer notre solution (2-approximation) du problème d'arbre de steiner $First\_solution$ :  pour chaque arête présente dans $Tree_{ter}$ on ajoute toutes les arêtes du plus court chemin correspondant dans $G_{ter} $ a $First\_solution$. On remarque donc que $First\_solution$ est bien une solution admissible vu que tous les terminaux seront ajoutés. On peut prouver que cet algorithme donne une deux approximation (voir ...). Je ne ferai pas ici la démonstration mais me contenterai de présenter un cas ou la borne est atteinte : (voir figure \ref{exborne} On voit que notre algorithme va choisir les arêtes $(1,2)$ $(2,3)$ et $(1,3)$ sans passer par le noeud $4$ alors que l'optimum (si $2a<b$ est de choisir les arêtes $(1,4)$ $(2,4)$ et $(3,4)$. Quand b tend vers 2a le ratio entre les deux tends vers 2.
 
 
 
-
+\begin{figure}
+\includegraphics[scale=.5]{images/exemple_borne}
+\caption{Exemple de graphe sur lequels la borne de la 2-approximation est atte}
+\label{exborne}
+\end{figure}
 \section{Notion de voisin}
 
 
@@ -88,7 +92,7 @@ Cette ultime version n'est pas spécialement plus rapide (bien que légèrement)
 
 \subsubsection{Comparaison des versions}
 
-La figure ... nous présente un exemple de test sur une instance (instance 039) de la fonction local\_search\_only\_better (décrite dans la partie suivante) avec 1000 itérations. Le temps d’exécution est relativement long (environs 25 minutes pour la version 1 et 3 et 5 pour la version 2). Les points rouges sont le gain de notre meilleure solution a l'instant $k$ et les points bleus le gain du voisin calculé pour l'instant $k$.
+La figure \ref{comparelocal} nous présente un exemple de test sur une instance (instance 039) de la fonction local\_search\_only\_better (décrite dans la partie suivante) avec 1000 itérations. Le temps d’exécution est relativement long (environs 25 minutes pour la version 1 et 3 et 5 pour la version 2). Les points rouges sont le gain de notre meilleure solution a l'instant $k$ et les points bleus le gain du voisin calculé pour l'instant $k$.
 
 On voit clairement que la version 2 est aussi efficace : convergence legerement plus lente pour des valeurs équivalentes, convergence finale beaucoup plus haute que les autres versions et gains des solutions visitées bien plus hauts que celles des deux autres. 
 
@@ -100,6 +104,7 @@ Les versions 1 et 3 semblent assez proches, bien que la version 3 semble donner 
 \includegraphics[scale=.4]{images/without_error_1000_v2}
 \includegraphics[scale=.4]{images/without_error_1000_v3}
 \caption{Dans l'ordre de gauche à droite : version 1, 2, 3}
+\label{comparelocal}
 \end{figure}
 
 
@@ -118,7 +123,14 @@ Cette première version est la plus "simple". On n'explore pas du tout de nouvel
 
 Cf local\_search\_with\_errors() dans le fichier simulated\_annealing.
 
-Cette fois a chaque tour de boucle on s'autorise le choix d'une mauvaise solution. Ce choix est entièrement arbitraire et ne dépend pas de l'erreur que l'on va faire. On pourrait l'améliorer en choisissant une probabilité d'erreur dépendant de l'écart entre la solution actuelle  et de la solution que l'on va peut choisir.
+Cette fois a chaque tour de boucle on s'autorise le choix d'une mauvaise solution. Ce choix est entièrement arbitraire et ne dépend pas de l'erreur que l'on va faire. On pourrait l'améliorer en choisissant une probabilité d'erreur dépendant de l'écart entre la solution actuelle  et de la solution que l'on va peut choisir. La figure \ref{compareerror} montre des exemples avec différentes valeurs pour la probabilité d'exploration.
+\begin{figure}
+\includegraphics[scale=.35]{images/with_error_01_1000}
+\includegraphics[scale=.35]{images/with_error_005_1000}
+\includegraphics[scale=.35]{images/with_error_001_1000}
+\label{compareerror}
+\caption{Avec erreur, de haut en bas : erreur en pourcentage 1, 0.5, 0.1}
+\end{figure}
 
 
 \subsection{Recuit simulé}
@@ -126,19 +138,57 @@ Cette fois a chaque tour de boucle on s'autorise le choix d'une mauvaise solutio
 
 \subsubsection{Présentation basique}
 
-Le recuit simulé s'appuie sur ce principe de pouvoir choisir une mauvaise solution. Cependant la probabilité d'acceptation de la solution va être indexée sur deux paramètre : le delta entre les deux solutions, et les
+Le recuit simulé s'appuie sur ce principe de pouvoir choisir une mauvaise solution. Cependant la probabilité d'acceptation de la solution va être indexée sur deux paramètre : le delta entre les deux solutions $\Delta\leq 0$, et une température $T$. La probabilité d'acceptation est généralement la probabilité de boltzmann : $e^{\frac{\Delta}{T}}$. On remarque donc que plus la température est haute plus la probabilité d'acceptation est forte. L'idée est donc de faire progressivement baisser la température jusqu'à la faire tendre vers 0. Dans un premier temps on s'autorise donc beaucoup d'erreurs assez larges, avant de progressivement se rapprocher d'un algorithme n'acceptant plus aucune erreur. Tout le problème de cet algorithme est le choix de la stratégie pour faire diminuer la température.
 
 \subsubsection{Choix de la température}
 
+J'ai fait le choix d'une stratégie très simple pour la température : simplement choisir $\frac{1}{nb_{iterations}}$ associé parfois d'un correctif multiplicatif pour garder une probabilité décente d'acceptation.
 
-\section{Algorithmes biologiques}
-
-
-\subsection{Algorithme moléculaire}
+\section{Algorithmes moléculaire}
 
 
-\subsubsection{Choix des }
+\subsection{Principe général}
+
+Une autre approche choisit, celle ci moins proche des recherches locale est un type d'algorithme dit biologique appelé algorithme moléculaire. L'idée générale est de maintenir une "population" de solutions (c'est a dire un ensemble de solution). On va ensuite faire evoluer cette population au cours de différentes générations. A chaque génération de nouvelles solutions seront créées et nous ne garderons que les meilleures solutions (ou nous garderons ces solutions du moins avec plus haute probabilité dans le cas de choix randomisés). Le principal problème de cet algorithme est l'ajout de nouvelles solutions
+
+\subsection{Ajouts de solutions à la population }
+
+Nous avons décidé de rester dans un cadre général pour cet algorithme. En effet notre algorithme prend en paramètre une fontion "variation" qui va choisir comment ajouter de nouvelles solutions. Nous avons testé trois principales fonctions de variations qui se basent sur deux principe. Le premier principe est \textbf{le crossover}. L'idée est que si nous avons deux "bonnes" solutions, une combinaison de ces deux solutions donnera encore une "bonne solution". La deuxième approche est juste la \textbf{mutation} des bonnes solutions. La dernière solution est le mix évidemment de ces deux solutions en a la fois qui est généralement le plus utilisé pour les algorithmes moléculaires : à la fois muter des éléments et en fusionner d'autres.
 
 
+
+\textbf{Crossover : } on prend en entrée deux solutions $S_1$ et $S_2$. On va créer une nouvelle solution $S_{fils}$ qui sera la fusion des deux solutions pères. On ajoute simplements toutes les arêtes de $S_1$ et $S_2$. On applique ensuite la fonction clean à $S_{fils}$ que l'on renvoie.
+
+\textbf{Mutation : } on utilisera simplement l'une de nos fonctions "voisin" décrites précédemment.
+
+
+Nous avons donc implémenté trois manières de modifier la population : uniquement du crossover, uniquement de la mutation ou un mix de deux. La figure \ref{compareajout} compare ces différentes manières d'ajouter sur un exemple. Il est logique de voir la stratégie ne faisant que des crossover être très vite limitée : nous n'explorons pas de nouvelles position et au bout de quelques générations on a fait toutes les fusions possible et il n'est plus possible d'améliorer. Même avec des fusions entrainant un peu plus d'aléatoire cette stratégie serait tres limitées. La stratégie ne faisant que des mutations reviens en réalité à une forme de local\_search multi threadée.
+\begin{figure}
+\centering
+\includegraphics[scale=.4]{images/comparaison_genetic_ajout.pdf}
+\caption{Comparaison des différentes stratégies d'ajout. Abscisses : nombre de générations, ordonnées minimum de la génération en cours. 
+En vert crossover, rouge mutatoin, bleu mix de deux}
+\label{compareajout}
+\end{figure}
+
+\subsection{Choix de la selection des survivants}
+
+A chaque génération on choisit un certain nombre de survivants et on élimine les autres solutions. Notre fonction genetic prend en paramètre une fonction de choix des survivants "selectoin". 
+\begin{itemize}
+\item[\textbf{selection\_elitist\_classic : }] On choisit simplement les meilleures solution de chaque étape
+\item[\textbf{selection\_fitness\_proportional : }] On garde les solutions en fonction de leur ratio par rapport a la moyenne des valeurs des solutions. Pour en choisir $\mu$ on va faire $\mu$ tour de boucle où a chaque tour de boucle on calcule un vecteur qui a chaque solution lui associes (S-cout[sol])/S (ou sol est la solution et S la somme des couts de toutes les solutions). On normalise le vecteur et cela nous donne la probabilité pour chacune des solutions d'être sélectionnée. 
+\item[\textbf{selection\_Boltzmann: }] On choisit les survivants avec une probabilité de Boltzmann suivant une certaine température fixée
+\item[\textbf{selection\_threshold: }] On accepte les survivants ne dépassant pas le threshold choisit par rapport au minimum de la génération.
+\end{itemize}
+
+La figure \ref{compareselection} compare les différentes manière de selectionner sur un exemple. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=.4]{images/comparaison_genetic_selection.pdf}
+\caption{Comparaison des différentes stratégies de selection. Abscisses : nombre de générations, ordonnées minimum de la génération en cours. 
+En vert classic, rouge offsprings, bleu boltzmann et noir threshold}
+\label{compareselection}
+\end{figure}
 
 \end{document}

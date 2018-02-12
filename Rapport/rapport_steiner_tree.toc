@@ -4,17 +4,18 @@
 \contentsline {section}{\numberline {4}Optimisation d\IeC {\'e}terministes}{2}{section.4}
 \contentsline {section}{\numberline {5}Notion de voisin}{3}{section.5}
 \contentsline {subsection}{\numberline {5.1}Presentation du pr\IeC {\'e}c\IeC {\'e}dent papier}{3}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Neighbour choice}{3}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.2}Neighbour choice}{4}{subsection.5.2}
 \contentsline {subsubsection}{\numberline {5.2.1}Version 1}{4}{subsubsection.5.2.1}
 \contentsline {subsubsection}{\numberline {5.2.2}Version 2}{4}{subsubsection.5.2.2}
 \contentsline {subsubsection}{\numberline {5.2.3}Version 3}{4}{subsubsection.5.2.3}
-\contentsline {subsubsection}{\numberline {5.2.4}Comparaison des versions}{4}{subsubsection.5.2.4}
-\contentsline {section}{\numberline {6}Local Searchs}{6}{section.6}
-\contentsline {subsection}{\numberline {6.1}Sans erreur}{6}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Avec erreur}{6}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Recuit simul\IeC {\'e}}{6}{subsection.6.3}
-\contentsline {subsubsection}{\numberline {6.3.1}Pr\IeC {\'e}sentation basique}{6}{subsubsection.6.3.1}
-\contentsline {subsubsection}{\numberline {6.3.2}Choix de la temp\IeC {\'e}rature}{6}{subsubsection.6.3.2}
-\contentsline {section}{\numberline {7}Algorithmes biologiques}{6}{section.7}
-\contentsline {subsection}{\numberline {7.1}Algorithme mol\IeC {\'e}culaire}{6}{subsection.7.1}
-\contentsline {subsubsection}{\numberline {7.1.1}Choix des }{6}{subsubsection.7.1.1}
+\contentsline {subsubsection}{\numberline {5.2.4}Comparaison des versions}{5}{subsubsection.5.2.4}
+\contentsline {section}{\numberline {6}Local Searchs}{5}{section.6}
+\contentsline {subsection}{\numberline {6.1}Sans erreur}{5}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Avec erreur}{5}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Recuit simul\IeC {\'e}}{8}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}Pr\IeC {\'e}sentation basique}{8}{subsubsection.6.3.1}
+\contentsline {subsubsection}{\numberline {6.3.2}Choix de la temp\IeC {\'e}rature}{8}{subsubsection.6.3.2}
+\contentsline {section}{\numberline {7}Algorithmes mol\IeC {\'e}culaire}{8}{section.7}
+\contentsline {subsection}{\numberline {7.1}Principe g\IeC {\'e}n\IeC {\'e}ral}{8}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Ajouts de solutions \IeC {\`a} la population }{8}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Choix de la selection des survivants}{9}{subsection.7.3}

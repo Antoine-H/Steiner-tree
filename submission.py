@@ -5,11 +5,11 @@
 #  Parser.
 #
 
+import time
 import networkx as nx
-import sys
 import random
-import matplotlib.pyplot as plt
-
+import math
+import sys
 
 # Reads graphs.
 def read_graph (file):
@@ -27,31 +27,23 @@ def read_graph (file):
     return [graph,terminals]
 
 
+
+
 def read_graph_stdin ():
     graph     = nx.Graph()
     terminals = nx.Graph()
-    for input in sys.argv[1]:
-        graph.add_weighted_edges_from([(int(e.split()[1]),
-                                        int(e.split()[2]),
-                                        int(e.split()[3]))
-                                        for e in input if e.startswith("E ")])
-    for input in sys.argv[1]:
-        terminals.add_nodes_from([int(u.split()[1])
-                                  for u in input if u.startswith("T ")])
+    
+    for e in sys.stdin:
+        if e.startswith("E "):
+            graph.add_weighted_edges_from([(int(e.split()[1]),int(e.split()[2]),int(e.split()[3]))])
+        if e.startswith("T "):
+            terminals.add_nodes_from([int(e.split()[1])])
 
     return [graph,terminals]
 
 
-
 ########################################################################################################################
 
-def display (graph,name_of_graph):
-    pos = nx.spring_layout(graph)
-    nx.draw_networkx_nodes(graph,pos,node_size=30)
-    nx.draw_networkx_edges(graph,pos,width=5,alpha=0.5)
-    plt.axis('off')
-    plt.savefig(name_of_graph)
-    plt.show()
 
 
 # First solution : 2-approx
@@ -317,11 +309,22 @@ def local_search_only_better(nb_step  = 10, version = 1):
             act_gain = new_gain
             cur_sol  = new_sol
         l_act.append(act_gain)
-
-    print  final_value(cur_sol)
-    print  gain(cur_sol)
     return l_act, l_new
 
+def local_search_only_better_graph(nb_step  = 10, version = 1):
+    cur_sol  = ( first_solution(graph, terminals))
+    act_gain =  gain(cur_sol)
+    l_act    = [act_gain]
+    l_new    = [act_gain]
+    for i in range(nb_step):
+        new_sol  =  neighbors_of_solution(graph, cur_sol, terminals,version,5)
+        new_gain =  gain(new_sol)
+        l_new.append(new_gain)
+        if new_gain < act_gain:
+            act_gain = new_gain
+            cur_sol  = new_sol
+        l_act.append(act_gain)
+    return cur_sol
 
 def local_search_accept_error(nb_step  = 10, version =2,p = .1):
     cur_sol  = ( first_solution(graph, terminals))
@@ -386,8 +389,12 @@ def print_solution(solution):
 
 if __name__ == '__main__':
     g = read_graph_stdin()
+    temps0 = time.clock()
     graph = g[0]
-    print(len(graph.edges()))
     terminals = g[1]
-    sol = local_search_only_better(100,2)
+    temps1 = time.clock()
+    print(temps1-temps0)
+    sol = local_search_only_better_graph(100,2)
     print_solution(sol)
+    temps2 = time.clock()
+    print(temps2-temps1)

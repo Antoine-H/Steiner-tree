@@ -10,7 +10,7 @@ import parser
 import matplotlib.pyplot as plt
 import math
 
-def local_search_only_better(nb_step  = 10, version = 1):
+def local_search_only_better(nb_step  = 10, version = 2):
 	cur_sol  = (ls.first_solution(graph, terminals))
 	act_gain = ls.gain(cur_sol)
 	l_act    = [act_gain]
@@ -36,6 +36,7 @@ def local_search_accept_error(nb_step  = 10, version =2,p = .1):
 	l_act    = [act_gain]
 	l_new    = [act_gain]
 	for i in range(nb_step):
+		print(i)
 		new_sol  = ls.neighbors_of_solution(graph, cur_sol, terminals)
 		new_gain = ls.gain(new_sol)
 		l_new.append(new_gain)
@@ -81,15 +82,22 @@ def simulated_anhilling(nb_step = 10, heat_strategy = heat_strategy_linear):
 
 
 if __name__ == '__main__':
-	g = parser.read_graph("Heuristic/instance001.gr")
+	g = parser.read_graph("Heuristic/instance039.gr")
 	graph     = g[0]
 	terminals = g[1]
-	temps1 = time.clock()
-	sol = local_search_accept_error(3000,2,0.05 )
-	temps2 = time.clock()
-	print("temps ecoule pour v2 de "+str(temps2-temps1))
-	plt.plot(sol[0],'ro')
-	plt.plot(sol[1],'b^')
-	#plt.plot(sol[2],'b^')
+	sol1 = local_search_accept_error(1000,2, 0.01)
+	sol2 = local_search_accept_error(1000,2,0.005)
+
+	plt.plot(sol1[0],'ro')
+	plt.plot(sol1[1],'b^')
 	plt.show()
 
+	plt.plot(sol2[0],'ro')
+	plt.plot(sol2[1],'b^')
+	plt.show()
+
+	sol3 = local_search_accept_error(1000,2,0.001)
+
+	plt.plot(sol3[0],'ro')
+	plt.plot(sol3[1],'b^')
+	plt.show()

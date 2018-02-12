@@ -15,6 +15,7 @@
 \BOOKMARK [2][-]{subsection.6.3}{Recuit simul\351}{section.6}% 15
 \BOOKMARK [3][-]{subsubsection.6.3.1}{Pr\351sentation basique}{subsection.6.3}% 16
 \BOOKMARK [3][-]{subsubsection.6.3.2}{Choix de la temp\351rature}{subsection.6.3}% 17
-\BOOKMARK [1][-]{section.7}{Algorithmes biologiques}{}% 18
-\BOOKMARK [2][-]{subsection.7.1}{Algorithme mol\351culaire}{section.7}% 19
-\BOOKMARK [3][-]{subsubsection.7.1.1}{Choix des }{subsection.7.1}% 20
+\BOOKMARK [1][-]{section.7}{Algorithmes mol\351culaire}{}% 18
+\BOOKMARK [2][-]{subsection.7.1}{Principe g\351n\351ral}{section.7}% 19
+\BOOKMARK [2][-]{subsection.7.2}{Ajouts de solutions \340 la population }{section.7}% 20
+\BOOKMARK [2][-]{subsection.7.3}{Choix de la selection des survivants}{section.7}% 21
