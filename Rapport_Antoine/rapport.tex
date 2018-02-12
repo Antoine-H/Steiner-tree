@@ -81,7 +81,7 @@ eccentricity of a vertex being the distance (shortest path over the weighted
 edges) from that vertex to the furthest away vertex.
 
 \begin{remark}
-Note that an optimal solution will always have its terminal nodes as leaves.
+Note that the leaves of an optimal solution will necessarily be terminals.
 \end{remark}
 
 \section{Overview}
@@ -172,8 +172,7 @@ as we have no interest in creating another connected component. The solution
 will obviously stay admissible as no terminal nodes can be disconnected from
 that operation.
 
-This operation is quite limited as it doesn't change the solution much. We
-observe that our algorithm converges rather quickly to a not so good solution.
+This operation sounds quite limited as it doesn't change the solution much.
 Therefore, we might want to modify the solution more to bypass those potential
 local optimums.
 
@@ -184,7 +183,8 @@ our current solution. In order to do so, we would randomly select two nodes
 from out curent solution then add a shortest path based on the graph $G$ we
 started with.
 
-This mutation is interesting as it changes the solution significantly. Solutions looke better than the previous solution.
+This mutation is interesting as it changes the solution significantly.
+Solutions look better than the previous solution.
 
 \subsubsection{Clean the solution}
 
@@ -192,8 +192,10 @@ After either of the previous two mutations, it is interesting to remove as many
 unnecessary edges as possible. An unnecessary edge is an edge that when removed
 doesn't make the solution unfeasible.
 
+Unnecessary edges are removed in a random order.
+
 This operation is more time consuming as it would entail checking if the
-solution is still feasible.
+solution is still feasible for each edge.
 
 \subsubsection{Multiple mutation}
 
@@ -224,7 +226,7 @@ In this section I will be presenting different ways of selecting solutions.
 
 \subsection{Elitist selection}
 
-The elitist selection will sample the $\mu$ best solutions out of the $\lambda
+The elitist selection will sample the best $\mu$ solutions out of the $\lambda
 + \mu$ solutions.
 
 \subsection{Elitist selection on offsprings only}
@@ -233,13 +235,13 @@ The elitist selection on offsprings only will sample the $\mu$ best solutions
 out of the $\lambda$ offpsrings.
 
 It could be a problem when $\lambda < \mu$. If this happens, it will fall back
-to the previous Elitist selection.
+to the previous elitist selection.
 
 \subsection{Fitness proportional selection}
 
 The fitness proportional selection samples $\mu$ solutions with probability
-proportional to their gains such that the solution closest to the optimum has
-the highest probability of being chosen.
+proportional to their gain such that the solution that is the closest to the
+optimum has the highest probability of being chosen.
 
 From my experience, this doesn't work very well as our solutions tend to have a
 relatively high gain (a few thousands) and aren't very far from each other (a
@@ -262,13 +264,27 @@ solutions $y$. If it is worse, it selects it with probability $e^{\frac{gain(x)
 The Threshold selection samples $\mu$ solutions out of the $\lambda$
 offsprings. It selects an offspring $x$ if it is better than the best previous
 solutions $y$. If it is worse, it selects it with probability $gain(x) >
-gain(y) + T$. For some value of T.
+gain(y) + T$. For some value of $T$.
+
+In my experiments, $T$ is constant. It would be a good idea to have it follow a decreasing sequence of the form $e^{-x}$.
 
 \section{Comparison}
 
 Here I will be comparing the variation and selection strategies.
 
 \subsection{Variations}
+
+In figure~\ref{Mutationcompareselection}, as predicted, the fitness
+proportional is too uniform therefore doesn't get neither better nor worse.  It
+looks like the threshold variation isn't converging very quickly either.  Maybe
+my $T$ parameter was a little too big.
+\\
+In figure~\ref{Crossovercompareselection}, except for the fitness proportional
+selection, it looks like we are converging rather quickly to a not so great
+solution.
+\\
+In figure~\ref{Multiplecompareselection}, we observe that combining both
+variations yields interesting results.
 
 %MUTATION
 \begin{figure}
@@ -277,7 +293,8 @@ Here I will be comparing the variation and selection strategies.
 \caption{Comparaison for $\lambda = 5$, $\mu = 2$ and mutation variation of
 classic elitist selection (in blue), elitist selection on offsprings (in
 orange), fitness proportional (in green), Boltzmann with constant $T = 1000$
-(in red) and Threshold selection with constant parameter $T = -150$}
+(in red) and Threshold selection with constant parameter $T = -150$ (in
+purple)}
 \label{Mutationcompareselection}
 \end{figure}
 
@@ -288,7 +305,8 @@ orange), fitness proportional (in green), Boltzmann with constant $T = 1000$
 \caption{Comparaison for $\lambda = 5$, $\mu = 2$ and crossover variation of
 classic elitist selection (in blue), elitist selection on offsprings (in
 orange), fitness proportional (in green), Boltzmann with constant $T = 1000$
-(in red) and Threshold selection with constant parameter $T = -150$}
+(in red) and Threshold selection with constant parameter $T = -150$ (in
+purple)}
 \label{Crossovercompareselection}
 \end{figure}
 
@@ -299,12 +317,32 @@ orange), fitness proportional (in green), Boltzmann with constant $T = 1000$
 \caption{Comparaison for $\lambda = 5$, $\mu = 2$ and multiple variation of
 classic elitist selection (in blue), elitist selection on offsprings (in
 orange), fitness proportional (in green), Boltzmann with constant $T = 1000$
-(in red) and Threshold selection with constant parameter $T = -150$}
+(in red) and Threshold selection with constant parameter $T = -150$ (in
+purple)}
 \label{Multiplecompareselection}
 \end{figure}
 
 \subsection{Selections}
 
+In figure~\ref{Elitistcomparevariation} and
+figure~\ref{Offspringscomparevariation}, we observe that the mutation variation
+and the mix of both variation and crossover yield interesting results.
+Crossover doesn't look as good.
+\\
+In figure~\ref{Fitnesscomparevariation}, we can see that as predicted, my
+fitness proportional selection stays quite uniform and non interesting.
+\\
+In figure~\ref{Boltzmanncomparevariation}, once again the crossover isn't
+working so well. The two other variations are working well.
+\\
+In figure~\ref{Thresholdcomparevariation}, we can observe that the threshold
+selection performs big steps, meaning that my $T$ variable could have been set
+a little too big.
+\\
+In figure~\ref{Threshold-80comparevariation}, I reduced the $T$ variable. We
+can observe smaller steps, thus converging faster to a better solution.
+
+\begin{center}
 %ELITIST
 \begin{figure}
 \centering
@@ -358,12 +396,40 @@ green).}
 constant parameter $T = -150$ of mutation variation (in blue), crossover
 variation (in orange) and another variation consisting of a mix of both (in
 green).}
-\label{Mutationcomparevariation}
+\label{Thresholdcomparevariation}
 \end{figure}
+\end{center}
 
+\begin{figure}
+\centering
+%\includegraphics[scale=.6]{../Plots_Antoine/5,2,Threshold-100,mutcrossmult.pdf}
+\includegraphics[scale=.6]{../Plots_Antoine/new/5,2,mutcmul,Threshold-80.png}
+\caption{Comparaison for $\lambda = 5$, $\mu = 2$ and threshold selection with
+constant parameter $T = -80$ of mutation variation (in blue), crossover
+variation (in orange) and another variation consisting of a mix of both (in
+green).}
+\label{Threshold-80comparevariation}
+\end{figure}
 \section{Conclusion}
 
-For this problem,
+For this problem, it looks like my fitness proportional and crossover
+techniques aren't working very well. I am not sure why my crossover technique
+isn't showing good results.
+
+Techniques that seem to be working well are mutation variation and Boltzmann
+selection.
+
+Let's perform one last try with mutation variation and Boltzmann for $\lambda
+= 11 $ and $\mu = 3$. See figure~\ref{MutationBoltzmann}
+
+\begin{figure}
+\centering
+%\includegraphics[scale=.6]{../Plots_Antoine/5,2,Threshold-100,mutcrossmult.pdf}
+\includegraphics[scale=.6]{../Plots_Antoine/new/11,3,mut,Boltzmann.png}
+\caption{Comparaison for $\lambda = 11$, $\mu = 3$ and Boltzmann selection with
+constant parameter $T = 1000$ and mutation variation (in blue)}
+\label{MutationBoltzmann}
+\end{figure}
 
 \end{document}
 

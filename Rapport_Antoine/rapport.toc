@@ -19,6 +19,6 @@
 \contentsline {subsection}{\numberline {6.4}Boltzmann selection}{5}{subsection.6.4}
 \contentsline {subsection}{\numberline {6.5}Threshold selection}{5}{subsection.6.5}
 \contentsline {section}{\numberline {7}Comparison}{5}{section.7}
-\contentsline {subsection}{\numberline {7.1}Variations}{10}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Selections}{10}{subsection.7.2}
-\contentsline {section}{\numberline {8}Conclusion}{10}{section.8}
+\contentsline {subsection}{\numberline {7.1}Variations}{5}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Selections}{6}{subsection.7.2}
+\contentsline {section}{\numberline {8}Conclusion}{11}{section.8}

@@ -1,3 +1,3 @@
-all: reponse.tex
-	pdflatex reponse.tex
+all: rapport.tex
+	pdflatex rapport.tex
 

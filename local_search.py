@@ -9,7 +9,7 @@ import sys
 sys.setrecursionlimit(1000000)
 
 
-def display (graph,name_of_graph):
+def display_graph (graph,name_of_graph):
     pos = nx.spring_layout(graph)
     nx.draw_networkx_nodes(graph,pos,node_size=30)
     nx.draw_networkx_edges(graph,pos,width=5,alpha=0.5)
@@ -43,6 +43,7 @@ def first_solution_opti (graph,terminals):
             approx_spanning.add_edge(path[i],path[i+1],weight=data)
     return approx_spanning
 
+
 def first_solution(graph,terminals):
     graph_t = nx.Graph()
     too_add = []
@@ -62,7 +63,9 @@ def first_solution(graph,terminals):
             approx_spanning.add_edge(path[i],path[i+1],weight=data)
     return approx_spanning
 
-#Louis version, without indexing problem (edges can't be indexed)
+
+# A solution is admissible if all terminals are in the same connected
+# component.
 def is_admissible (subgraph, terminals):
     n0   = list(terminals.nodes())[0]
     comp = nx.node_connected_component(subgraph,n0)
@@ -87,7 +90,7 @@ def test_is_admissible():
 ########################################
 
 
-#output the list of edges that can be added
+# Outputs the list of edges that can be added.
 def edges_adjacent (graph, subgraph):
     edges_adj = []
     sub_nodes = subgraph.nodes()
@@ -98,7 +101,7 @@ def edges_adjacent (graph, subgraph):
     return edges_adj
 
 
-#output the list of edges that can be removed
+# Outputs the list of edges that can be removed.
 def edges_to_delete (subgraph, terminals):
     edges_to_del = []
     graph_copy   = subgraph.copy()
@@ -111,6 +114,7 @@ def edges_to_delete (subgraph, terminals):
     return edges_to_del
 
 
+# Adds a shortest path between two given nodes in the current solution.
 def add_path (graph,subgraph, n1 ,n2):
     path = nx.shortest_path(graph,n1, n2,"weight")
     for i in range(len(path)-1):
@@ -118,6 +122,7 @@ def add_path (graph,subgraph, n1 ,n2):
         subgraph.add_edge(path[i],path[i+1],weight=data)
 
 
+# Adds a shortest path between two random nodes in the current solution.
 def add_random_path (graph, subgraph):
     list_e = list(subgraph.nodes())
     n1     = random.choice(list_e)
@@ -126,7 +131,8 @@ def add_random_path (graph, subgraph):
         add_path(graph, subgraph, n1, n2)
 
 
-#
+# Remove unnecessary edges.
+# Edges that do not disconnect the solution.
 def clean_composante (subgraph, terminals):
     n0   = list(terminals.nodes())[0]
     comp = nx.node_connected_component(subgraph,n0)
@@ -136,7 +142,7 @@ def clean_composante (subgraph, terminals):
             subgraph.remove_node(n)
 
 
-#
+# Remove edges as long as the solution stays admissible.
 def clean (subgraph, terminals):
     clean_composante(subgraph, terminals)
     l = list(subgraph.edges())
@@ -169,7 +175,7 @@ def random_deletion (cur_sol, terminals):
 
 
 
-#n = nombre de test
+# Adds n edges, removes m edges.
 def nm_step_dummy (graph, cur_sol, terminals,  n=40,m=40):
     if n > 0:
         random_add(graph, cur_sol)
@@ -192,27 +198,31 @@ def one_step_search (graph, cur_sol, terminals):
         else:
             nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
+
 def one_step_search_v2(graph, cur_sol, terminals):
         p = random.random()
         if p < 0.5:
             add_random_path(graph,cur_sol) #ajout de path
-        else: 
+        else:
             nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
+
 
 def one_step_search_v3(graph, cur_sol, terminals):
         p = random.random()
         if p < 0.5:
             add_random_path(graph,cur_sol) #ajout de path
-        else: 
+        else:
             nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
         p = random.random()
         if p < 0.5:
             add_random_path(graph,cur_sol) #ajout de path
-        else: 
+        else:
             nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
         nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
-def neighbors_of_solution (graph, cur_sol, terminals, version_number = 2, nb_modif = 10):
+
+def neighbors_of_solution (graph, cur_sol, terminals,
+                                        version_number = 2, nb_modif = 10):
     act      = gain(cur_sol)
     solution = cur_sol
     for i in range(nb_modif):
@@ -224,7 +234,7 @@ def neighbors_of_solution (graph, cur_sol, terminals, version_number = 2, nb_mod
                 one_step_search_v3(graph, new_sol, terminals)
             else:
                 one_step_search(graph, new_sol, terminals)
-        
+
         new_gain = gain(new_sol)
         solution = new_sol
         gain_act = new_gain
@@ -252,10 +262,9 @@ def final_value (steiner):
     for e in edges:
         data = steiner.get_edge_data(*e)["weight"]
         d   += data
-    return d 
+    return d
 
 # Local search. With optional parameter p \in [0,1]
-# Louis : changement de la fonction, elle renvoyait pas assez new_sol
 def local_search (heuristic, graph, cur_sol, terminals, p=0.25):
     new_sol = heuristic(graph, cur_sol, terminals)
     if gain(cur_sol) > gain(new_sol):
@@ -272,10 +281,11 @@ def test (heuristic, graph, terminals,nb_test = 5, p=0, new=nx.Graph()):
     #print("le premier gain est : "+ str(gain(new)))
     k = 0
     while k < nb_test:
-        k+=1
+        k  += 1
         new = local_search (heuristic, graph, new, terminals)
         #print("le gain actuel est : "+ str(gain(new)))
     return new
+
 
 temps_debut = 0
 temps_step = 0
@@ -286,6 +296,7 @@ def get_step():
     delta = t-temps_step
     temps_step = t
     return(delta)
+
 
 if __name__ == '__main__':
     g = parser.read_graph("Heuristic/instance019.gr")
@@ -301,7 +312,7 @@ if __name__ == '__main__':
     t1 = time.clock()
     delta1 = t1 -t0
     print(delta1)
-    
+
     for i in range(10):
         add_random_path(graph, g0)
     t2 = time.clock()
@@ -311,3 +322,4 @@ if __name__ == '__main__':
     t3 = time.clock()
     delta3 = t3 - t2
     print(delta3)
+

@@ -17,7 +17,8 @@ def local_search_only_better(nb_step  = 10, version = 2):
 	l_new    = [act_gain]
 	for i in range(nb_step):
 		print(i)
-		new_sol  = ls.neighbors_of_solution(graph, cur_sol, terminals,version,5)
+		new_sol  = ls.neighbors_of_solution(graph,
+						cur_sol, terminals,version,5)
 		new_gain = ls.gain(new_sol)
 		l_new.append(new_gain)
 		if new_gain < act_gain:
@@ -25,8 +26,8 @@ def local_search_only_better(nb_step  = 10, version = 2):
 			cur_sol  = new_sol
 		l_act.append(act_gain)
 
-	print ls.final_value(cur_sol)
-	print ls.gain(cur_sol)
+	print(ls.final_value(cur_sol))
+	print(ls.gain(cur_sol))
 	return l_act, l_new
 
 
@@ -47,6 +48,7 @@ def local_search_accept_error(nb_step  = 10, version =2,p = .1):
 		l_act.append(act_gain)
 	return l_act, l_new
 
+
 def heat_strategy_linear(nb_step, act_gain, new_gain):
 	if act_gain > new_gain:
 		return 1
@@ -56,9 +58,6 @@ def heat_strategy_linear(nb_step, act_gain, new_gain):
 	print(r_seuil, nb_step,act_gain,new_gain, act_gain-new_gain)
 	return r_seuil
 
-def test_exp():
-	for i in range(10):
-		print(math.exp(-i))
 
 def simulated_anhilling(nb_step = 10, heat_strategy = heat_strategy_linear):
 	cur_sol  = (ls.first_solution(graph, terminals))

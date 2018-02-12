@@ -1,5 +1,4 @@
-
-
+#!/usr/bin/python3
 
 #
 #  Parser.
@@ -32,7 +31,7 @@ def read_graph (file):
 def read_graph_stdin ():
     graph     = nx.Graph()
     terminals = nx.Graph()
-    
+
     for e in sys.stdin:
         if e.startswith("E "):
             graph.add_weighted_edges_from([(int(e.split()[1]),int(e.split()[2]),int(e.split()[3]))])
@@ -201,19 +200,19 @@ def one_step_search_v2(graph, cur_sol, terminals):
         p = random.random()
         if p < 0.5:
             add_random_path(graph,cur_sol) #ajout de path
-        else: 
+        else:
             nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
 
 def one_step_search_v3(graph, cur_sol, terminals):
         p = random.random()
         if p < 0.5:
             add_random_path(graph,cur_sol) #ajout de path
-        else: 
+        else:
             nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
         p = random.random()
         if p < 0.5:
             add_random_path(graph,cur_sol) #ajout de path
-        else: 
+        else:
             nm_step_dummy(graph, cur_sol, terminals, 10,0)#ajoute d'edges
         nm_step_dummy(graph, cur_sol, terminals, 0, 10)
 
@@ -229,7 +228,7 @@ def neighbors_of_solution (graph, cur_sol, terminals, version_number = 2, nb_mod
                 one_step_search_v3(graph, new_sol, terminals)
             else:
                 one_step_search(graph, new_sol, terminals)
-        
+
         new_gain = gain(new_sol)
         solution = new_sol
         gain_act = new_gain
@@ -255,7 +254,7 @@ def real_gain (steiner):
     for e in edges:
         data = steiner.get_edge_data(*e)["weight"]
         d   += data
-    return d 
+    return d
 
 def final_value (steiner):
     # Assuming that max eccentricity nodes are terminals
@@ -264,7 +263,7 @@ def final_value (steiner):
     for e in edges:
         data = steiner.get_edge_data(*e)["weight"]
         d   += data
-    return d 
+    return d
 
 # Local search. With optional parameter p \in [0,1]
 # Louis : changement de la fonction, elle renvoyait pas assez new_sol
@@ -375,9 +374,7 @@ def simulated_anhilling(nb_step = 10, heat_strategy = heat_strategy_linear):
     return l_act, l_new, l_seuils
 
 
-#########################################################################################################
-
-
+###############################################################################
 
 
 def print_solution(solution):
@@ -398,3 +395,4 @@ if __name__ == '__main__':
     print_solution(sol)
     temps2 = time.clock()
     print(temps2-temps1)
+
