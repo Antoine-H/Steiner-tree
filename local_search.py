@@ -33,7 +33,6 @@ def display_graph (graph,name_of_graph):
 	plt.show()
 
 
-
 def first_solution(graph,terminals):
 	graph_t = nx.Graph()
 	too_add = []
