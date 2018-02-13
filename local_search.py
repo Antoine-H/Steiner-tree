@@ -35,47 +35,47 @@ def display_graph (graph,name_of_graph):
 
 
 def first_solution(graph,terminals):
-    graph_t = nx.Graph()
-    too_add = []
-    approx_spanning = nx.Graph()
-    ter = terminals.nodes()
-    #n = len(list(ter))
-    #i =0
-    for n1 in ter:
-        #print(i,n)
-        #i+=1
-        sh_path_l = nx.single_source_dijkstra_path_length(graph,n1)
-        for n2 in ter:
-            if n1 < n2:
-                w = sh_path_l[n2]
-                too_add.append((n1,n2,w))
-    graph_t.add_weighted_edges_from(too_add)
-    spanning_tree = nx.minimum_spanning_tree(graph_t)
-    for (i,j) in spanning_tree.edges():
-        path = nx.shortest_path(graph,i, j,"weight")
-        for i in range(len(path)-1):
-            data = graph.get_edge_data(path[i],path[i+1])["weight"]
-            approx_spanning.add_edge(path[i],path[i+1],weight=data)
-    return approx_spanning
+	graph_t = nx.Graph()
+	too_add = []
+	approx_spanning = nx.Graph()
+	ter = terminals.nodes()
+	#n = len(list(ter))
+	#i =0
+	for n1 in ter:
+		#print(i,n)
+		#i+=1
+		sh_path_l = nx.single_source_dijkstra_path_length(graph,n1)
+		for n2 in ter:
+			if n1 < n2:
+				w = sh_path_l[n2]
+				too_add.append((n1,n2,w))
+	graph_t.add_weighted_edges_from(too_add)
+	spanning_tree = nx.minimum_spanning_tree(graph_t)
+	for (i,j) in spanning_tree.edges():
+		path = nx.shortest_path(graph,i, j,"weight")
+		for i in range(len(path)-1):
+			data = graph.get_edge_data(path[i],path[i+1])["weight"]
+			approx_spanning.add_edge(path[i],path[i+1],weight=data)
+	return approx_spanning
 
 def first_solution_non_opti(graph,terminals):
-    graph_t = nx.Graph()
-    too_add = []
-    approx_spanning = nx.Graph()
-    ter = terminals.nodes()
-    for n1 in ter:
-        for n2 in ter:
-            if n1 < n2:
-                w = nx.shortest_path_length(graph,n1, n2,"weight")
-                too_add.append((n1,n2,w))
-    graph_t.add_weighted_edges_from(too_add)
-    spanning_tree = nx.minimum_spanning_tree(graph_t)
-    for (i,j) in spanning_tree.edges():
-        path = nx.shortest_path(graph,i, j,"weight")
-        for i in range(len(path)-1):
-            data = graph.get_edge_data(path[i],path[i+1])["weight"]
-            approx_spanning.add_edge(path[i],path[i+1],weight=data)
-    return approx_spanning
+	graph_t = nx.Graph()
+	too_add = []
+	approx_spanning = nx.Graph()
+	ter = terminals.nodes()
+	for n1 in ter:
+		for n2 in ter:
+			if n1 < n2:
+				w = nx.shortest_path_length(graph,n1, n2,"weight")
+				too_add.append((n1,n2,w))
+	graph_t.add_weighted_edges_from(too_add)
+	spanning_tree = nx.minimum_spanning_tree(graph_t)
+	for (i,j) in spanning_tree.edges():
+		path = nx.shortest_path(graph,i, j,"weight")
+		for i in range(len(path)-1):
+			data = graph.get_edge_data(path[i],path[i+1])["weight"]
+			approx_spanning.add_edge(path[i],path[i+1],weight=data)
+	return approx_spanning
 
 
 def is_admissible (subgraph, terminals):
@@ -311,19 +311,19 @@ def get_step():
 
 
 if __name__ == '__main__':
-    g = parser.read_graph("Heuristic/instance143.gr")
-    graph     = g[0]
-    print(len(graph.edges()), len(graph.nodes()))
-    terminals = g[1]
-    print(len(terminals))
-    t0 = time.clock()
-    g0 = first_solution(graph, terminals)
-    t1 = time.clock()
-    delta1 = t1 -t0
-    print(delta1)
+	g = parser.read_graph("Heuristic/instance143.gr")
+	graph	  = g[0]
+	print(len(graph.edges()), len(graph.nodes()))
+	terminals = g[1]
+	print(len(terminals))
+	t0 = time.clock()
+	g0 = first_solution(graph, terminals)
+	t1 = time.clock()
+	delta1 = t1 -t0
+	print(delta1)
 
-    g0 = first_solution_non_opti(graph, terminals)
-    t2 = time.clock()
-    delta2 = t2 - t1
-    print(delta2)
+	g0 = first_solution_non_opti(graph, terminals)
+	t2 = time.clock()
+	delta2 = t2 - t1
+	print(delta2)
 
