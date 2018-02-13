@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.10)  12 FEB 2018 14:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.10)  12 FEB 2018 15:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -699,108 +699,113 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (44.30005pt too wide) in paragraph at lines 48--48
-[][][]\OT1/cmr/m/n/8 pour une demon-stra-tion de ce principe voir https://peopl
-e.eecs.berkeley.edu/ luca/cs261/lecture02.pdf| 
- []
-
-
-Overfull \hbox (21.66742pt too wide) in paragraph at lines 47--49
+Overfull \hbox (21.66742pt too wide) in paragraph at lines 49--51
 \OT1/cmr/m/n/10 La plus-part de nos ap-prox-i-ma-tions au-ront pour so-lu-tion 
 de base une 2-approximation
  []
 
-[2] <images/exemple_borne.png, id=152, 623.32875pt x 488.82625pt>
+[2]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `htbp') on input line 54.
+
+<images/exemple_borne.png, id=150, 623.32875pt x 488.82625pt>
 File: images/exemple_borne.png Graphic file (type png)
 
 <use images/exemple_borne.png>
-Package pdftex.def Info: images/exemple_borne.png used on input line 79.
+Package pdftex.def Info: images/exemple_borne.png used on input line 82.
 (pdftex.def)             Requested size: 311.6636pt x 244.41252pt.
 
-Overfull \hbox (3.44498pt too wide) in paragraph at lines 88--101
+Overfull \hbox (44.30005pt too wide) in paragraph at lines 88--88
+[][][]\OT1/cmr/m/n/8 pour une d^^Semonstration de ce principe voir https://peop
+le.eecs.berkeley.edu/ luca/cs261/lecture02.pdf| 
+ []
+
+[3]
+Overfull \hbox (29.88945pt too wide) in paragraph at lines 96--109
 [][] 
  []
 
-[3] [4 <./images/exemple_borne.png (PNG copy)>]
-Overfull \hbox (26.36171pt too wide) in paragraph at lines 151--164
+[4 <./images/exemple_borne.png (PNG copy)>] [5]
+Overfull \hbox (26.9728pt too wide) in paragraph at lines 157--170
 [][] 
  []
 
-[5] [6] <images/without_error_1000_v1.pdf, id=186, 987.20822pt x 495.04951pt>
+[6] <images/without_error_1000_v1.pdf, id=183, 987.20822pt x 495.04951pt>
 File: images/without_error_1000_v1.pdf Graphic file (type pdf)
 
 <use images/without_error_1000_v1.pdf>
-Package pdftex.def Info: images/without_error_1000_v1.pdf used on input line 21
-5.
+Package pdftex.def Info: images/without_error_1000_v1.pdf used on input line 22
+1.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-<images/without_error_1000_v2.pdf, id=187, 987.20822pt x 495.04951pt>
+<images/without_error_1000_v2.pdf, id=184, 987.20822pt x 495.04951pt>
 File: images/without_error_1000_v2.pdf Graphic file (type pdf)
 
 <use images/without_error_1000_v2.pdf>
-Package pdftex.def Info: images/without_error_1000_v2.pdf used on input line 21
-6.
+Package pdftex.def Info: images/without_error_1000_v2.pdf used on input line 22
+2.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-<images/without_error_1000_v3.pdf, id=188, 987.20822pt x 495.04951pt>
+<images/without_error_1000_v3.pdf, id=185, 987.20822pt x 495.04951pt>
 File: images/without_error_1000_v3.pdf Graphic file (type pdf)
 
 <use images/without_error_1000_v3.pdf>
-Package pdftex.def Info: images/without_error_1000_v3.pdf used on input line 21
-7.
+Package pdftex.def Info: images/without_error_1000_v3.pdf used on input line 22
+3.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 215--218
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 221--224
 [][]
  []
 
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 215--218
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 221--224
 []
  []
 
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 215--218
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 221--224
 [] 
  []
 
 
-LaTeX Warning: Float too large for page by 21.99329pt on input line 220.
+LaTeX Warning: Float too large for page by 21.99329pt on input line 226.
 
-<images/with_error_01_1000.pdf, id=190, 987.20822pt x 495.04951pt>
+<images/with_error_01_1000.pdf, id=187, 987.20822pt x 495.04951pt>
 File: images/with_error_01_1000.pdf Graphic file (type pdf)
 
 <use images/with_error_01_1000.pdf>
-Package pdftex.def Info: images/with_error_01_1000.pdf used on input line 240.
+Package pdftex.def Info: images/with_error_01_1000.pdf used on input line 246.
 (pdftex.def)             Requested size: 345.52805pt x 173.26991pt.
 
-<images/with_error_005_1000.pdf, id=191, 987.20822pt x 495.04951pt>
+<images/with_error_005_1000.pdf, id=188, 987.20822pt x 495.04951pt>
 File: images/with_error_005_1000.pdf Graphic file (type pdf)
 
 <use images/with_error_005_1000.pdf>
-Package pdftex.def Info: images/with_error_005_1000.pdf used on input line 241.
+Package pdftex.def Info: images/with_error_005_1000.pdf used on input line 247.
 
 (pdftex.def)             Requested size: 345.52805pt x 173.26991pt.
 
-<images/with_error_001_1000.pdf, id=192, 987.20822pt x 495.04951pt>
+<images/with_error_001_1000.pdf, id=189, 987.20822pt x 495.04951pt>
 File: images/with_error_001_1000.pdf Graphic file (type pdf)
 
 <use images/with_error_001_1000.pdf>
-Package pdftex.def Info: images/with_error_001_1000.pdf used on input line 242.
+Package pdftex.def Info: images/with_error_001_1000.pdf used on input line 248.
 
 (pdftex.def)             Requested size: 345.52805pt x 173.26991pt.
 
-Overfull \hbox (0.52805pt too wide) in paragraph at lines 240--244
+Overfull \hbox (0.52805pt too wide) in paragraph at lines 246--250
 [][]
  []
 
 
-Overfull \hbox (0.52805pt too wide) in paragraph at lines 240--244
+Overfull \hbox (0.52805pt too wide) in paragraph at lines 246--250
 []
  []
 
 
-Overfull \hbox (0.52805pt too wide) in paragraph at lines 240--244
+Overfull \hbox (0.52805pt too wide) in paragraph at lines 246--250
 []
  []
 
@@ -813,7 +818,7 @@ on: multiple pdfs with page group included in a single page
 
 pdfTeX warning: pdflatex (file ./images/without_error_1000_v3.pdf): PDF inclusi
 on: multiple pdfs with page group included in a single page
->] [9 <./images/with_error_01_1000.pdf> <./images/with_error_005_1000.pdf
+>] [9] [10 <./images/with_error_01_1000.pdf> <./images/with_error_005_1000.pdf
 
 pdfTeX warning: pdflatex (file ./images/with_error_005_1000.pdf): PDF inclusion
 : multiple pdfs with page group included in a single page
@@ -821,87 +826,96 @@ pdfTeX warning: pdflatex (file ./images/with_error_005_1000.pdf): PDF inclusion
 
 pdfTeX warning: pdflatex (file ./images/with_error_001_1000.pdf): PDF inclusion
 : multiple pdfs with page group included in a single page
->] <images/comparaison_genetic_ajout.pdf, id=300, 987.20822pt x 495.04951pt>
+>] <images/comparaison_genetic_ajout.pdf, id=304, 987.20822pt x 495.04951pt>
 File: images/comparaison_genetic_ajout.pdf Graphic file (type pdf)
 
 <use images/comparaison_genetic_ajout.pdf>
 Package pdftex.def Info: images/comparaison_genetic_ajout.pdf used on input lin
-e 280.
+e 286.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 280--282
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 286--288
  [][] 
  []
 
-[10] <images/nombre_fusion_log_5_1000.pdf, id=307, 987.20822pt x 495.04951pt>
+<images/nombre_fusion_log_5_1000.pdf, id=306, 987.20822pt x 495.04951pt>
 File: images/nombre_fusion_log_5_1000.pdf Graphic file (type pdf)
 
 <use images/nombre_fusion_log_5_1000.pdf>
 Package pdftex.def Info: images/nombre_fusion_log_5_1000.pdf used on input line
- 291.
+ 297.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-<images/nombre_fusion_log_30_1000.pdf, id=308, 462.52798pt x 346.89601pt>
+<images/nombre_fusion_log_30_1000.pdf, id=307, 462.52798pt x 346.89601pt>
 File: images/nombre_fusion_log_30_1000.pdf Graphic file (type pdf)
 
 <use images/nombre_fusion_log_30_1000.pdf>
 Package pdftex.def Info: images/nombre_fusion_log_30_1000.pdf used on input lin
-e 292.
+e 298.
 (pdftex.def)             Requested size: 277.51892pt x 208.1392pt.
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 291--293
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 297--299
  [][] 
  []
 
-<images/comparaison_genetic_selection.pdf, id=310, 987.20822pt x 495.04951pt>
+[11 <./images/comparaison_genetic_ajout.pdf>]
+<images/comparaison_genetic_selection.pdf, id=332, 987.20822pt x 495.04951pt>
 File: images/comparaison_genetic_selection.pdf Graphic file (type pdf)
 
 <use images/comparaison_genetic_selection.pdf>
 Package pdftex.def Info: images/comparaison_genetic_selection.pdf used on input
- line 311.
+ line 317.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 311--313
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 317--319
  [][] 
  []
 
-[11 <./images/comparaison_genetic_ajout.pdf>] [12 <./images/nombre_fusion_log_5
-_1000.pdf> <./images/nombre_fusion_log_30_1000.pdf
 
-pdfTeX warning: pdflatex (file ./images/nombre_fusion_log_30_1000.pdf): PDF inc
-lusion: multiple pdfs with page group included in a single page
->]
-<images/comparaison_genetic_without_error.pdf, id=363, 987.20822pt x 495.04951p
+<images/comparaison_genetic_without_error.pdf, id=334, 987.20822pt x 495.04951p
 t>
 File: images/comparaison_genetic_without_error.pdf Graphic file (type pdf)
  <use images/comparaison_genetic_without_error.pdf>
 Package pdftex.def Info: images/comparaison_genetic_without_error.pdf used on i
-nput line 324.
+nput line 330.
 (pdftex.def)             Requested size: 394.8763pt x 198.01628pt.
 
-Overfull \hbox (49.8763pt too wide) in paragraph at lines 324--325
+Overfull \hbox (49.8763pt too wide) in paragraph at lines 330--331
  [][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 336.
-[13 <./images/comparaison_genetic_selection.pdf>] [14 <./images/comparaison_gen
-etic_without_error.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 336.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 342.
+[12] [13 <./images/nombre_fusion_log_5_1000.pdf> <./images/nombre_fusion_log_30
+_1000.pdf
+
+pdfTeX warning: pdflatex (file ./images/nombre_fusion_log_30_1000.pdf): PDF inc
+lusion: multiple pdfs with page group included in a single page
+>] [14 <./images/comparaison_genetic_selection.pdf> <./images/comparaison_genet
+ic_without_error.pdf
+
+pdfTeX warning: pdflatex (file ./images/comparaison_genetic_without_error.pdf):
+ PDF inclusion: multiple pdfs with page group included in a single page
+>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 342.
  (./rapport_steiner_tree.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 336.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 336.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 342.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 342.
 Package rerunfilecheck Info: File `rapport_steiner_tree.out' has not changed.
 (rerunfilecheck)             Checksum: F16EE2BDD2A32C89E98BDF011FF09AFB;1675.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 336.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 342.
  ) 
 Here is how much of TeX's memory you used:
- 7394 strings out of 493029
- 106989 string characters out of 6136234
- 206684 words of memory out of 5000000
- 10773 multiletter control sequences out of 15000+600000
+ 7395 strings out of 493029
+ 106998 string characters out of 6136234
+ 205685 words of memory out of 5000000
+ 10774 multiletter control sequences out of 15000+600000
  11849 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,17n,30p,1478b,423s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,17n,30p,1543b,450s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
@@ -918,10 +932,10 @@ e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on rapport_steiner_tree.pdf (14 pages, 306614 bytes).
+Output written on rapport_steiner_tree.pdf (14 pages, 307071 bytes).
 PDF statistics:
- 479 PDF objects out of 1000 (max. 8388607)
- 326 compressed objects within 4 object streams
+ 478 PDF objects out of 1000 (max. 8388607)
+ 325 compressed objects within 4 object streams
  57 named destinations out of 1000 (max. 500000)
  261 words of extra memory for PDF output out of 10000 (max. 10000000)
 

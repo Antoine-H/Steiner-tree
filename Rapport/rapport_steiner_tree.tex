@@ -26,16 +26,18 @@
 
 \section{Abstract}
 
-Dans ce rapport je présenterai différentes approches choisies pour approximer le problème des arbres de Steiner. Basé sur le papier ref ref pour les choix des voisins. 
+Dans ce rapport je présenterai différentes approches choisies pour approximer le problème des arbres de Steiner. Je developperai un concept de voisin d'une solution puis utiliserai ce concept pour faire de la recherche locale de solutions. Une approche par algorithmes génétiques sera aussi présentée. Toutes les approches seront comparées et je tenterai d'en faire sortir les points positifs en expliquant rapidement les raisons m'ayant poussé à faire ces choix d'approximation.
 
 \section{Introduction}
 
-Le problème des arbres de Steiner est un problème de graphe NP Complet. Il consiste à, pour un graphe pondéré et un sous ensemble de nœuds (les terminaux), trouver le sous ensemble d’arêtes de poids minimal connectant ces terminaux. Ce problème largement étudié trouve de nombreuses applications blablabla. Il n'est évidemment pas possible de résoudre complètement le problème dans le cas général. Cependant dans certains cas le calcul de l'optimum est possible, par exemple avec un nombre faible de terminaux ou encore pour un graphe avec faible treewidth. Enfin dans le cas général il reste comme approche l'approximation de l'optimum. Dans la majeure partie des cas en effet une approximation est largement appréciable. Dans un premier temps certaines approximations peuvent être déterministes.  Nous nous baserons sur l'une d'entre elle décrite dans\textbf{?}. Nous randomiserons ensuite nos approches. Dans la section 1 je décrirais le problèmes et lui donnerais un cadre théorique. La section 2 sera dédiée à la description d'une approximation déterministe. La section 3 expliquera la notion de voisin de solution qui servira dans pour toutes les approximations suivantes. La section 4 se penchera sur des recherches locales tandis que la section 5 présentera des algorithmes biologiques (principalement un algorithme moléculaire). Enfin la section 6 comparera les différentes approximations.
+Le problème des arbres de Steiner est un problème de graphe NP Complet. Il consiste à, pour un graphe pondéré et un sous ensemble de nœuds (les terminaux), trouver le sous ensemble d’arêtes de poids minimal connectant ces terminaux. Ce problème largement étudié trouve de nombreuses applications blablabla. Il n'est évidemment pas possible de résoudre complètement le problème dans le cas général. Cependant dans certains cas le calcul de l'optimum est possible, par exemple avec un nombre faible de terminaux ou encore pour un graphe avec faible treewidth. Enfin dans le cas général il reste comme approche l'approximation de l'optimum. Dans la majeure partie des cas en effet une approximation est largement appréciable. Dans un premier temps certaines approximations peuvent être déterministes.  Nous nous baserons sur l'une d'entre elle décrite dans le rapport proposé en préambule du projet. Nous randomiserons ensuite nos approches. Dans la section 3 je décrirais le problèmes et lui donnerais un cadre théorique. La section 4 sera dédiée à la description d'une approximation déterministe. La section 5 expliquera la notion de voisin de solution qui servira dans pour toutes les approximations suivantes. La section 6 se penchera sur des recherches locales tandis que la section 7 présentera des algorithmes biologiques (principalement un algorithme moléculaire). Enfin la section 8 comparera les différentes approximations avant de conclure en section 9.
 
 
 \section{Problèmes des arbres de Steiner}
 
-Soit $G = (V,E)$ un graphe ($V$ son ensemble de nœuds et $E$ son ensemble d'arêtes, muni d'une fonction de poids $w:E\rightarrow \mathbb{R}$. Soit de plus un sous ensemble de nœuds $T \subset V$, les terminaux. Le but est de trouver le sous ensemble d'arêtes de poids minimal connectant tous les terminaux. On dira qu'un sous ensemble est admissible si il connecte bien les terminaux.  $\argmin\limits_{S\subset E / S ~~admissible} ~~ \sum\limits_{e\in S} w(e) $. 
+Soit $G = (V,E)$ un graphe ($V$ son ensemble de nœuds et $E$ son ensemble d'arêtes, muni d'une fonction de poids $w:E\rightarrow \mathbb{R}$. Soit de plus un sous ensemble de nœuds $T \subset V$, les terminaux. Le but est de trouver le sous ensemble d'arêtes de poids minimal connectant tous les terminaux. On dira qu'un sous ensemble est admissible si il connecte bien les terminaux.  
+
+$$F_{objectif} = \argmin\limits_{S\subset E / S ~~admissible} ~~ \sum\limits_{e\in S} w(e) $$
 
 On appellera graphe induit par une solution le graphe composé des arêtes de l'ensemble solution $S$ et des nœuds appartement a cet ensemble d'arêtes. 
 
@@ -45,10 +47,11 @@ On dira par la suite qu'une solution est optimale si elle est admissible et que 
 
 \subsection{Algorithme}
 La plus-part de nos approximations auront pour solution de base une 2-approximation déterministe (dans le code fonction first\_solution() dans le fichier local\_search() ).
-Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = {T, E_T}$. Les nœuds sont donc les terminaux et les arêtes sont étiquetées par le poids du plus court chemin entre les deux terminaux. On va ensuite calculer un arbre couvrant minimal $Tree_{ter}$ de $G_{ter}$. Enfin va créer notre solution (2-approximation) du problème d'arbre de steiner $First\_solution$ :  pour chaque arête présente dans $Tree_{ter}$ on ajoute toutes les arêtes du plus court chemin correspondant dans $G_{ter} $ a $First\_solution$. On remarque donc que $First\_solution$ est bien une solution admissible vu que tous les terminaux seront ajoutés. On peut prouver que cet algorithme donne une deux approximation\footnote{pour une demonstration de ce principe voir https://people.eecs.berkeley.edu/~luca/cs261/lecture02.pdf}. Je ne ferai pas ici la démonstration mais me contenterai de présenter un cas ou la borne est atteinte : (voir figure \ref{exborne} On voit que notre algorithme va choisir les arêtes $(1,2)$ $(2,3)$ et $(1,3)$ sans passer par le nœud $4$ alors que l'optimum (si $2a<b$ est de choisir les arêtes $(1,4)$ $(2,4)$ et $(3,4)$. Quand b tend vers 2a le ratio entre les deux tends vers 2.
+Son principe est relativement simple. On va créer un nouveau graphe $G_{ter} = (T, E_T)$. Les nœuds sont donc les terminaux et les arêtes sont étiquetées par le poids du plus court chemin entre les deux terminaux. On va ensuite calculer un arbre couvrant minimal $Tree_{ter}$ de $G_{ter}$. Enfin va créer notre solution (2-approximation) du problème d'arbre de steiner $First\_solution$ :  pour chaque arête présente dans $Tree_{ter}$ on ajoute toutes les arêtes du plus court chemin correspondant dans $G_{ter} $ a $First\_solution$. 
 
 
-\begin{algorithm}[H]
+
+\begin{algorithm}[]
 \SetAlgoLined
 \KwData{graph, terminals}
 \KwResult{2-approximation solution}
@@ -62,9 +65,9 @@ $G_{ter}$ = empty graph\;
 		add  ($n_1,n_2,w $) to $G_{ter}$ \; 
 	}
 }
-T = spanning\_tree($G_ter$)
+$Tree_{ter}$ = spanning\_tree($G_{ter}$)\;
 $First\_Solution$ = empty graph\;
-\For{ $(n_i, n_j) \in T$}
+\For{ $(n_i, n_j) \in Tree_{ter}$}
 {
 	\For{$(a,b)\in $ shortest\_path($n_1,n_2$)}
 	{
@@ -80,14 +83,19 @@ return($First\_Solution$ )\;
 \caption{Exemple de graphe sur lequel la borne de la 2-approximation est atteinte}
 \label{exborne}
 \end{figure}
+ 
+
+On remarque donc que $First\_solution$ est bien une solution admissible vu que tous les terminaux seront ajoutés et connectés 2 à 2. On peut prouver que cet algorithme donne une deux approximation\footnote{pour une démonstration de ce principe voir https://people.eecs.berkeley.edu/~luca/cs261/lecture02.pdf}. Je ne ferai pas ici la démonstration mais me contenterai de présenter un cas ou la borne est atteinte : (voir figure \ref{exborne} On voit que notre algorithme va choisir les arêtes $(1,2)$ $(2,3)$ et $(1,3)$ sans passer par le nœud $4$ alors que l'optimum (si $2a<b$ est de choisir les arêtes $(1,4)$ $(2,4)$ et $(3,4)$. Quand b tend vers 2a le ratio entre les deux tends vers 2.
+
+
 
 \subsection{Une anecdote d'optimisation}
 Une petite anecdote pour bien rappeler le concept de "avant de trouver des stratégies efficaces déjà optimise ton code" :
-Après avoir remarqué que mon algorithme d'optimisation était particulièrement lent (voir même ne marchait pas du tout sur les tres larges instances) j'ai remarqué que pour chaque tour de boucle pour les couples de terminaux je calculais le plus court chemin entre ces deux terminaux. Ce qui revenait à faire $O(t^2)$ Dijkstra (avec $t$ le nombre de terminaux).  Il suffit en réalité de calculer pour chaque $t_1$ son plus court chemin à tous les points du graphe (ce qui ne coûte qu'un seul Dijkstra) et d'utiliser le résultat pour tous les $t_2$ pour le plus court chemin entre $t_1$ et $t_2$. Cela améliore grandement les performances de notre algorithme. 
+Après avoir remarqué que mon algorithme d'optimisation était particulièrement lent (voir même ne marchait pas du tout sur les très larges instances) j'ai remarqué que pour chaque tour de boucle pour les couples de terminaux je calculais le plus court chemin entre ces deux terminaux. Ce qui revenait à faire $O(t^2)$ Dijkstra (avec $t$ le nombre de terminaux).  Il suffit en réalité de calculer pour chaque $t_1$ son plus court chemin à tous les points du graphe (ce qui ne coûte qu'un seul Dijkstra) et d'utiliser le résultat pour tous les $t_2$ pour le plus court chemin entre $t_1$ et $t_2$. Cela améliore grandement les performances de notre algorithme, évidemment particulièrement quand le nombre de terminaux et fort. 
 
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline 
-temps de calcul & non optimisé & optimisé & noeuds & arêtes & terminaux \\ 
+temps de calcul (en s) & non optimisé & optimisé & nœuds & arêtes & terminaux \\ 
 \hline 
 instance 039 & 3,31 & 0,143 & 320 & 640 & 80 \\ 
 \hline 
@@ -95,17 +103,15 @@ instance 001 & 1,09 & 0,525 & 6405 & 10454 & 16 \\
 \hline 
 instance 019 & 177,8 & 13,4 & 38307 & 71546 & 58 \\ 
 \hline 
-instance 143 & ???   & ???  & 2676 & 3894 & 1000 \\
+instance 143 & $>3600$   & 16,1  & 2676 & 3894 & 1000 \\
 \hline 
 \end{tabular} 
 
 \section{Notion de voisin}
 
 
-
-
 \subsection{Présentation du précédent papier}
-Par la suite la plupart de nos optimisation se baseront sur une notion de "voisin" des solutions. Il faut évidemment que ces "voisins" soit proche d'un point de vue de score face au problème. Cette proximité dans le cas de graphes comme les notre sera logiquement proche d'une métrique comparant les ensembles de sommets. Cependant comme expliqué dans REFERENCE, il n'est pas suffisant de regarder les ensembles de d’arêtes directement. L'ajout ou la suppression d’arête ne suffit pas. On a donc implémenté un nouveau "modificateur" : l'ajout de chemin. 
+Par la suite la plupart de nos optimisation se baseront sur une notion de "voisin" des solutions. Il faut évidemment que ces "voisins" soit proche d'un point de vue de score face au problème. Cette proximité dans le cas de graphes comme les notre sera logiquement proche d'une métrique comparant les ensembles de sommets. Cependant comme expliqué dans ce rapport, il n'est pas suffisant de regarder les ensembles de d’arêtes directement. L'ajout ou la suppression d’arête ne suffit pas. On a donc implémenté un nouveau "modificateur" : l'ajout de chemin. 
 Pour résumer nous avons quatre "modificateurs" d'une solution courante :
 \begin{itemize}   
 \item[\textbf{L'addition  d’arêtes : }] on ajoute un certain nombre d'arêtes "voisine" de notre graphe. C'est à dire d'arêtes dont au moins un des nœuds fait déjà partie de la solution. En effet sinon on risque de souvent rajouter des arêtes complètement déconnectées de notre graphe qui n'ont que très peu D’Intérêt.
@@ -150,7 +156,7 @@ r = random()\;
 
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline 
-temps & ajout & ajout path & suppression & nœuds & arêtes & terminaux  \\ 
+temps (en s) & ajout & ajout path & suppression & nœuds & arêtes & terminaux  \\ 
 \hline 
 instance 001 & 0,03 & 0,01 & 6,63 & 320 & 640 & 80 \\ 
 \hline 
@@ -284,7 +290,7 @@ En vert crossover, rouge mutation, bleu mix de deux}
 \end{figure}
 
 
-Un autre bon indicateur de l'utilité du crossover est le nombre de crossover de la meilleure solution a chaque génération. Nous définissons le nombre de crossover d'une solution par : la somme du nombre de crossover de ses parents +1 si elle issue d'un crossover, son nombre de crossover si elle est issue d'une mutation. Ce nombre est initialisé à 0. La figure \ref{nbcrossover} montre bien que ce nombre suis une loi quasimment (attention les courbes sont en echelle logarithmique), ce qui prouve qu'a chaque génération le crossover à tendance à améliorer la solution. Une première version naive n'avait tendance qu'à rester aux alentours de 1 ou 3. On voit qu'avec de petites population le nombre de crossover est relaticement plus faible mais que la courbe est bien plus croissante du au manque d'exploration de nouvelles solutions, les améliorations doivent se greffer directement sur les solutions déjà bonne. Quand le nombre de génération est plus grand ce nombre fluctue plus 
+Un autre bon indicateur de l'utilité du crossover est le nombre de crossover de la meilleure solution a chaque génération. Nous définissons le nombre de crossover d'une solution par : la somme du nombre de crossover de ses parents +1 si elle issue d'un crossover, son nombre de crossover si elle est issue d'une mutation. Ce nombre est initialisé à 0. La figure \ref{nbcrossover} montre bien que ce nombre suis une loi quasiment (attention les courbes sont en échelle logarithmique), ce qui prouve qu'a chaque génération le crossover à tendance à améliorer la solution. Une première version naïve n'avait tendance qu'à rester aux alentours de 1 ou 3. On voit qu'avec de petites population le nombre de crossover est relativement plus faible mais que la courbe est bien plus croissante du au manque d'exploration de nouvelles solutions, les améliorations doivent se greffer directement sur les solutions déjà bonne. Quand le nombre de génération est plus grand ce nombre fluctue plus 
 
 \begin{figure}
 \centering
@@ -316,21 +322,21 @@ En vert classic, rouge offsprings, bleu Boltzmann et noir threshold}
 
 \section{Comparaisons globales}
 
-Notre dernière comparaison visait à comparer l'algorithme génétiques aux approches locales. Après de nombreux tests l'approche génétique c'est révélée meilleure. Ces comparaisons ont été faites à temps d'execution équivalente, on ne peut pas comparer le nombre de génération au nombre d'itération des algorithmes locaux (vu que les générations sont composées de plusieurs éléments sur lesquels on peut appliquer des algorithmes locaux). La figure \ref{comparegeneral} compare le meilleur algorithme de recherche locale que nous ayons au meilleur algorithme moléculaire. 
+Notre dernière comparaison visait à comparer l'algorithme génétiques aux approches locales. Après de nombreux tests l'approche génétique c'est révélée meilleure. Ces comparaisons ont été faites à temps d’exécution équivalente, on ne peut pas comparer le nombre de génération au nombre d'itération des algorithmes locaux (vu que les générations sont composées de plusieurs éléments sur lesquels on peut appliquer des algorithmes locaux). La figure \ref{comparegeneral} compare le meilleur algorithme de recherche locale que nous ayons au meilleur algorithme moléculaire. 
 
 
 \begin{figure}
 \centering
 \includegraphics[scale=.4]{images/comparaison_genetic_without_error.pdf}
-\caption{Abscisses : temps (normalisé unité non disponible), ordonnées meilleure valeure au temps donné. En rouge algorithme génétique, en vert algorithme de recherche locale}
+\caption{Abscisses : temps (normalisé unité non disponible), ordonnées meilleure valeurs au temps donné. En rouge algorithme génétique, en vert algorithme de recherche locale}
 \label{comparegeneral}
 \end{figure}
 
 
 \section{Conclusion}
 
-En conclusion les résultats trouvé semblent correctent. Je n'ai malheureusement pas eu le temps de comparer sur le site aux autres personnes mais en comparaison avec d'autres élèves sur l'instance 039 mes résultats semblent tout à fait valable (justification légère mais seule possible pour l'instant). Le fait que le crossover de l'algorithme génétique améliore réellement les solutions est une vraie satisfaction.
- Quelques problèmes d'implémentation m'ont empechés de travailler suffisamment sur le recuit simulé (temps d'executions trop longs pour accepter trop d'erreurs).
+En conclusion les résultats trouvé semblent corrects. Je n'ai malheureusement pas eu le temps de comparer sur le site aux autres personnes mais en comparaison avec d'autres élèves sur l'instance 039 mes résultats semblent tout à fait valable (justification légère mais seule possible pour l'instant). Le fait que le crossover de l'algorithme génétique améliore réellement les solutions est une vraie satisfaction.
+ Quelques problèmes d'implémentation m'ont empêches de travailler suffisamment sur le recuit simulé (temps d’exécutions trop longs pour accepter trop d'erreurs).
  
  
 \end{document}

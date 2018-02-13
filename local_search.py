@@ -19,7 +19,7 @@ def display (graph,name_of_graph):
 
 
 # First solution : 2-approx
-def first_solution_opti (graph,terminals):
+def first_solution(graph,terminals):
     graph_t = nx.Graph()
     too_add = []
     approx_spanning = nx.Graph()
@@ -43,7 +43,7 @@ def first_solution_opti (graph,terminals):
             approx_spanning.add_edge(path[i],path[i+1],weight=data)
     return approx_spanning
 
-def first_solution(graph,terminals):
+def first_solution_non_opti(graph,terminals):
     graph_t = nx.Graph()
     too_add = []
     approx_spanning = nx.Graph()
@@ -288,26 +288,18 @@ def get_step():
     return(delta)
 
 if __name__ == '__main__':
-    g = parser.read_graph("Heuristic/instance019.gr")
+    g = parser.read_graph("Heuristic/instance143.gr")
     graph     = g[0]
     print(len(graph.edges()), len(graph.nodes()))
     terminals = g[1]
     print(len(terminals))
-    g0 = first_solution_opti(graph, terminals)
     t0 = time.clock()
-    temps_debut = time.clock()
-    temps_step = temps_debut
-    nm_step_dummy(graph, g0, terminals, 100, 0 )
+    g0 = first_solution(graph, terminals)
     t1 = time.clock()
     delta1 = t1 -t0
     print(delta1)
-    
-    for i in range(10):
-        add_random_path(graph, g0)
+
+    g0 = first_solution_non_opti(graph, terminals)
     t2 = time.clock()
     delta2 = t2 - t1
     print(delta2)
-    nm_step_dummy(graph, g0, terminals, 0, 100 )
-    t3 = time.clock()
-    delta3 = t3 - t2
-    print(delta3)
