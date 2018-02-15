@@ -1,0 +1,10 @@
+\beamer@slide {Mutationcompareselection}{2}
+\beamer@slide {Crossovercompareselection}{3}
+\beamer@slide {Multiplecompareselection}{4}
+\beamer@slide {Elitistcomparevariation}{5}
+\beamer@slide {Offspringscomparevariation}{6}
+\beamer@slide {Fitnesscomparevariation}{7}
+\beamer@slide {Boltzmanncomparevariation}{8}
+\beamer@slide {Thresholdcomparevariation}{9}
+\beamer@slide {Threshold-80comparevariation}{10}
+\beamer@slide {MutationBoltzmann}{11}
